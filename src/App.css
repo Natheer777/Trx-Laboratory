@@ -1,0 +1,38 @@
+:root {
+    --color-white: #ffffff;
+    --color-blue: #99222a;
+    --color-blue2:#12bfe9 ;
+  }
+
+@font-face {
+    font-family: 'LittleBubble';
+    src: url('./assets/Fonts/static/Nunito-ExtraBold.ttf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'RoundedBlackRegular';
+    src: url('./assets/Fonts/Rounds Black.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'NunitoBlack';
+    src: url('./assets/Fonts/static/Nunito-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'NunitoSemiBold';
+    src: url('./assets/Fonts/static/Nunito-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
