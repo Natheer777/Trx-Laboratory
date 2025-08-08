@@ -2,6 +2,9 @@
     --color-white: #ffffff;
     --color-blue: #99222a;
     --color-blue2:#12bfe9 ;
+    --primary-color: #263684;
+    --secondary-color: #6ed6ff;
+    --accent-color: #4a90e2;
   }
 
 @font-face {

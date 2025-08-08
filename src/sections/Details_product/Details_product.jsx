@@ -291,29 +291,27 @@ export default function Details_product({
 
   const {
     pname,
-    description,
+    name,
+    product_overview,
+    uses,
+    potential_harms,
+    method_of_use,
     price,
     qr_code,
     warnings,
-    strength,
     vial,
     caliber,
-    side_effects,
-    how_to_use,
-    muscle_gain,
-    science_name,
-    keep_gains,
-    fat_water,
+    sec_name,
     vid_url,
     img_url,
+    science_name
   } = productData;
 
   // const productColor = productColors[pname] || "#ffffff";
-  const descriptionLines = description
-    ?.split(/\r?\n/)
-    .filter((line) => line.trim() !== "");
-  const shortDescription = descriptionLines?.slice(0, 2);
-  // const fullDescription = descriptionLines;
+  // Clean up the science_name display
+  const displayScienceName = science_name
+    ? science_name.replace(/[()]/g, '').trim()
+    : '';
 
   const formatTextWithNumbers = (text, useProductColor = false) => {
     if (!text) return "";
@@ -406,153 +404,58 @@ export default function Details_product({
                   <div>
                     <span className="vial right">
                       <span>
-                        {productData.sec_name === "injections"
+                        {sec_name === "injections"
                           ? "Vial: "
-                          : productData.sec_name === "tablets"
+                          : sec_name === "tablets"
                           ? "Tablets: "
                           : "Vial: "}
                       </span>
-                      {vial.replace(/tablets?/gi, "").trim()}
+                      {vial}
                     </span>{" "}
                     <p className="caliber right">
-                      {formatTextWithNumbers(caliber, true)}
+                      {caliber}
                     </p>
                   </div>
                 </div>
                 <div className="details_product pb-5">
-                  {descriptionLines?.length > 0 && (
-                    <div className="product-description">
-                      <div
-                        style={{ whiteSpace: "pre-wrap" }}
-                        className="NunitoSemiBold"
-                      >
-                        <span className="how_use top">Description :</span>{" "}
-                        {showFullDescription
-                          ? descriptionLines.map((line, idx) => {
-                              if (line.trim() === "") {
-                                return <br key={idx} />;
-                              }
-                              const match = line.match(/^([^:]+):\s*(.*)$/);
-                              if (match) {
-                                return (
-                                  <div key={idx}>
-                                    <span className="desc-label">
-                                      {match[1].trim()}:
-                                    </span>
-                                    <span> {match[2]}</span>
-                                  </div>
-                                );
-                              } else {
-                                return <div key={idx}>{line}</div>;
-                              }
-                            })
-                          : shortDescription.map((line, idx) => {
-                              const match = line.match(/^([^:]+):\s*(.*)$/);
-                              if (match) {
-                                return (
-                                  <div key={idx}>
-                                    <span className="desc-label">
-                                      {match[1].trim()}:
-                                    </span>
-                                    <span> {match[2]}</span>
-                                  </div>
-                                );
-                              } else {
-                                return <div key={idx}>{line}</div>;
-                              }
-                            })}
-                      </div>
-
-                      {descriptionLines.length > 6 && (
-                        <button
-                          onClick={() =>
-                            setShowFullDescription((prev) => !prev)
-                          }
-                          className="btn btn-link p-0 mt-2"
-                          style={{
-                            fontSize: "18px",
-                            color: "#FFFFFF",
-                            cursor: "pointer",
-                          }}
-                        >
-                          {showFullDescription ? "Show Less" : "Show More"}
-                        </button>
-                      )}
+                  {product_overview && (
+                    <div className="product-section">
+                      <h3 className="section-title">Product Overview</h3>
+                      <p className="section-content">{product_overview}</p>
                     </div>
                   )}
-                  <div className="NunitoSemiBold">
-                    <span className="how_to_use">Dosage: </span>
-                    {how_to_use}
-                  </div>
-                  <div className="Warning hidden">
-                    <span>Warnings: </span>
-                    {warnings}
-                  </div>
 
-                  <div className="product-details-extra mt-3">
-                    <ul className="list-unstyled product-attributes-list">
-                      {strength && (
-                        <li className="product-attribute-item">
-                          <strong>Strength:</strong>
-                          <CircularProgress
-                            value={parseInt(strength, 10)}
-                            showValue={true}
-                            size={80}
-                            color="#007bff"
-                            strokeWidth={8}
-                          />
-                        </li>
-                      )}
-                      {side_effects && (
-                        <li className="product-attribute-item">
-                          <strong>Side Effects:</strong>
-                          <CircularProgress
-                            value={parseInt(side_effects, 10)}
-                            showValue={true}
-                            size={80}
-                            color="#dc3545"
-                            strokeWidth={8}
-                          />
-                        </li>
-                      )}
-                      {muscle_gain && (
-                        <li className="product-attribute-item">
-                          <strong>Muscle Gain:</strong>
-                          <CircularProgress
-                            value={parseInt(muscle_gain, 10)}
-                            showValue={true}
-                            size={80}
-                            color="#28a745"
-                            strokeWidth={8}
-                          />
-                        </li>
-                      )}
-                      {keep_gains && (
-                        <li className="product-attribute-item">
-                          <strong>Keep Gains:</strong>
-                          <CircularProgress
-                            value={parseInt(keep_gains, 10)}
-                            showValue={true}
-                            size={80}
-                            color="#ffc107"
-                            strokeWidth={8}
-                          />
-                        </li>
-                      )}
-                      {fat_water && (
-                        <li className="product-attribute-item">
-                          <strong>Fat/Water:</strong>
-                          <CircularProgress
-                            value={parseInt(fat_water, 10)}
-                            showValue={true}
-                            size={80}
-                            color="#17a2b8"
-                            strokeWidth={8}
-                          />
-                        </li>
-                      )}
-                    </ul>
-                  </div>
+                  {uses && (
+                    <div className="product-section mt-4">
+                      <h3 className="section-title">Uses</h3>
+                      <p className="section-content">{uses}</p>
+                    </div>
+                  )}
+
+                  {potential_harms && (
+                    <div className="product-section mt-4">
+                      <h3 className="section-title">Potential Harms</h3>
+                      <div className="section-content" style={{ whiteSpace: 'pre-line' }}>
+                        {potential_harms}
+                      </div>
+                    </div>
+                  )}
+
+                  {method_of_use && (
+                    <div className="product-section mt-4">
+                      <h3 className="section-title">Method of Use</h3>
+                      <p className="section-content">{method_of_use}</p>
+                    </div>
+                  )}
+
+                  {warnings && (
+                    <div className="product-section mt-4">
+                      <h3 className="section-title warning">Warnings</h3>
+                      <div className="section-content" style={{ whiteSpace: 'pre-line' }}>
+                        {warnings}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

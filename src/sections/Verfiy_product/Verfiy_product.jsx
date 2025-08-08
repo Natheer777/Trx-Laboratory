@@ -115,16 +115,8 @@ export default function VerifyProduct() {
                 ))}
               </motion.ul>
 
-              <motion.div 
-                className="verification-note"
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.8 }}
-              >
-                <FiAlertTriangle className="note-icon" />
-                <p>Note: The QR code can only be scanned once. After scanning, it will be automatically deactivated.</p>
-              </motion.div>
+             
+               
             </div>
 
             {/* Brand Section */}
