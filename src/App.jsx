@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle";
 import DynamicRouteHandler from "../components/DynamicRouteHandler";
 import "./App.css";
-import { Home , Contact } from "./pages";
+import { Home, Contact , Authenticity_sec } from "./pages";
 
 function App() {
   return (
@@ -12,6 +12,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/Authenticity" element={<Authenticity_sec />} />
           <Route path="/:param" element={<DynamicRouteHandler />} />
         </Routes>
       </Router>

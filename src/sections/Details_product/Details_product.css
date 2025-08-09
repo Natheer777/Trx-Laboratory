@@ -108,7 +108,7 @@
 }
 
 .sec_name {
-  color: white;
+  color: black;
   padding-left: 10px;
   font-size: 20px;
   font-family: "NunitoBlack";
@@ -141,16 +141,14 @@
   border-image: linear-gradient(90deg, #263684, #4a90e2) 1;}
 
 .price {
-
   font-family: "NunitoSemiBold";
   background: linear-gradient(90deg, #263684, #4a90e2) !important;
   color: white;
-  padding: 6px;
+  padding: 8px;
   margin-left: 10px;
-  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
   border-top-right-radius: 20px;
-
-}
+    }
 
 .price span,
 .vial span {
@@ -167,10 +165,12 @@
   border-top-left-radius: 20px;
   background: linear-gradient(90deg, #263684, #4a90e2) !important;
   padding: 8px;
+  margin-bottom: 10px;
+  justify-content: space-evenly;
 }
 
 .caliber {
-  color: white;
+  color: black;
   font-family: "NunitoBlack";
   margin-top: 5px;
   text-align: center;
@@ -492,8 +492,7 @@
   text-align: center;
   margin: 2rem auto;
   padding: 2rem;
-  background: var(--color-blue2);
-  border-radius: 15px;
+  background: -webkit-linear-gradient(180deg, #1160aa, #04044f);  border-radius: 15px;
   box-shadow: 0 8px 32px rgba(220, 53, 69, 0.1);
   border: 2px solid #dc3545;
   max-width: 500px;

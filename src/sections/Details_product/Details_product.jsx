@@ -272,10 +272,10 @@ export default function Details_product({
     return (
       <div className="details-error-container">
         <p className="details-error-message">{error}</p>
-        <p className="details-error-subtitle">
+        {/* <p className="details-error-subtitle">
           This product has been previously verified. <br />
           (This QR code has been scanned before.)
-        </p>
+        </p> */}
       </div>
     );
   if (!productData) return <p></p>;
@@ -365,7 +365,7 @@ export default function Details_product({
               </div>
 
               <div className="col-xl-6 col-lg-6 ">
-                <div className="detailsMainProduct">
+                <div className="detailsMainProduct pb-4">
                   <div>
                     <h1
                       className="product_name text-xl font-bold  left"
@@ -393,13 +393,16 @@ export default function Details_product({
                               : name.toUpperCase();
                           })()}
                     </h1>
-                    <p className="sec_name">
-                      {capitalizeFirstLetter(science_name.replace(/[()]/g, ""))}
-                    </p>
-                    <span className="price left">
-                      <span>Price: </span>
-                      {price}$
-                    </span>
+                    {sec_name && (
+                      <p className="sec_name">
+                        {capitalizeFirstLetter(sec_name.replace(/[()]/g, ""))}
+                      </p>
+                    )}
+                    {/* {science_name && (
+                      <p className="sec_name">
+                        {capitalizeFirstLetter(science_name.replace(/[()]/g, ""))}
+                      </p>
+                    )} */}
                   </div>
                   <div>
                     <span className="vial right">
@@ -414,7 +417,11 @@ export default function Details_product({
                     </span>{" "}
                     <p className="caliber right">
                       {caliber}
-                    </p>
+                    </p>  
+                    <span className="price  left">
+                      <span>Price: </span>
+                      {price}$
+                    </span>
                   </div>
                 </div>
                 <div className="details_product pb-5">
