@@ -1,6 +1,6 @@
 /* Footer Container */
 .footer {
-  background-color: #1a1a2e;
+  background-color: white;
   color: #fff;
   font-size: 14px;
   line-height: 1.8;
@@ -30,13 +30,13 @@
 }
 
 .footer-logo img {
-  max-height: 50px;
+  max-height: 30px;
   width: auto;
 }
 
 /* Footer About */
 .footer-about p {
-  color: #b3b3b3;
+  color: black;
   margin-bottom: 25px;
 }
 
@@ -54,8 +54,8 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  background: var(--color-blue2);
+  color:white;
   font-size: 16px;
   transition: all 0.3s ease;
   text-decoration: none;
@@ -68,7 +68,7 @@
 
 /* Footer Headings */
 .footer h4 {
-  color: #fff;
+  color: black;
   font-size: 18px;
   font-weight: 700;
   margin-bottom: 25px;
@@ -98,7 +98,7 @@
 }
 
 .footer-links ul a {
-  color: #b3b3b3;
+  color: black;
   text-decoration: none;
   transition: all 0.3s ease;
   display: inline-block;
@@ -128,7 +128,7 @@
 /* Contact Info */
 .footer-contact p {
   margin-bottom: 15px;
-  color: #b3b3b3;
+  color: black;
   display: flex;
   align-items: flex-start;
 }
@@ -147,7 +147,7 @@
   margin-top: 25px;
   margin-bottom: 15px;
   font-size: 16px;
-  color: #fff;
+  color: black;
 }
 
 .newsletter form {
@@ -186,7 +186,7 @@
 
 .copyright {
   text-align: center;
-  color: #b3b3b3;
+  color: black;
   display: flex;
   flex-direction: column;
   align-items: center;

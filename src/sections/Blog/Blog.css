@@ -1,0 +1,20 @@
+.blogImage img{
+    width: 100%;
+}
+.textBlog{
+    position: relative;
+    background-color: white;
+    padding: 10px;
+    top: -73px;
+    width: 90%;
+    margin: auto;
+}
+.textBlog p{
+    font-weight: 600;
+}
+.blogSpan{
+    font-size: 13px;
+}
+.blogSpan span{
+    color: var(--color-blue2);
+}

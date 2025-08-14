@@ -7,7 +7,7 @@ import {
   faInstagram, 
   faWhatsapp
 } from '@fortawesome/free-brands-svg-icons';
-
+import logo from '../../assets/logo/Asset 1@8x.png'
 import './Footer.css';
 
 const Footer = () => {
@@ -18,7 +18,7 @@ const Footer = () => {
           <Row className='justify-content-evenly'>
             <Col lg={4} md={6} className="footer-about">
               <div className="footer-logo">
-                <img src="/logo.png" alt="Logo" />
+                <img src={logo} alt="Logo" />
               </div>
               <p>
                 We are a leading laboratory equipment provider, offering high-quality products and solutions for scientific research and healthcare institutions.
@@ -44,7 +44,10 @@ const Footer = () => {
                 <li><Link to="/">Home</Link></li>
                 <li><Link to="/Authenticity">Authenticity</Link></li>
                 <li><Link >Products</Link></li>
+                <li><Link to="/Counterfeit">Counterfeit</Link></li>
                 <li><Link to="/contact">Contact</Link></li>
+                <li><Link to="/Article">Article</Link></li>
+                <li><Link to="/Blogs">Blogs</Link></li>
               </ul>
             </Col>
 

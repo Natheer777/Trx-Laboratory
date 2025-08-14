@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiMenu, FiX } from 'react-icons/fi';
 import './Navbar.css';
-
+import logo from '../../assets/logo/Asset 1@8x.png'
 const Navbar = () => {
   const [expanded, setExpanded] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -34,7 +34,11 @@ const Navbar = () => {
     { path: '/', label: 'Home' },
     { path: '/Authenticity', label: 'Authenticity' },
     { path: '#products', label: 'Products', onClick: closeNav },
+    { path: '/Counterfeit', label: 'Counterfeit' },
     { path: '/contact', label: 'Contact' },
+    { path: '/Article', label: 'Article' },
+    { path: '/Blogs', label: 'Blogs' },
+
   ];
 
   const containerVariants = {
@@ -75,7 +79,7 @@ const Navbar = () => {
         >
           <BSNavbar.Brand as={Link} to="/" className="navbar-brand" onClick={closeNav}>
             <img 
-              src="/logo.png" 
+              src={logo}
               alt="Logo"
               className="logo"
             />

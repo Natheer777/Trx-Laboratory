@@ -1,0 +1,33 @@
+.catego{
+    position: relative;
+    border: none;
+    border-bottom-left-radius: 100px;
+    border-top: 25px var(--color-blue2) solid;
+}
+.catego h1{
+    position: absolute;
+    top: -15px;
+    color: white;
+    font-weight: bold;
+    background-color: var(--color-blue2);
+    width: max-content;
+    margin: auto;
+    padding: 5px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border: none;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+.catego ul{
+    padding-left: 0;
+    list-style: none;
+    margin-top: 50px;
+}
+.catego img{
+    margin: auto;
+    width: 70%;
+}
+.catego ul li{
+    display: flex;
+}

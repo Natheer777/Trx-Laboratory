@@ -1,0 +1,81 @@
+.counterfeits-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  background-color: #fff;
+}
+
+.authenticity-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.counterfeits-section {
+  width: 100%;
+  background-color: #f8f9fa;
+}
+
+.container {
+  max-width: 1170px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.section-title {
+  font-size: 32px;
+  color: #333;
+  text-align: center;
+  font-weight: 600;
+  text-transform: uppercase;
+  position: relative;
+  padding-bottom: 15px;
+  letter-spacing: 0.5px;
+}
+
+.section-title:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70px;
+  height: 2px;
+  background-color: #007bff;
+}
+
+.section-description {
+  font-size: 18px;
+  color: #6c757d;
+  text-align: left;
+  max-width: 800px;
+  margin: 0 auto 36px;
+  line-height: 1.8;
+  font-weight: 400;
+}
+
+.counterfeits-link {
+  color: #12bfe9;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.counterfeits-link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 767px) {
+  .section-title {
+    font-size: 28px;
+  }
+  .section-description {
+    font-size: 16px;
+    margin-bottom: 24px;
+  }
+  .container {
+    padding: 0 8px;
+  }
+}

@@ -2,3 +2,6 @@ export { default as Products } from "./Products/Products";
 export { default as Home } from "./Home/Home";
 export { default as Contact } from "./Contact/Contact";
 export { default as Authenticity_sec } from "./Authenticity_sec/Authenticity_sec";
+export { default as Counterfeit } from "./Counterfeit/Counterfeit";
+export { default as Blogs } from "./Blogs/Blogs";
+export { default as Articles } from "./Articels/Articels";
