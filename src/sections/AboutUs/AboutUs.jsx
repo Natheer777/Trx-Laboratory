@@ -15,7 +15,7 @@ export default function AboutUs() {
                 production of a diverse portfolio of cutting-edge oral, injectable,
                 and specialized dosage forms, committed to advancing health and
                 performance worldwide</p>
-            <button>EXPLORE</button>
+            <button className='explore-button'>EXPLORE</button>
             </div>
             <div className="marquee-container mt-5">
           <div className="marquee-text">

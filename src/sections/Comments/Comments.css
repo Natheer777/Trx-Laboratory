@@ -1,72 +1,213 @@
+:root {
+  --primary-color: #2563eb;
+  --secondary-color: #1e40af;
+  --text-color: #1f2937;
+  --light-gray: #f3f4f6;
+  --border-radius: 12px;
+  --box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.comment-section {
+  position: relative;
+  padding: 4rem 0;
+  background-color: #ffffff;
+}
+
 .comment-title {
-    text-align: center;
-    font-size: 20px;
-    color: var(--color-blue2);
-    margin-bottom: 2rem;
+  color: var(--color-blue2);
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
 }
 
-.comment-section h1 {
-    font-family: 'NunitoBlack';
-    text-align: center;
-    font-size: 40px;
-    margin-bottom: 20px;
+.section-heading {
+  font-family: 'NunitoBlack', sans-serif;
+  font-size: 2.5rem;
+  color: #111827;
+  margin-bottom: 3rem;
+  position: relative;
+  display: inline-block;
 }
 
-.comment-title {
-    font-family: 'NunitoBlack';
-
-    animation: colorFade 3s infinite ease-in-out;
+.section-heading::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, white, var(--color-blue2));
+  border-radius: 2px;
 }
 
-
+.card-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+.comment-section .swiper-pagination ,.swiper-pagination-clickable ,.swiper-pagination-bullets ,.swiper-pagination-horizontal{
+    display: none;
+}
 .comment-card {
-    color: var(--color-white);
-    border-radius: 1.5rem;
-    padding: 2rem 1.5rem;
-    /* max-width: 500px; */
-    margin: 0 auto;
-    padding-bottom: 0 !important;
-    transition: transform 0.3s ease;
+  background: white;
+  border-radius: var(--border-radius);
+  padding: 2.5rem 2rem;
+  height: 100%;
+  box-shadow: var(--box-shadow);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
 }
-
+.swiper-button-next{
+    display: none;
+}
+.swiper-button-prev{
+    display: none;
+}
 .comment-card:hover {
-    transform: translateY(-5px);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
-.comment-card img {
-    border-radius: 50%;
-    margin: auto;
-    width: 8rem;
-    height: 8rem;
-    display: flex;
+.quote-icon {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  color: rgba(37, 99, 235, 0.1);
+  font-size: 4rem;
+  z-index: 1;
+}
+
+.comment-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .user-comment {
-    font-family: 'NunitoSemiBold';
-
-    color: black;
-    font-size: 1.1rem;
-    margin: 14px;
-    font-style: italic;
-    line-height: 1.5;
-    text-align: center;
-}
-.starts{
-    display: flex;
-    justify-content: center;
-}
-.comment-section svg {
-    margin: auto;
-    font-size: 3rem;
-    color: #dfc060;
-    width: 25px;
-    margin: 4px;
+  font-family: 'NunitoSemiBold', sans-serif;
+  color: var(--text-color);
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 2;
+  padding: 1rem 0;
 }
 
-.comment-section .swiper-button-prev {
-    display: none;
+.rating {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
 }
 
-.comment-section .swiper-button-next {
-    display: none;
+.star {
+  color: #f59e0b;
+  font-size: 1.25rem;
+  margin: 0 2px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.user-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 1rem;
+  border: 3px solid #e5e7eb;
+  transition: all 0.3s ease;
+}
+
+.user-details {
+  text-align: left;
+}
+
+.user-name {
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 0.25rem 0;
+  font-size: 1.1rem;
+}
+
+.user-role {
+  color: #6b7280;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* Swiper Customization */
+.testimonial-swiper {
+  padding: 2rem 0 4rem;
+}
+
+.swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  background-color: #d1d5db;
+  opacity: 1;
+  transition: all 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+  width: 30px;
+  border-radius: 5px;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: var(--primary-color) !important;
+  transition: all 0.3s ease;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  transform: scale(1.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .comment-section {
+    padding: 3rem 0;
+  }
+  
+  .section-heading {
+    font-size: 2rem;
+  }
+  
+  .comment-card {
+    padding: 1.75rem 1.5rem;
+  }
+  
+  .user-comment {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .comment-title {
+    font-size: 1rem;
+  }
+  
+  .section-heading {
+    font-size: 1.75rem;
+  }
+  
+  .user-img {
+    width: 50px;
+    height: 50px;
+  }
 }

@@ -2,18 +2,90 @@ import React, { useState, useEffect } from 'react';
 import { Navbar as BSNavbar, Nav, Container, NavDropdown, Dropdown } from 'react-bootstrap';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiMenu, FiX } from 'react-icons/fi';
+import { FiMenu, FiX, FiSearch } from 'react-icons/fi';
+import { FaTimes } from 'react-icons/fa';
 import './Navbar.css';
 import logo from '../../assets/logo/Asset 1@8x.png'
 const Navbar = () => {
   const [expanded, setExpanded] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
   const location = useLocation();
   const isMobile = window.innerWidth <= 992; // Bootstrap's lg breakpoint
 
   const toggleNav = () => {
     setExpanded(!expanded);
+  };
+
+  const toggleSearch = () => {
+    setSearchOpen(!searchOpen);
+    if (!searchOpen) {
+      setSearchQuery('');
+      setSearchResults([]);
+    }
+  };
+
+  const handleSearch = async (e) => {
+    const query = e.target.value.trim();
+    setSearchQuery(query);
+    
+    if (query.length < 2) {
+      setSearchResults([]);
+      return;
+    }
+
+    try {
+      setIsSearching(true);
+      
+      // Simple form data format that works with most servers
+      const formBody = `word=${encodeURIComponent(query)}`;
+      const response = await fetch('https://trx-laboratory.com/search.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ word: query }),
+        credentials: 'omit',
+        mode: 'cors'
+      });
+      
+      console.log('Response status:', response.status);
+      const responseText = await response.text();
+      console.log('Raw response:', responseText);
+      
+      let data;
+      try {
+        data = responseText ? JSON.parse(responseText) : null;
+        
+        if (!response.ok || (data && data.status === 'error')) {
+          const errorMessage = data?.message || `HTTP error! status: ${response.status}`;
+          console.error('Search error:', errorMessage);
+          setSearchResults([{ error: true, message: errorMessage }]);
+          return;
+        }
+        
+        // If we get here, the request was successful
+        setSearchResults(Array.isArray(data) ? data : (data?.data || []));
+      } catch (parseError) {
+        console.error('Error parsing response:', parseError, 'Response:', responseText);
+        setSearchResults([{ 
+          error: true, 
+          message: 'Error processing search results' 
+        }]);
+      }
+    } catch (error) {
+      console.error('Search request failed:', error);
+      setSearchResults([{ 
+        error: true, 
+        message: error.message || 'Error connecting to server' 
+      }]);
+    } finally {
+      setIsSearching(false);
+    }
   };
 
   const closeNav = () => {
@@ -93,13 +165,14 @@ const Navbar = () => {
             />
           </BSNavbar.Brand>
         </motion.div>
-        
+        <div className='searchD'>
+
         <BSNavbar.Toggle 
           aria-controls="basic-navbar-nav" 
           onClick={toggleNav}
           className="navbar-toggler"
           aria-label="Toggle navigation"
-        >
+          >
           <AnimatePresence mode="wait">
             {expanded ? (
               <motion.span
@@ -125,13 +198,24 @@ const Navbar = () => {
           </AnimatePresence>
         </BSNavbar.Toggle>
 
+        <div className="search-icon-container">
+          <motion.div
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={toggleSearch}
+            className="search-icon"
+          >
+            <FiSearch className="nav-icon" />
+          </motion.div>
+                  </div>
+        </div>
         <BSNavbar.Collapse id="basic-navbar-nav" className="justify-content-end">
           <Nav as={motion.div} 
             className="ms-auto"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-          >
+            >
             {navLinks.map((link, index) =>
               link.isDropdown ? (
                 <div className="nav-item dropdown-hover" key={index}>
@@ -186,7 +270,90 @@ const Navbar = () => {
             )}
           </Nav>
         </BSNavbar.Collapse>
+     
+
       </Container>
+
+      {/* Search Overlay */}
+      <AnimatePresence>
+        {searchOpen && (
+          <motion.div 
+            className="search-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="search-container">
+              <div className="search-header">
+                <h3>Search Products</h3>
+                <button onClick={toggleSearch} className="close-search">
+                  <FaTimes />
+                </button>
+              </div>
+              
+              <div className="search-input-container">
+                <FiSearch className="search-input-icon" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={handleSearch}
+                  placeholder="Type to search..."
+                  autoFocus
+                  className="search-input"
+                />
+              </div>
+              
+              <div className="search-results">
+                {isSearching ? (
+                  <div className="search-loading">Searching...</div>
+                ) : searchResults.length > 0 ? (
+                  <div className="results-grid">
+                    {searchResults.map((result, index) => (
+                      <div 
+                        key={index} 
+                        className="result-item"
+                        onClick={() => {
+                          if (result.qr_code) {
+                            window.open(result.qr_code, '_blank');
+                          }
+                        }}
+                        style={{
+                          cursor: result.qr_code ? 'pointer' : 'default',
+                          transition: 'all 0.3s ease',
+                        }}
+                      >
+                        {result.img_url && (
+                          <div className="result-image-container">
+                            <img 
+                              src={result.img_url} 
+                              alt={result.pname || 'Product'} 
+                              className="result-image"
+                              onError={(e) => {
+                                e.target.style.display = 'none';
+                              }}
+                            />
+                          </div>
+                        )}
+                        <div className="result-content">
+                          <h4>{result.pname || 'Unnamed Product'}</h4>
+                          {result.qr_code && (
+                            <div className="qr-link">
+                              Read More<span className="external-link-icon">↗</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : searchQuery.length >= 2 && !isSearching ? (
+                  <div className="no-results">No results found</div>
+                ) : null}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </BSNavbar>
   );
 };
