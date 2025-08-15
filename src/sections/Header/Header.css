@@ -1,8 +1,6 @@
 .header {
-    position: relative;
     width: 100%;
-    height: 20vh;
-    min-height: 600px;
+    /* height: 80vh; */
     color: var(--color-white);
     overflow: hidden;
     margin: 0;
@@ -11,33 +9,24 @@
 
 .header.swiper {
     width: 100% !important;
-    height: 40% !important;
+    height: 50vh !important;
     margin: 0 !important;
     padding: 0 !important;
 }
 
-.header-swiper {
-    width: 100%;
-    height: 30%;
-    position: relative;
-    z-index: 0;
-    margin: 0;
+.header .swiper-button-next {
+    display: none;
 }
 
-.header-slide {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    z-index: 0;
-    margin: 0;
-    padding: 0;
+.header .swiper-button-prev {
+    display: none;
 }
+
+
 
 .slide-background {
-    position: relative;
     width: 100%;
-    height: 100%;
-    overflow: hidden;
+    /* height: 20vh; */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -45,25 +34,15 @@
 
 .slide-image {
     min-width: 100%;
-    min-height: 100%;
+    /* height: 60vh; */
     width: auto;
-    height: auto;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 0;
     object-fit: contain !important;
 }
 
-.slide-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(8, 15, 36, 0.4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.header .swiper-pagination,
+.swiper-pagination-clickable,
+.swiper-pagination-bullets,
+.swiper-pagination-horizontal {
+    bottom: 0px;
+    position: relative;
 }

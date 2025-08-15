@@ -20,7 +20,7 @@ export default function Header() {
     }
   ];
   return (
-    <div className='header'>
+    <div className='header mb-4'>
 
        <Swiper
           spaceBetween={0}

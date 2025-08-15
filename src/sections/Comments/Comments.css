@@ -4,11 +4,13 @@
     color: var(--color-blue2);
     margin-bottom: 2rem;
 }
-.comment-section h1{
+
+.comment-section h1 {
     text-align: center;
     font-size: 40px;
     margin-bottom: 20px;
 }
+
 .comment-title {
     animation: colorFade 3s infinite ease-in-out;
 }
@@ -32,7 +34,8 @@
     border-radius: 50%;
     margin: auto;
     width: 8rem;
-    height: 15vh;
+    height: 8rem;
+    display: flex;
 }
 
 .user-comment {
@@ -41,9 +44,14 @@
     margin: 14px;
     font-style: italic;
     line-height: 1.5;
+    text-align: center;
 }
-
+.starts{
+    display: flex;
+    justify-content: center;
+}
 .comment-section svg {
+    margin: auto;
     font-size: 3rem;
     color: #dfc060;
     width: 25px;

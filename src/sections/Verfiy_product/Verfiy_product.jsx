@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FiInstagram, FiFacebook, FiCheck, FiAlertTriangle } from 'react-icons/fi';
 import scan from '../../assets/istockphoto-2183004296-612x612-removebg-preview.png';
 import "./Verfiy_product.css";
+import logo from '../../assets/logo/Asset 1@8x.png'
 
 export default function VerifyProduct() {
   const [isHovered, setIsHovered] = useState(false);
@@ -129,7 +130,7 @@ export default function VerifyProduct() {
             >
               <div className="brand-logo-container">
                 <img 
-                  src="/logo.png" 
+                  src={logo}
                   alt="HormoGenius Logo" 
                   className="brand-logo"
                 />

@@ -4,7 +4,7 @@ import categoImage2 from '../../assets/catego/Asset 2@8x.png'
 import categoImage3 from '../../assets/catego/Asset 3@8x.png'
 export default function Catego() {
     return (
-        <div className="catego">
+        <div className="catego mb-5">
             <h1>CATEGORIES</h1>
             <div className="categoImage">
                 <ul>
