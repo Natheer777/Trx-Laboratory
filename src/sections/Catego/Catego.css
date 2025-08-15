@@ -5,6 +5,7 @@
     border-top: 25px var(--color-blue2) solid;
 }
 .catego h1{
+    font-family: 'NunitoBlack';
     position: absolute;
     top: -15px;
     color: white;
@@ -30,4 +31,7 @@
 }
 .catego ul li{
     display: flex;
+}
+.catego ul li:nth-child(3){
+    cursor: pointer;
 }

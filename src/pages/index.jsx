@@ -5,3 +5,5 @@ export { default as Authenticity_sec } from "./Authenticity_sec/Authenticity_sec
 export { default as Counterfeit } from "./Counterfeit/Counterfeit";
 export { default as Blogs } from "./Blogs/Blogs";
 export { default as Articles } from "./Articels/Articels";
+export { default as Injectables } from "./injectables/Injectables";
+export { default as Tablets } from "./tablets/Tablets";

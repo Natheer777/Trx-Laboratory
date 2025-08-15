@@ -1,11 +1,13 @@
 /* Why Choose Us Section */
 .why-choose-us {
+
   background-color: #f8f9fa;
   position: relative;
   overflow: hidden;
 }
 
 .section-title {
+  font-family: 'NunitoBlack';
   font-size: 2.5rem;
   font-weight: 700;
   color: #2c3e50;
@@ -26,6 +28,7 @@
 }
 
 .section-subtitle {
+  font-family: 'NunitoSemiBold';
   color: #7f8c8d;
   font-size: 1.1rem;
   max-width: 700px;
@@ -73,6 +76,7 @@
 }
 
 .feature-title {
+  font-family: 'NunitoBlack';
   color: #2c3e50;
   font-weight: 600;
   margin-bottom: 1rem;
@@ -84,6 +88,7 @@
 }
 
 .feature-description {
+  font-family: 'NunitoSemiBold';
   color: #7f8c8d;
   font-size: 0.95rem;
   line-height: 1.6;

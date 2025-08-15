@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Navbar as BSNavbar, Nav, Container } from 'react-bootstrap';
+import { Navbar as BSNavbar, Nav, Container, NavDropdown, Dropdown } from 'react-bootstrap';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiMenu, FiX } from 'react-icons/fi';
@@ -8,7 +8,9 @@ import logo from '../../assets/logo/Asset 1@8x.png'
 const Navbar = () => {
   const [expanded, setExpanded] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const location = useLocation();
+  const isMobile = window.innerWidth <= 992; // Bootstrap's lg breakpoint
 
   const toggleNav = () => {
     setExpanded(!expanded);
@@ -32,13 +34,19 @@ const Navbar = () => {
 
   const navLinks = [
     { path: '/', label: 'Home' },
+    { 
+      label: 'Categories ⌵',
+      isDropdown: true,
+      items: [
+        { path: '/injectables', label: 'INJECTABLES' },
+        { path: '/tablets', label: 'TABLETS' }
+      ]
+    },
     { path: '/Authenticity', label: 'Authenticity' },
-    { path: '#products', label: 'Products', onClick: closeNav },
     { path: '/Counterfeit', label: 'Counterfeit' },
     { path: '/contact', label: 'Contact' },
     { path: '/Article', label: 'Article' },
     { path: '/Blogs', label: 'Blogs' },
-
   ];
 
   const containerVariants = {
@@ -124,21 +132,58 @@ const Navbar = () => {
             initial="hidden"
             animate="visible"
           >
-            {navLinks.map((link, index) => (
-              <Nav.Link
-                key={index}
-                as={motion(Link)}
-                variants={itemVariants}
-                to={link.path}
-                onClick={link.onClick || closeNav}
-                className={`nav-link ${location.pathname === link.path ? 'active' : ''}`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {link.label}
-                <span className="nav-link-underline"></span>
-              </Nav.Link>
-            ))}
+            {navLinks.map((link, index) =>
+              link.isDropdown ? (
+                <div className="nav-item dropdown-hover" key={index}>
+                  <Dropdown as="div" className="d-inline-block" onMouseEnter={() => !isMobile && setDropdownOpen(true)}
+                    onMouseLeave={() => !isMobile && setDropdownOpen(false)}
+                    onClick={() => isMobile && setDropdownOpen(!dropdownOpen)}>
+                    <Dropdown.Toggle
+                      as={motion.div}
+                      variants={itemVariants}
+                      className={`nav-link ${navLinks.some(l => l.path === location.pathname) ? 'active' : ''}`}
+                      whileHover={!isMobile ? { scale: 1.05 } : {}}
+                      whileTap={!isMobile ? { scale: 0.95 } : {}}
+                      style={{ cursor: 'pointer' }}
+                      aria-expanded={dropdownOpen}
+                    >
+                      {link.label}
+                      <span className="nav-link-underline"></span>
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu className={`dropdown-menu-end ${dropdownOpen ? 'show' : ''}`}>
+                      {link.items.map((item, itemIndex) => (
+                        <Dropdown.Item
+                          key={itemIndex}
+                          as={Link}
+                          to={item.path}
+                          onClick={() => {
+                            closeNav();
+                            setDropdownOpen(false);
+                          }}
+                          className={location.pathname === item.path ? 'active' : ''}
+                        >
+                          {item.label}
+                        </Dropdown.Item>
+                      ))}
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </div>
+              ) : (
+                <Nav.Link
+                  key={index}
+                  as={motion(Link)}
+                  variants={itemVariants}
+                  to={link.path}
+                  onClick={link.onClick || closeNav}
+                  className={`nav-link ${location.pathname === link.path ? 'active' : ''}`}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  {link.label}
+                  <span className="nav-link-underline"></span>
+                </Nav.Link>
+              )
+            )}
           </Nav>
         </BSNavbar.Collapse>
       </Container>

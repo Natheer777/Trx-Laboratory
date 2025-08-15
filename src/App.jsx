@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle";
 import DynamicRouteHandler from "../components/DynamicRouteHandler";
 import "./App.css";
-import { Home, Contact ,Blogs, Authenticity_sec ,Articles, Counterfeit } from "./pages";
+import { Home, Contact ,Blogs, Authenticity_sec ,Articles, Counterfeit, Injectables, Tablets } from "./pages";
 
 function App() {
   return (
@@ -16,6 +16,8 @@ function App() {
           <Route path="/Counterfeit" element={<Counterfeit />} />
           <Route path="/Blogs" element={<Blogs />} />
           <Route path="/Article" element={<Articles />} />
+          <Route path="/injectables" element={<Injectables />} />
+          <Route path="/tablets" element={<Tablets />} />
           <Route path="/:param" element={<DynamicRouteHandler />} />
         </Routes>
       </Router>

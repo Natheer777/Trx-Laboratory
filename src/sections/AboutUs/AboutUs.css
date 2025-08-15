@@ -10,16 +10,21 @@
     top: 36px;
 }
 .about h3{
+  font-family: 'NunitoBlack';
     color: var(--color-blue2);
 }
 .about h1{
+  font-family: 'NunitoBlack';
     font-weight: bold;
 }
 .about p{
+  font-family: 'NunitoSemiBold';
     line-height: 1.4;
     font-weight: 600;
 }
 .about button{
+  font-family: 'NunitoBlack';
+
     margin-top: 10px;
     border: none;
     color: white;
@@ -42,6 +47,8 @@
   }
   
   .marquee-text {
+    font-family: 'NunitoBlack';
+
     display: inline-block;
     padding-left: 100%;
     animation: marquee 25s linear infinite;

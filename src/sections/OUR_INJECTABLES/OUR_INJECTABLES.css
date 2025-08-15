@@ -1,13 +1,91 @@
-.borderOur h5{
+.borderOur h5 {
+    font-family: 'NunitoBlack';
     color: var(--color-blue2);
-    padding-bottom: 10px;
+    padding: 10px 15px;
     font-weight: bold;
     font-size: 15px;
-    margin-bottom: 0;
-    padding-left: 10px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    background: linear-gradient(135deg, #ecfbff 0%, #0446aa 100%)
+    margin: 0;
+    background: linear-gradient(135deg, #ecfbff 0%, #0446aa 100%);
+    border-radius: 8px 8px 0 0;
+}
+
+.ProductsInjec {
+    padding: 20px;
+    /* background-color: #f8f9fa; */
+}
+
+.All_Product {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 20px 0;
+}
+
+.All_Product_items {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 12px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.All_Product_items:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.product-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+.product-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 1px solid #eee;
+}
+
+.product-card h2 {
+    font-family: 'NunitoBlack';
+    color: #2c3e50;
+    font-size: 1.2rem;
+    margin: 15px 0 10px;
+    padding: 0 15px;
+    font-weight: 600;
+}
+
+.product-card p {
+    font-family: 'NunitoBlack';
+    color: #7f8c8d;
+    padding: 0 15px;
+    margin: 5px 0 15px;
+    font-size: 0.95rem;
+}
+
+.Link_Product {
+    font-family: 'NunitoBlack';
+    display: inline-block;
+    margin: 0 15px 15px;
+    padding: 8px 20px;
+    background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    text-align: center;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+}
+
+.Link_Product:hover {
+    background: linear-gradient(135deg, #2980b9 0%, #1a252f 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 .OUR_INJECTABLES ul{
     padding-left: 0;
@@ -16,6 +94,7 @@
     justify-content: space-between;
 }
 .OUR_INJECTABLES ul li:nth-child(1){
+    font-family: 'NunitoBlack';
     position: relative;
     top: -1px;
     padding-left: 10px;
@@ -28,8 +107,12 @@
     background: linear-gradient(158deg, #ecfbff 0%, #0446aa 100%)
 }
 .OUR_INJECTABLES ul li:nth-child(2){
+    font-family: 'NunitoBlack';
+    padding-right: 10px;
     color: var(--color-blue2);
     font-size: 15px;
     font-weight: bold;
     padding-top: 5px;
 }
+
+

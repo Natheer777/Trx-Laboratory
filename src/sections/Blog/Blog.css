@@ -2,6 +2,7 @@
     width: 100%;
 }
 .textBlog{
+    
     position: relative;
     background-color: white;
     padding: 10px;
@@ -9,12 +10,20 @@
     width: 90%;
     margin: auto;
 }
+.textBlog h3{
+    font-family: 'NunitoBlack';
+
+}
 .textBlog p{
+    font-family: 'NunitoSemiBold';
+
     font-weight: 600;
 }
 .blogSpan{
     font-size: 13px;
 }
 .blogSpan span{
+    font-family: 'NunitoSemiBold';
+
     color: var(--color-blue2);
 }

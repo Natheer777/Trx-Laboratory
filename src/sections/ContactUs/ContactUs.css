@@ -8,10 +8,15 @@
 
 /* Section Title */
 .section-title {
+    font-family: 'NunitoBlack';
+
   margin-bottom: 60px;
   text-align: center;
 }
+.section-title p{
+  font-family: 'NunitoSemiBold';
 
+}
 .section-title h2 {
   font-size: 2.8rem;
   font-weight: 800;

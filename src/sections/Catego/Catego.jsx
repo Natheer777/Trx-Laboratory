@@ -1,4 +1,5 @@
 import './Catego.css'
+import { Link } from 'react-router-dom'
 import categoImage1 from '../../assets/catego/Asset 1@8x.png'
 import categoImage2 from '../../assets/catego/Asset 2@8x.png'
 import categoImage3 from '../../assets/catego/Asset 3@8x.png'
@@ -12,8 +13,10 @@ export default function Catego() {
                     </li>
                     <li className='mt-4'><img src={categoImage2} alt="" />
                         </li>
+                        <Link to="/Article">
                     <li className='mt-4'><img src={categoImage3} alt="" />
                         </li>
+                        </Link>
                 </ul>
             </div>
         </div>

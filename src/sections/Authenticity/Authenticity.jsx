@@ -63,9 +63,9 @@ export default function Authenticity() {
       />
       <div className="axxio-laboratory">
         <div className="container mt-4">
-          <h1 className="section-title d-grid">Axxio Laboratory</h1>
+          <h1 className="section-title d-grid">Trx-Laboratory Laboratory</h1>
           <p className="section-description">
-          Axxio Laboratory is deeply committed to upholding the authenticity and integrity of its products through a comprehensive and robust multi-layered authentication system. Within the realm of injections, every Axxio product is furnished with a series of distinctive and secure identifiers that empower customers to confidently verify the legitimacy of their purchase. These unique identifiers serve as tangible assurances of quality and authenticity, underscoring Axxio's unwavering dedication to delivering genuine and reliable products to consumers.
+          Trx-Laboratory Laboratory is deeply committed to upholding the authenticity and integrity of its products through a comprehensive and robust multi-layered authentication system. Within the realm of injections, every Trx-Laboratory product is furnished with a series of distinctive and secure identifiers that empower customers to confidently verify the legitimacy of their purchase. These unique identifiers serve as tangible assurances of quality and authenticity, underscoring Axxio's unwavering dedication to delivering genuine and reliable products to consumers.
           </p>
        
 
@@ -78,11 +78,11 @@ export default function Authenticity() {
             <div className="feature-item">
               <h3>Flip Effect
               </h3>
-              <p>Axxio's name and the specific product name will be displayed in a holographic image on genuine injection products.</p>
+              <p>Trx-Laboratory's name and the specific product name will be displayed in a holographic image on genuine injection products.</p>
             </div>
             <div className="feature-item">
-              <h3>Axxio Logo</h3>
-              <p>Look for the Axxio logo clearly debossed on the plastic cartridge tray. This is another indicator of a genuine Axxio product.</p>
+              <h3>Trx-Laboratory Logo</h3>
+              <p>Look for the Trx-Laboratory logo clearly debossed on the plastic cartridge tray. This is another indicator of a genuine Trx-Laboratory product.</p>
             </div>
           </div>
           <div className="verification-section pt-4 pb-4">
@@ -118,7 +118,7 @@ export default function Authenticity() {
                     </svg>
                   </div>
                   <h3>Verification Successful!</h3>
-                  <p>This product is genuine and verified by Axxio Laboratory.</p>
+                  <p>This product is genuine and verified by Trx-Laboratory Laboratory.</p>
                 </div>
                 <div className="verified-product-details">
                   <Details_product productData={productDetails} suppressErrors={true} />

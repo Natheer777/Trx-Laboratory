@@ -36,12 +36,15 @@
 
 /* Footer About */
 .footer-about p {
+  font-family: 'NunitoSemiBold';
+
   color: black;
   margin-bottom: 25px;
 }
 
 /* Social Icons */
 .social-links {
+
   display: flex;
   gap: 15px;
   margin-top: 20px;
@@ -55,7 +58,7 @@
   height: 36px;
   border-radius: 50%;
   background: var(--color-blue2);
-  color:white;
+  color: white;
   font-size: 16px;
   transition: all 0.3s ease;
   text-decoration: none;
@@ -68,6 +71,8 @@
 
 /* Footer Headings */
 .footer h4 {
+  font-family: 'NunitoBlack';
+
   color: black;
   font-size: 18px;
   font-weight: 700;
@@ -94,6 +99,7 @@
 }
 
 .footer-links ul li {
+
   margin-bottom: 12px;
 }
 
@@ -103,6 +109,8 @@
   transition: all 0.3s ease;
   display: inline-block;
   position: relative;
+  font-family: 'NunitoSemiBold';
+
   padding-left: 15px;
 }
 
@@ -215,13 +223,13 @@
   .footer-top {
     padding: 60px 0 30px;
   }
-  
+
   .footer-about,
   .footer-links,
   .footer-contact {
     margin-bottom: 30px;
   }
-  
+
   .footer h4 {
     margin-bottom: 20px;
   }
@@ -233,16 +241,16 @@
     gap: 10px;
     align-items: center;
   }
-  
+
   .newsletter form {
     flex-direction: column;
     border-radius: 10px;
   }
-  
+
   .newsletter input {
     padding: 12px 20px;
   }
-  
+
   .newsletter button {
     padding: 10px;
     border-radius: 0 0 10px 10px;

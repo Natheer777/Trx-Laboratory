@@ -108,6 +108,7 @@
 }
 
 .section-title {
+  font-family: 'NunitoBlack';
   color: var(--primary-color);
   font-size: 2.2rem;
   font-weight: 800;
@@ -163,6 +164,8 @@
   color: var(--text-color);
   font-size: 1.05rem;
   line-height: 1.6;
+  font-family: 'NunitoSemiBold';
+
 }
 
 .verification-note {
