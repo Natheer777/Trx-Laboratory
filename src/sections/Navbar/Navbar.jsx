@@ -6,6 +6,7 @@ import { FiMenu, FiX, FiSearch } from 'react-icons/fi';
 import { FaTimes } from 'react-icons/fa';
 import './Navbar.css';
 import logo from '../../assets/logo/Asset 1@8x.png'
+
 const Navbar = () => {
   const [expanded, setExpanded] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -33,7 +34,8 @@ const Navbar = () => {
     const query = e.target.value.trim();
     setSearchQuery(query);
     
-    if (query.length < 2) {
+    // تم تغيير الشرط من < 2 إلى < 1 ليعمل البحث من أول حرف
+    if (query.length < 1) {
       setSearchResults([]);
       return;
     }
@@ -41,8 +43,6 @@ const Navbar = () => {
     try {
       setIsSearching(true);
       
-      // Simple form data format that works with most servers
-      const formBody = `word=${encodeURIComponent(query)}`;
       const response = await fetch('https://trx-laboratory.com/search.php', {
         method: 'POST',
         headers: {
@@ -68,8 +68,21 @@ const Navbar = () => {
           return;
         }
         
-        // If we get here, the request was successful
-        setSearchResults(Array.isArray(data) ? data : (data?.data || []));
+        // التأكد من أن البيانات هي array قبل تعيينها
+        let results = [];
+        if (Array.isArray(data)) {
+          results = data;
+        } else if (data && Array.isArray(data.data)) {
+          results = data.data;
+        } else if (data && data.results && Array.isArray(data.results)) {
+          results = data.results;
+        } else if (data) {
+          // إذا كانت البيانات object واحد، ضعه في array
+          results = [data];
+        }
+        
+        setSearchResults(results);
+        
       } catch (parseError) {
         console.error('Error parsing response:', parseError, 'Response:', responseText);
         setSearchResults([{ 
@@ -117,6 +130,7 @@ const Navbar = () => {
     { path: '/Authenticity', label: 'Authenticity' },
     { path: '/Counterfeit', label: 'Counterfeit' },
     { path: '/contact', label: 'Contact' },
+    { path: '/About', label: 'About Us' },
     { path: '/Article', label: 'Article' },
     { path: '/Blogs', label: 'Blogs' },
   ];
@@ -307,46 +321,62 @@ const Navbar = () => {
               <div className="search-results">
                 {isSearching ? (
                   <div className="search-loading">Searching...</div>
-                ) : searchResults.length > 0 ? (
+                ) : Array.isArray(searchResults) && searchResults.length > 0 ? (
                   <div className="results-grid">
-                    {searchResults.map((result, index) => (
-                      <div 
-                        key={index} 
-                        className="result-item"
-                        onClick={() => {
-                          if (result.qr_code) {
-                            window.open(result.qr_code, '_blank');
-                          }
-                        }}
-                        style={{
-                          cursor: result.qr_code ? 'pointer' : 'default',
-                          transition: 'all 0.3s ease',
-                        }}
-                      >
-                        {result.img_url && (
-                          <div className="result-image-container">
-                            <img 
-                              src={result.img_url} 
-                              alt={result.pname || 'Product'} 
-                              className="result-image"
-                              onError={(e) => {
-                                e.target.style.display = 'none';
-                              }}
-                            />
+                    {searchResults.map((result, index) => {
+                      // التحقق من أن result هو object وليس null أو undefined
+                      if (!result || typeof result !== 'object') {
+                        return null;
+                      }
+
+                      // إذا كان result يحتوي على error
+                      if (result.error) {
+                        return (
+                          <div key={index} className="error-message">
+                            {result.message || 'An error occurred'}
                           </div>
-                        )}
-                        <div className="result-content">
-                          <h4>{result.pname || 'Unnamed Product'}</h4>
-                          {result.qr_code && (
-                            <div className="qr-link">
-                              Read More<span className="external-link-icon">↗</span>
+                        );
+                      }
+
+                      return (
+                        <div 
+                          key={index} 
+                          className="result-item"
+                          onClick={() => {
+                            if (result.qr_code) {
+                              window.open(result.qr_code, '_blank');
+                            }
+                          }}
+                          style={{
+                            cursor: result.qr_code ? 'pointer' : 'default',
+                            transition: 'all 0.3s ease',
+                          }}
+                        >
+                          {result.img_url && (
+                            <div className="result-image-container">
+                              <img 
+                                src={result.img_url} 
+                                alt={result.pname || 'Product'} 
+                                className="result-image"
+                                onError={(e) => {
+                                  e.target.style.display = 'none';
+                                }}
+                              />
                             </div>
                           )}
+                          <div className="result-content">
+                            <h4>{result.pname || 'Product not found'}</h4>
+                            {result.qr_code && (
+                              <div className="qr-link">
+                                Read More<span className="external-link-icon">↗</span>
+                              </div>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
-                ) : searchQuery.length >= 2 && !isSearching ? (
+                ) : searchQuery.length >= 1 && !isSearching ? (
                   <div className="no-results">No results found</div>
                 ) : null}
               </div>
