@@ -1,7 +1,15 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 import './Authenticity.css';
-import image from '../../assets/Authenticity/14.jpg';
+import imagePc1 from '../../assets/auth/المستخدم/عرض كمبيوتر/1.png';
+import imagePc2 from '../../assets/auth/المستخدم/عرض كمبيوتر/2.png';
+import imageMobile1 from '../../assets/auth/المستخدم/عرض موبايل/Asset 6@8x.png';
+import imageMobile2 from '../../assets/auth/المستخدم/عرض موبايل/Asset 7@8x.png';
 import Details_product from '../Details_product/Details_product';
 
 export default function Authenticity() {
@@ -11,6 +19,18 @@ export default function Authenticity() {
   const [isLoading, setIsLoading] = useState(false);
   const [verificationStatus, setVerificationStatus] = useState(null);
   const [productDetails, setProductDetails] = useState(null);
+
+  // بيانات الصور للـ Swiper
+  const slidesData = [
+    {
+      pcImage: imagePc1,
+      mobileImage: imageMobile1,
+    },
+    {
+      pcImage: imagePc2,
+      mobileImage: imageMobile2,
+    }
+  ];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -54,30 +74,64 @@ export default function Authenticity() {
       setError('');
     }
   };
+
   return (
     <div className="authenticity-container">
-      <img 
-        src={image} 
-        alt="Authenticity" 
-        className="authenticity-image"
-      />
+      {/* Swiper للصور مع responsive images */}
+      <div className="authenticity-image-slider">
+        <Swiper
+          spaceBetween={0}
+          centeredSlides={true}
+          autoplay={{
+            delay: 4000,
+            disableOnInteraction: false,
+          }}
+          pagination={{
+            clickable: true,
+            dynamicBullets: true,
+          }}
+          navigation={true}
+          modules={[Autoplay, Pagination, Navigation]}
+          className="authenticity-swiper"
+        >
+          {slidesData.map((slide, index) => (
+            <SwiperSlide key={index} className="authenticity-slide">
+              <div className="slide-background">
+                <picture>
+                  <source 
+                    media="(max-width: 768px)" 
+                    srcSet={slide.mobileImage} 
+                  />
+                  <source 
+                    media="(min-width: 769px)" 
+                    srcSet={slide.pcImage} 
+                  />
+                  <img
+                    src={slide.pcImage}
+                    alt={`Authenticity slide ${index + 1}`}
+                    className="authenticity-image"
+                  />
+                </picture>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+
       <div className="axxio-laboratory">
         <div className="container mt-4">
           <h1 className="section-title d-grid">Trx-Laboratory Laboratory</h1>
           <p className="section-description">
-          Trx-Laboratory Laboratory is deeply committed to upholding the authenticity and integrity of its products through a comprehensive and robust multi-layered authentication system. Within the realm of injections, every Trx-Laboratory product is furnished with a series of distinctive and secure identifiers that empower customers to confidently verify the legitimacy of their purchase. These unique identifiers serve as tangible assurances of quality and authenticity, underscoring Axxio's unwavering dedication to delivering genuine and reliable products to consumers.
+            Trx-Laboratory Laboratory is deeply committed to upholding the authenticity and integrity of its products through a comprehensive and robust multi-layered authentication system. Within the realm of injections, every Trx-Laboratory product is furnished with a series of distinctive and secure identifiers that empower customers to confidently verify the legitimacy of their purchase. These unique identifiers serve as tangible assurances of quality and authenticity, underscoring Axxio's unwavering dedication to delivering genuine and reliable products to consumers.
           </p>
-       
 
           <div className="features-grid m-1">
             <div className="feature-item">
-              <h3>Scratch Code
-              </h3>
+              <h3>Scratch Code</h3>
               <p>Scratch off the designated area to reveal a unique code. Enter this code on the authentication website to verify your product's legitimacy.</p>
             </div>
             <div className="feature-item">
-              <h3>Flip Effect
-              </h3>
+              <h3>Flip Effect</h3>
               <p>Trx-Laboratory's name and the specific product name will be displayed in a holographic image on genuine injection products.</p>
             </div>
             <div className="feature-item">
@@ -85,6 +139,7 @@ export default function Authenticity() {
               <p>Look for the Trx-Laboratory logo clearly debossed on the plastic cartridge tray. This is another indicator of a genuine Trx-Laboratory product.</p>
             </div>
           </div>
+
           <div className="verification-section pt-4 pb-4">
             <h2>Product Verification</h2>
             <form onSubmit={handleSubmit} className="verification-form">

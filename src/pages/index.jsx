@@ -7,3 +7,4 @@ export { default as Blogs } from "./Blogs/Blogs";
 export { default as Articles } from "./Articels/Articels";
 export { default as Injectables } from "./injectables/Injectables";
 export { default as Tablets } from "./tablets/Tablets";
+export { default as About } from "./About/About";

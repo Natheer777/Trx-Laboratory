@@ -2,11 +2,12 @@ import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faFacebookF, 
-  faInstagram, 
+import {
+  faFacebookF,
+  faInstagram,
   faWhatsapp
 } from '@fortawesome/free-brands-svg-icons';
+import { faLocationDot, faPhone, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import logo from '../../assets/logo/Asset 1@8x.png'
 import './Footer.css';
 
@@ -27,11 +28,11 @@ const Footer = () => {
                 <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="social-icon">
                   <FontAwesomeIcon icon={faFacebookF} />
                 </a>
-             
+
                 <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="social-icon">
                   <FontAwesomeIcon icon={faInstagram} />
                 </a>
-              
+
                 <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer" className="social-icon">
                   <FontAwesomeIcon icon={faWhatsapp} />
                 </a>
@@ -42,19 +43,50 @@ const Footer = () => {
               <h4>Quick Links</h4>
               <ul>
                 <li><Link to="/">Home</Link></li>
-                <li><Link to="/Authenticity">Authenticity</Link></li>
+                <li><Link to="/About">About Us</Link></li>
+                <li><Link to="/contact">Contact</Link></li>
+                {/* <li><Link to="/Authenticity">Authenticity</Link></li> */}
                 <li><Link to="/injectables">Injectables</Link></li>
                 <li><Link to="/tablets">Tablets</Link></li>
-                <li><Link to="/Counterfeit">Counterfeit</Link></li>
-                <li><Link to="/contact">Contact</Link></li>
+                {/* <li><Link to="/Counterfeit">Counterfeit</Link></li> */}
                 <li><Link to="/Article">Article</Link></li>
-                <li><Link to="/Blogs">Blogs</Link></li>
+                {/* <li><Link to="/Blogs">Blogs</Link></li> */}
               </ul>
             </Col>
 
-           
+            <Col lg={2} md={6} className="footer-links">
+              <h4>Usefull Links</h4>
+              <ul>
+                <li><Link to="/Authenticity">Authenticity</Link></li>
+                <li><Link to="/Counterfeit">Counterfeit</Link></li>
+                <li><Link to="/Article">Article</Link></li>
+                {/* <li><Link to="/Blogs">Blogs</Link></li> */}
+              </ul>
+            </Col>
 
-        
+            <Col lg={4} md={6} className="footer-contact">
+              <h4>Contact</h4>
+              <ul className="list-unstyled">
+                <li>
+                  <FontAwesomeIcon icon={faLocationDot} style={{ marginRight: '8px' }} />
+                  9/2, 2nd Floor, Innovation Hub, Sheikh Zayed Rd, Dubai 00000, UAE
+                </li>
+                <li>
+                  <a href="tel:+97112345678" className="text-decoration-none">
+                    <FontAwesomeIcon icon={faPhone} style={{ marginRight: '8px' }} />
+                    +971 12 345 678
+                  </a>
+                </li>
+                <li>
+                  <a href="mailto:hello@example-labs.com" className="text-decoration-none">
+                    <FontAwesomeIcon icon={faEnvelope} style={{ marginRight: '8px' }} />
+                    hello@example-labs.com
+                  </a>
+                </li>
+              </ul>
+            </Col>
+
+
           </Row>
         </Container>
       </div>
@@ -65,7 +97,7 @@ const Footer = () => {
             <Col md={12}>
               <div className="copyright">
                 &copy; {new Date().getFullYear()} Trx-Laboratory. All Rights Reserved.
-             
+
               </div>
             </Col>
           </Row>

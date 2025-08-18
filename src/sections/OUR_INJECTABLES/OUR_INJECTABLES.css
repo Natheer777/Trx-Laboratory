@@ -5,8 +5,8 @@
     font-weight: bold;
     font-size: 15px;
     margin: 0;
-    background: linear-gradient(135deg, #ecfbff 0%, #0446aa 100%);
-    border-radius: 8px 8px 0 0;
+    background: linear-gradient(135deg, #cce0f4 25%, #1e9cd7 50% , #005aa0 75% , #003e93 100%);
+    /* border-radius: 8px 8px 0 0; */
 }
 
 .ProductsInjec {
@@ -104,7 +104,7 @@
     padding-bottom: 5px;border-bottom-right-radius: 20px;
     font-size: 20px;
     font-weight: bold;
-    background: linear-gradient(158deg, #ecfbff 0%, #0446aa 100%)
+    background: linear-gradient(158deg, #cce0f4 25%, #1e9cd7 50% , #005aa0 75% , #003e93 100%)
 }
 .OUR_INJECTABLES ul li:nth-child(2){
     font-family: 'NunitoBlack';

@@ -2,11 +2,11 @@
     width: 100%;
 }
 .textBlog{
-    
+    border-radius: 10px;
     position: relative;
     background-color: white;
     padding: 10px;
-    top: -73px;
+    top: -50px;
     width: 90%;
     margin: auto;
 }

@@ -1,7 +1,7 @@
 .catego{
     position: relative;
     border: none;
-    border-bottom-left-radius: 100px;
+    /* border-bottom-left-radius: 100px; */
     border-top: 25px var(--color-blue2) solid;
 }
 .catego h1{

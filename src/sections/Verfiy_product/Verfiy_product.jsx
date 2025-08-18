@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiInstagram, FiFacebook, FiCheck, FiAlertTriangle } from 'react-icons/fi';
-import scan from '../../assets/istockphoto-2183004296-612x612-removebg-preview.png';
+import scan from '../../assets/verify/a-realistic-close-up-of-a-hand-holding-a-modern-smartphone-the-phone-screen-showing-a-qr-code-being1.jpg';
 import "./Verfiy_product.css";
 import logo from '../../assets/logo/Asset 1@8x.png'
+import { Link } from 'react-router-dom';
 
 export default function VerifyProduct() {
   const [isHovered, setIsHovered] = useState(false);
@@ -20,9 +21,10 @@ export default function VerifyProduct() {
   }, []);
 
   const steps = [
-    "Scratch the QR code on the back of the package.",
-    "Use your smartphone camera to scan the QR code.",
-    "Follow the link that the QR code refers to.",
+    "Scratch the designated area to reveal your unique code",
+    "use your smartphone camera to scan the QR code",
+    "Follow the link provided by the QR code",
+    "Finally, enter the code you revealed into the verification field to confirm that your product is genuine",
   ];
 
   const containerVariants = {
@@ -129,33 +131,9 @@ export default function VerifyProduct() {
               transition={{ delay: 0.4 }}
             >
               <div className="brand-logo-container">
-                <img 
-                  src={logo}
-                  alt="HormoGenius Logo" 
-                  className="brand-logo"
-                />
-                <div className="social-links">
-                  <a 
-                    href="https://www.instagram.com/hormogenius" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="social-link"
-                    aria-label="Instagram"
-                  >
-                    <FiInstagram />
-                  </a>
-                  <a 
-                    href="#" 
-                    className="social-link"
-                    aria-label="Facebook"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      alert('Facebook link coming soon!');
-                    }}
-                  >
-                    <FiFacebook />
-                  </a>
-                </div>
+                <Link to="/authenticity">
+               <button className='submit-btn btn btn-primary'>Go To Authenticity</button>
+                </Link>
               </div>
             </motion.div>
           </div>
