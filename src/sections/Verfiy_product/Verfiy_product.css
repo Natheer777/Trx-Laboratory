@@ -34,7 +34,6 @@
 .verification-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2.5rem;
   align-items: center;
 }
 
@@ -104,7 +103,7 @@
 
 /* Instructions Section */
 .instructions-section {
-  padding: 1.5rem;
+  padding: 0 1.5rem;
 }
 
 .section-title {
@@ -113,7 +112,7 @@
   font-size: 2.2rem;
   font-weight: 800;
   margin-bottom: 2rem;
-  background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+  background: linear-gradient(90deg, #12bfea, #0d6efd);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -295,12 +294,9 @@
   
   .verification-grid {
     grid-template-columns: 1fr;
-    gap: 2rem;
   }
   
   .brand-section {
-    margin-top: 2rem;
-    padding-top: 2rem;
     border-top: 1px solid rgba(0, 0, 0, 0.05);
   }
   

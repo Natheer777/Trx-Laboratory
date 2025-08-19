@@ -26,7 +26,6 @@
   font-family: 'NunitoBlack', sans-serif;
   font-size: 2.5rem;
   color: #111827;
-  margin-bottom: 3rem;
   position: relative;
   display: inline-block;
 }
@@ -98,7 +97,6 @@
   margin-bottom: 1.5rem;
   position: relative;
   z-index: 2;
-  padding: 1rem 0;
 }
 
 .rating {
@@ -122,8 +120,8 @@
 }
 
 .user-img {
-  width: 60px;
-  height: 60px;
+  width: 60px !important;
+  height: 60px !important;
   border-radius: 50%;
   object-fit: cover;
   margin-right: 1rem;
@@ -203,7 +201,7 @@
   }
   
   .section-heading {
-    font-size: 1.75rem;
+    font-size: 2.2rem;
   }
   
   .user-img {

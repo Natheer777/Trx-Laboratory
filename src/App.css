@@ -7,6 +7,39 @@
     --accent-color: #4a90e2;
   }
 
+
+
+  .left {
+    opacity: 0;
+    filter: blur(4px);
+    transform: translateX(-10vw);
+    transition: all 1.8s;
+  }
+  .hidden {
+    opacity: 0;
+    filter: blur(4px);
+    transition: all 1.8s;
+  }
+  .right {
+    opacity: 0;
+    filter: blur(4px);
+    transform: translateX(10vw);
+    transition: all 1.8s;
+  }
+  .top {
+    opacity: 0;
+    filter: blur(4px);
+    transform: translateY(30vw);
+    transition: all 1.8s;
+  }
+  .show {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateX(0);
+  } 
+  
+
+
 @font-face {
     font-family: 'LittleBubble';
     src: url('./assets/Fonts/static/Nunito-ExtraBold.ttf') format('opentype');

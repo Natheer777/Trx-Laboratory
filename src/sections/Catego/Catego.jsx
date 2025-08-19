@@ -9,12 +9,16 @@ export default function Catego() {
             <h1>CATEGORIES</h1>
             <div className="categoImage">
                 <ul>
-                    <li className='mt-4'><img src={categoImage1} alt="" />
+                    <Link to="/injectables">
+                    <li className='mt-4 hidden'><img src={categoImage1} alt="" />
                     </li>
-                    <li className='mt-4'><img src={categoImage2} alt="" />
+                    </Link>
+                    <Link to="/tablets">
+                    <li className='mt-4 hidden'><img src={categoImage2} alt="" />
                         </li>
+                    </Link>
                         <Link to="/Article">
-                    <li className='mt-4'><img src={categoImage3} alt="" />
+                    <li className='mt-4 hidden'><img src={categoImage3} alt="" />
                         </li>
                         </Link>
                 </ul>

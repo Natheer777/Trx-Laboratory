@@ -1,7 +1,7 @@
 import React from 'react';
 import './Articel.css';
 import articleImage from '../../assets/Arrical/6.png';
-
+import Blogs from '../Blog/Blog'
 export default function Article() {
   return (
     <section className="article-section">
@@ -9,7 +9,8 @@ export default function Article() {
         <h1 className="article-title">Understanding Steroids: A Comprehensive Overview</h1>
         
         <div className="article-image">
-          <img src={articleImage} alt="Steroids medical illustration" />
+          <Blogs />
+          {/* <img src={articleImage} alt="Steroids medical illustration" /> */}
         </div>
         
         <div className="article-content">

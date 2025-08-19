@@ -22,7 +22,7 @@ export default function Comments() {
             delay: 3500,
             disableOnInteraction: false,
           }}
-          pagination={{ 
+          pagination={{
             clickable: true,
             bulletClass: 'swiper-pagination-bullet custom-bullet',
             bulletActiveClass: 'custom-bullet-active'
@@ -42,23 +42,23 @@ export default function Comments() {
           {[
             {
               id: 1,
-              img: "https://i.pravatar.cc/100?img=12",
+              img: "https://randomuser.me/api/portraits/men/12.jpg",
               comment: "TRX-LABORATORYv supplements completely transformed my energy levels! Incredible taste and noticeable results.",
-              name: "Alex Johnson",
+              name: "James Carter",
               role: "Fitness Enthusiast"
             },
             {
               id: 2,
-              img: "https://i.pravatar.cc/100?img=7",
+              img: "https://randomuser.me/api/portraits/men/22.jpg",
               comment: "I've tried many brands, but TRX-LABORATORYv stands out in quality and performance. Highly recommend!",
-              name: "Sarah Williams",
+              name: "William Thompson",
               role: "Professional Athlete"
             },
             {
               id: 3,
-              img: "https://i.pravatar.cc/100?img=3",
+              img: "https://randomuser.me/api/portraits/men/33.jpg",
               comment: "From packaging to performance, TRX-LABORATORYv delivers excellence. My new go-to supplement brand!",
-              name: "Michael Chen",
+              name: "Daniel Roberts",
               role: "Health Coach"
             }
           ].map((testimonial) => (
@@ -77,10 +77,10 @@ export default function Comments() {
                     ))}
                   </div>
                   <div className="user-info">
-                    <img 
-                      src={testimonial.img} 
-                      alt={testimonial.name} 
-                      className="user-img" 
+                    <img
+                      src={testimonial.img}
+                      alt={testimonial.name}
+                      className="user-img"
                     />
                     <div className="user-details">
                       <h4 className="user-name">{testimonial.name}</h4>

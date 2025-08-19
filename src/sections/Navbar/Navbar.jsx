@@ -132,7 +132,7 @@ const Navbar = () => {
     { path: '/contact', label: 'Contact' },
     { path: '/About', label: 'About Us' },
     { path: '/Article', label: 'Article' },
-    { path: '/Blogs', label: 'Blogs' },
+    // { path: '/Blogs', label: 'Blogs' },
   ];
 
   const containerVariants = {

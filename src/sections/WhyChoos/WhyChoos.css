@@ -36,7 +36,7 @@
 }
 
 .feature-card {
-  background: #fff;
+  background: #66e0ff;
   border-radius: 10px;
   transition: all 0.3s ease;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
@@ -89,8 +89,8 @@
 
 .feature-description {
   font-family: 'NunitoSemiBold';
-  color: #7f8c8d;
-  font-size: 0.95rem;
+  color: white;
+  font-size: 1rem;
   line-height: 1.6;
 }
 

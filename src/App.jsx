@@ -4,8 +4,33 @@ import "bootstrap/dist/js/bootstrap.bundle";
 import DynamicRouteHandler from "../components/DynamicRouteHandler";
 import "./App.css";
 import { Home, Contact ,Blogs,  About, Authenticity_sec ,Articles, Counterfeit, Injectables, Tablets } from "./pages";
-
+import { useEffect } from "react";
 function App() {
+  
+  useEffect(() => {
+    setInterval(() => {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+          } else {
+            entry.target.classList.remove("show");
+                  observer.unobserve(entry.target); // نوقف المراقبة بعد الظهور
+
+          }
+        });
+      });
+
+      const Elements = document.querySelectorAll(
+        ".left ,.right ,.top ,.hidden"
+      );
+      Elements.forEach((el) => observer.observe(el));
+
+      return () => {
+        Elements.forEach((el) => observer.unobserve(el));
+      };
+    });
+  }, []);
   return (
     <>
       <Router>
