@@ -3,10 +3,10 @@ import { Container, Row, Col } from 'react-bootstrap';
 import './WhyChoos.css';
 
 // Import images
-import icon1 from '../../assets/Why_Choos/24-7.png';
-import icon2 from '../../assets/Why_Choos/fastwork.png';
+import icon1 from '../../assets/Why_Choos/24-hours (1).png';
+import icon2 from '../../assets/Why_Choos/rapid.png';
 import icon3 from '../../assets/Why_Choos/microscope.png';
-import icon4 from '../../assets/Why_Choos/team.png';
+import icon4 from '../../assets/Why_Choos/teamwork.png';
 
 const features = [
   {

@@ -35,55 +35,56 @@ export default function OUR_INJECTABLES() {
         </ul>
         </div>
         <div className="ProductsInjec container">
-        <div className="All_Product">
-        {data.map((item) => (
-          <div key={item.id} className="All_Product_items hidden">
-            <div className="product-card p-4 shadow-sm">
-              <div className="product-image-container">
-                <Swiper
-                  spaceBetween={30}
-                  centeredSlides={true}
-                  autoplay={{
-                    delay: 2500,
-                    disableOnInteraction: false,
-                  }}
-                  pagination={{
-                    clickable: true,
-                  }}
-                  navigation={false}
-                  modules={[Autoplay, Pagination, Navigation]}
-                  className="product-swiper"
-                >
-                  {[item.img_url, item.img_url2, item.img_url3].map((img, index) => (
-                    img && (
-                      <SwiperSlide key={index}>
+          <div className="All_Product">
+            <Swiper
+              spaceBetween={30}
+              slidesPerView={1}
+              centeredSlides={true}
+              pagination={{
+                clickable: true,
+              }}
+              navigation={true}
+              modules={[Pagination, Navigation]}
+              breakpoints={{
+                640: {
+                  slidesPerView: 2,
+                },
+                1024: {
+                  slidesPerView: 3,
+                },
+              }}
+              className="products-swiper"
+            >
+              {data.map((item) => (
+                <SwiperSlide key={item.id}>
+                  <div className="All_Product_items">
+                    <div className="product-card p-4 shadow-sm">
+                      <div className="product-image-container">
                         <img 
                           loading="lazy" 
-                          src={img} 
-                          alt={`${item.pname} ${index + 1}`} 
+                          src={item.img_url} 
+                          alt={item.pname} 
                           className="product-image"
                         />
-                      </SwiperSlide>
-                    )
-                  ))}
-                </Swiper>
-              </div>
-              <h2 className="mt-3">{item.pname}</h2>
-              <p className="mb-4">
-                <strong>Price:</strong> {item.price}$
-              </p>
-              <a
-                className="Link_Product"
-                href={`${item.qr_code}?from=internal`}
-                target="_blank"
-              >
-                read more
-              </a>
-
-            </div>
+                      </div>
+                      <h2 className="mt-3">{item.pname}</h2>
+                      <p className="mb-4">
+                        <strong>Price:</strong> {item.price}$
+                      </p>
+                      <a
+                        className="Link_Product"
+                        href={`${item.qr_code}?from=internal`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        read more
+                      </a>
+                    </div>
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
           </div>
-        ))}
-      </div>
         </div>
     </div>
     </>
