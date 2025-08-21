@@ -6,7 +6,7 @@
 }
 .catego h1{
     font-family: 'NunitoBlack';
-    position: absolute;
+    position: sticky;
     top: -15px;
     color: white;
     font-weight: bold;

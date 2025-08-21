@@ -10,12 +10,11 @@ import imageMobile2 from '../../assets/auth/المستخدم/عرض موبايل
 import './Counterfeits.css';
 
 export default function Counterfeits() {
-    // بيانات الصور للـ Swiper - نفس الصور المستخدمة في Authenticity
     const slidesData = [
-        {
-            pcImage: imagePc1,
-            mobileImage: imageMobile1,
-        },
+        // {
+        //     pcImage: imagePc1,
+        //     mobileImage: imageMobile1,
+        // },
         {
             pcImage: imagePc2,
             mobileImage: imageMobile2,

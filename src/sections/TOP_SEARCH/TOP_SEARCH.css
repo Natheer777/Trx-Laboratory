@@ -1,0 +1,98 @@
+.topSearch .top-search-container {
+  padding: 2rem 0;
+  text-align: center;
+}
+
+.topSearch .top-search-container h1,
+.topSearch h1 {
+  position: relative;
+  display: inline-block;
+  color: #1a365d;
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.topSearch .videos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 0 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.topSearch .video-container {
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+}
+
+.topSearch .video-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.topSearch .video-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.topSearch .product-video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border: none;
+  outline: none;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+}
+
+.topSearch .product-name-overlay {
+  position: absolute;
+  bottom: -15px;
+  left: 0;
+  right: 0;
+  padding: 1rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  color: white;
+  text-align: center;
+  z-index: 2;
+}
+
+.topSearch .product-name {
+  font-family: 'NunitoBlack';
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+  color: #fff;
+  padding: 0.5rem 0;
+  position: relative;
+  z-index: 3;
+}
+
+.topSearch .loading {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.1rem;
+  color: #666;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .topSearch .videos-grid {
+    grid-template-columns: 1fr;
+    max-width: 90%;
+  }
+  
+  .topSearch .top-search-container h1 {
+    font-size: 1.5rem;
+  }
+}

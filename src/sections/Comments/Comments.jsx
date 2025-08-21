@@ -45,21 +45,18 @@ export default function Comments() {
               img: "https://randomuser.me/api/portraits/men/12.jpg",
               comment: "TRX-LABORATORYv supplements completely transformed my energy levels! Incredible taste and noticeable results.",
               name: "James Carter",
-              role: "Fitness Enthusiast"
             },
             {
               id: 2,
               img: "https://randomuser.me/api/portraits/men/22.jpg",
               comment: "I've tried many brands, but TRX-LABORATORYv stands out in quality and performance. Highly recommend!",
               name: "William Thompson",
-              role: "Professional Athlete"
             },
             {
               id: 3,
               img: "https://randomuser.me/api/portraits/men/33.jpg",
               comment: "From packaging to performance, TRX-LABORATORYv delivers excellence. My new go-to supplement brand!",
               name: "Daniel Roberts",
-              role: "Health Coach"
             }
           ].map((testimonial) => (
             <SwiperSlide key={testimonial.id}>
@@ -84,7 +81,6 @@ export default function Comments() {
                     />
                     <div className="user-details">
                       <h4 className="user-name">{testimonial.name}</h4>
-                      <p className="user-role">{testimonial.role}</p>
                     </div>
                   </div>
                 </div>

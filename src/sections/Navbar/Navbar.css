@@ -437,57 +437,55 @@
   height: 20px;
   position: relative;
   cursor: pointer;
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .hamburger span {
   display: block;
-  position: absolute;
   height: 3px;
   width: 100%;
-  background: #333;
+  background: #1a365d; /* Dark blue color */
   border-radius: 3px;
-  opacity: 1;
-  left: 0;
-  transform: rotate(0deg);
-  transition: .25s ease-in-out;
+  transition: all 0.3s ease;
 }
 
+/* Three lines with spacing */
 .hamburger span:nth-child(1) {
-  top: 0;
+  width: 100%;
 }
 
-.hamburger span:nth-child(2),
+.hamburger span:nth-child(2) {
+  width: 80%;
+  margin-left: auto;
+}
+
 .hamburger span:nth-child(3) {
-  top: 10px;
+  width: 100%;
 }
 
-.hamburger span:nth-child(4) {
-  top: 20px;
-}
-
+/* Active state - transform to X */
 .hamburger.active span:nth-child(1) {
-  top: 10px;
-  width: 0%;
-  left: 50%;
+  transform: translateY(8px) rotate(45deg);
+  width: 100%;
 }
 
 .hamburger.active span:nth-child(2) {
-  transform: rotate(45deg);
+  opacity: 0;
+  transform: translateX(-20px);
 }
 
 .hamburger.active span:nth-child(3) {
-  transform: rotate(-45deg);
-}
-
-.hamburger.active span:nth-child(4) {
-  top: 10px;
-  width: 0%;
-  left: 50%;
+  transform: translateY(-8px) rotate(-45deg);
+  width: 100%;
 }
 
 /* Mobile Menu */
 @media (max-width: 991.98px) {
+  .searchD{
+    flex-direction: row-reverse;
+  }
   .navbar-collapse {
     background: #fff;
     padding: 1rem;

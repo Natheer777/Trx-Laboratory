@@ -26,10 +26,10 @@ export default function Authenticity() {
       pcImage: imagePc1,
       mobileImage: imageMobile1,
     },
-    {
-      pcImage: imagePc2,
-      mobileImage: imageMobile2,
-    }
+    // {
+    //   pcImage: imagePc2,
+    //   mobileImage: imageMobile2,
+    // }
   ];
 
   const handleSubmit = async (e) => {

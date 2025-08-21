@@ -1,6 +1,12 @@
 import './OUR_TABLETS.css'
-import { useState , useEffect } from 'react';
-import axios from 'axios'
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+import ShinyText from '../../components/ShinyText/ShinyText';
 export default function OUR_TABLETS() {
    const [data, setData] = useState([]);
   
@@ -16,7 +22,15 @@ export default function OUR_TABLETS() {
         <div className="borderOur">
         <h5>CHECK OUT!</h5>
         <ul>
-            <li>OUR TABLETS</li>
+          <li>
+
+          <ShinyText 
+          text="OUR TABLETS"
+          speed={3}
+          className='shiny-heading'
+          />
+          </li>
+           
             <li>TABLET 100</li>
         </ul>
         </div>
@@ -24,9 +38,37 @@ export default function OUR_TABLETS() {
         <div className="All_Product">
         {data.map((item) => (
           <div key={item.id} className="All_Product_items hidden">
-            <div className="product-card p-4 shadow-sm ">
-              <img loading="lazy" src={item.img_url} alt="" />
-              <h2>{item.pname}</h2>
+            <div className="product-card p-4 shadow-sm">
+              <div className="product-image-container">
+                <Swiper
+                  spaceBetween={30}
+                  centeredSlides={true}
+                  autoplay={{
+                    delay: 2500,
+                    disableOnInteraction: false,
+                  }}
+                  pagination={{
+                    clickable: true,
+                  }}
+                  navigation={false}
+                  modules={[Autoplay, Pagination, Navigation]}
+                  className="product-swiper"
+                >
+                  {[item.img_url, item.img_url2, item.img_url3].map((img, index) => (
+                    img && (
+                      <SwiperSlide key={index}>
+                        <img 
+                          loading="lazy" 
+                          src={img} 
+                          alt={`${item.pname} ${index + 1}`} 
+                          className="product-image"
+                        />
+                      </SwiperSlide>
+                    )
+                  ))}
+                </Swiper>
+              </div>
+              <h2 className="mt-3">{item.pname}</h2>
               <p className="mb-4">
                 <strong>Price:</strong> {item.price}$
               </p>

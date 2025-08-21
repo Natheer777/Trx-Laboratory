@@ -117,6 +117,9 @@
   margin-top: auto;
   padding-top: 1rem;
   border-top: 1px solid #e5e7eb;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
 }
 
 .user-img {

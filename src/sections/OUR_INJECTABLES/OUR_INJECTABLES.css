@@ -69,23 +69,55 @@
 .Link_Product {
     font-family: 'NunitoBlack';
     display: inline-block;
-    margin: 0 15px 15px;
-    padding: 8px 20px;
-    background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
-    color: white;
+    padding: 10px 25px;
+    color: white !important;
     text-decoration: none;
-    border-radius: 25px;
-    text-align: center;
+    border-radius: 50px;
+    font-weight: 600;
     transition: all 0.3s ease;
-    font-weight: 500;
-    text-transform: uppercase;
-    font-size: 0.8rem;
-    letter-spacing: 0.5px;
+    text-align: center;
+    margin-top: auto;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: linear-gradient(
+        135deg, 
+        rgba(0, 90, 160, 0.6) 0%, 
+        rgba(30, 156, 215, 0.6) 50%, 
+        rgba(0, 58, 147, 0.6) 100%
+    );
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+
+.Link_Product::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        135deg, 
+        rgba(0, 90, 160, 0.8) 0%, 
+        rgba(30, 156, 215, 0.8) 50%, 
+        rgba(0, 58, 147, 0.8) 100%
+    );
+    z-index: -1;
+    transition: all 0.3s ease;
+    opacity: 1;
+}
+
+.Link_Product:hover::before {
+    opacity: 0.9;
+    transform: scale(1.05);
 }
 
 .Link_Product:hover {
-    background: linear-gradient(135deg, #2980b9 0%, #1a252f 100%);
     transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 90, 160, 0.3);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 .OUR_INJECTABLES ul{
@@ -115,5 +147,15 @@
     font-weight: bold;
     padding-top: 5px;
 }
+/* .OUR_INJECTABLES ,.ProductsInjec .swiper-pagination .swiper-pagination-clickable .swiper-pagination-bullets .swiper-pagination-horizontalswiper-pagination .swiper-pagination-clickable .swiper-pagination-bullets .swiper-pagination-horizontal{
+    display: block;
+    position: relative;
+    bottom: 20px;
+ 
+}
+.OUR_INJECTABLES .swiper-pagination-bullet {
+width: 10px !important;
+height: 10px !important;
+} */
 
 

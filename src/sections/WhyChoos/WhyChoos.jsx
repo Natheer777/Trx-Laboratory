@@ -36,11 +36,11 @@ export default function WhyChoos() {
     <section className="why-choose-us py-5">
       <Container>
         <div className="text-center mb-5">
-          <h2 className="section-title">Why Choose Us</h2>
-          <p className="section-subtitle">We provide the best service with our professional team</p>
+          <h2 className="section-title top">Why Choose Us</h2>
+          <p className="section-subtitle hidden">We provide the best service with our professional team</p>
         </div>
         
-        <Row className="g-4">
+        <Row className="g-4 hidden">
           {features.map((feature, index) => (
             <Col key={index} xs={12} sm={6} md={3} className="feature-col">
               <div className="feature-card text-center p-4 h-100">

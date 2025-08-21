@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar as BSNavbar, Nav, Container, NavDropdown, Dropdown } from 'react-bootstrap';
 import { Link, useLocation } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FiMenu, FiX, FiSearch } from 'react-icons/fi';
+import { motion } from 'framer-motion';
+import { FiSearch } from 'react-icons/fi';
 import { FaTimes } from 'react-icons/fa';
 import './Navbar.css';
 import logo from '../../assets/logo/Asset 1@8x.png'
@@ -187,29 +187,11 @@ const Navbar = () => {
           className="navbar-toggler"
           aria-label="Toggle navigation"
           >
-          <AnimatePresence mode="wait">
-            {expanded ? (
-              <motion.span
-                key="close"
-                initial={{ rotate: 90, opacity: 0 }}
-                animate={{ rotate: 0, opacity: 1 }}
-                exit={{ rotate: -90, opacity: 0 }}
-                transition={{ duration: 0.2 }}
-              >
-                <FiX className="nav-toggle-icon" />
-              </motion.span>
-            ) : (
-              <motion.span
-                key="menu"
-                initial={{ rotate: -90, opacity: 0 }}
-                animate={{ rotate: 0, opacity: 1 }}
-                exit={{ rotate: 90, opacity: 0 }}
-                transition={{ duration: 0.2 }}
-              >
-                <FiMenu className="nav-toggle-icon" />
-              </motion.span>
-            )}
-          </AnimatePresence>
+          <div className={`hamburger ${expanded ? 'active' : ''}`}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
         </BSNavbar.Toggle>
 
         <div className="search-icon-container">
@@ -289,15 +271,13 @@ const Navbar = () => {
       </Container>
 
       {/* Search Overlay */}
-      <AnimatePresence>
-        {searchOpen && (
-          <motion.div 
-            className="search-overlay"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
+      {searchOpen && (
+        <motion.div 
+          className="search-overlay"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+        >
             <div className="search-container">
               <div className="search-header">
                 <h3>Search Products</h3>
@@ -381,9 +361,8 @@ const Navbar = () => {
                 ) : null}
               </div>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+        </motion.div>
+      )}
     </BSNavbar>
   );
 };

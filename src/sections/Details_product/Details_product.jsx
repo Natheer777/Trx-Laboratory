@@ -304,6 +304,8 @@ export default function Details_product({
     sec_name,
     vid_url,
     img_url,
+    img_url2,
+    img_url3,
     science_name
   } = productData;
 
@@ -352,16 +354,33 @@ export default function Details_product({
           <div className="container">
             <div className="row">
               <div className="Swiper left col-xl-6 col-lg-6 ">
-                {img_url ? (
-                  <img
-                    src={img_url}
-                    alt="product"
-                    className="img-fluid "
-                    style={{ borderRadius: "20px", maxWidth: "100%" }}
-                  />
-                ) : (
-                  <p></p>
-                )}
+                <Swiper
+                  spaceBetween={30}
+                  centeredSlides={true}
+                  autoplay={{
+                    delay: 2500,
+                    disableOnInteraction: false,
+                  }}
+                  pagination={{
+                    clickable: true,
+                  }}
+                  navigation={true}
+                  modules={[Autoplay, Pagination, Navigation]}
+                  className="mySwiper"
+                >
+                  {[img_url, img_url2, img_url3].map((img, index) => (
+                    img && (
+                      <SwiperSlide key={index}>
+                        <img
+                          src={img}
+                          alt={`product ${index + 1}`}
+                          className="img-fluid"
+                          style={{ borderRadius: "20px", maxWidth: "100%", height: "auto" }}
+                        />
+                      </SwiperSlide>
+                    )
+                  ))}
+                </Swiper>
               </div>
 
               <div className="col-xl-6 col-lg-6 ">
