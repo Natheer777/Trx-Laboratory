@@ -59,14 +59,31 @@ export default function OUR_INJECTABLES() {
                 <SwiperSlide key={item.id}>
                   <div className="All_Product_items">
                     <div className="product-card p-4 shadow-sm">
-                      <div className="product-image-container">
-                        <img 
-                          loading="lazy" 
-                          src={item.img_url} 
-                          alt={item.pname} 
-                          className="product-image"
-                        />
-                      </div>
+                      <Swiper
+                        spaceBetween={10}
+                        slidesPerView={1}
+                        autoplay={{
+                          delay: 2500,
+                          disableOnInteraction: false,
+                        }}
+                        modules={[Autoplay]}
+                        className="product-images-swiper"
+                      >
+                        {[item.img_url, item.img_url2, item.img_url3].map((img, idx) => (
+                          img && (
+                            <SwiperSlide key={`${item.id}-img-${idx}`}>
+                              <div className="product-image-container">
+                                <img 
+                                  loading="lazy" 
+                                  src={img} 
+                                  alt={`${item.pname} ${idx + 1}`} 
+                                  className="product-image"
+                                />
+                              </div>
+                            </SwiperSlide>
+                          )
+                        ))}
+                      </Swiper>
                       <h2 className="mt-3">{item.pname}</h2>
                       <p className="mb-4">
                         <strong>Price:</strong> {item.price}$
