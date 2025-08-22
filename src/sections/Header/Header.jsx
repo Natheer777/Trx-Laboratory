@@ -11,7 +11,7 @@ import slide3Pc from '../../assets/header/headerPc/the-image-depicts-a-scene-wit
 import slide1Mobile from '../../assets/header/headerMobile/Asset 2@8x.png'
 import slide2Mobile from '../../assets/header/headerMobile/Asset 3@8x.png'
 import slide3Mobile from '../../assets/header/headerMobile/Asset 4@8x.png'
-import homeVideo from '../../assets/videoHome/home/0820(5).mp4'
+import homeVideo from '/videoHome/home/0820(5).mp4'
 
 // Custom hook لتحديد حجم الشاشة
 const useWindowSize = () => {
