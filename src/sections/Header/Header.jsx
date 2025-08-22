@@ -11,6 +11,7 @@ import slide3Pc from '../../assets/header/headerPc/the-image-depicts-a-scene-wit
 import slide1Mobile from '../../assets/header/headerMobile/Asset 2@8x.png'
 import slide2Mobile from '../../assets/header/headerMobile/Asset 3@8x.png'
 import slide3Mobile from '../../assets/header/headerMobile/Asset 4@8x.png'
+import homeVideo from '../../assets/videoHome/home/0820(5).mp4'
 
 // Custom hook لتحديد حجم الشاشة
 const useWindowSize = () => {
@@ -79,6 +80,26 @@ export default function Header() {
           </SwiperSlide>
         ))}
       </Swiper>
+          <div className="video-container mt-5 mb-5">
+                  <video 
+                    autoPlay 
+                    loop 
+                    muted 
+                    playsInline 
+                    className="auth-video w-100"
+                    style={{
+                      maxWidth: '800px',
+                      margin: '0 auto',
+                      display: 'block',
+                      borderRadius: '10px',
+                      boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+                    }}
+                  >
+                    <source src={homeVideo} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+      
     </div>
   )
 }
