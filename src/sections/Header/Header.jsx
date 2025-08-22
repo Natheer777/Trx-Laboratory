@@ -80,7 +80,7 @@ export default function Header() {
           </SwiperSlide>
         ))}
       </Swiper>
-          <div className="video-container mt-5 mb-5">
+          <div className="video-container ps-2 pe-2 mt-4">
                   <video 
                     autoPlay 
                     loop 

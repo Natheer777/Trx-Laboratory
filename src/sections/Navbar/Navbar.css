@@ -136,7 +136,7 @@
 }
 
 .search-container {
-  background: white;
+  background: #cce0f4;
   width: 90%;
   height: fit-content;
   border-radius: 8px;
@@ -181,16 +181,25 @@
   position: relative;
   padding: 20px;
 }
-
 .search-input {
   width: 100%;
   padding: 15px 20px 15px 50px;
   font-size: 1.1rem;
   border: 2px solid #eee;
-  border-radius: 4px;
+  border-radius: 8px;
   outline: none;
   transition: border-color 0.3s;
+
+  background: rgba(255, 255, 255, 0.3); /* شفافية للخلفية */
+  backdrop-filter: blur(10px); /* يعمل البلور */
+  -webkit-backdrop-filter: blur(5px); /* لدعم Safari */
+  color: #333; /* النص يضل واضح */
 }
+
+.search-input::placeholder {
+  color: #555; /* يبين النص placeholder */
+}
+
 
 .search-input:focus {
   border-color: var(--color-blue2);
