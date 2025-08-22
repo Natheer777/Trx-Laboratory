@@ -90,7 +90,7 @@
     font-family: 'NunitoBlack';
     display: inline-block;
     padding: 10px 25px;
-    color: white !important;
+    color:#107cbd !important;
     text-decoration: none;
     border-radius: 50px;
     font-weight: 600;
@@ -99,31 +99,24 @@
     margin-top: auto;
     position: relative;
     overflow: hidden;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background: linear-gradient(135deg,
-            rgba(0, 90, 160, 0.6) 0%,
-            rgba(30, 156, 215, 0.6) 50%,
-            rgba(0, 58, 147, 0.6) 100%);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     z-index: 1;
+
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1); /* شفاف */
+    backdrop-filter: blur(10px);          /* بلور للخلفية */
+    -webkit-backdrop-filter: blur(10px);  /* دعم Safari */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .Link_Product::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg,
-            rgba(0, 90, 160, 0.8) 0%,
-            rgba(30, 156, 215, 0.8) 50%,
-            rgba(0, 58, 147, 0.8) 100%);
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0, 91, 160, 0.2) 0%, rgba(30, 156, 215, 0.3) 50%, rgba(0, 58, 147, 0.3) 100%);
     z-index: -1;
     transition: all 0.3s ease;
     opacity: 1;
+    filter: blur(5px);
 }
 
 .Link_Product:hover::before {
@@ -134,7 +127,6 @@
 .Link_Product:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(0, 90, 160, 0.3);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .OUR_INJECTABLES ul {

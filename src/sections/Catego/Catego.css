@@ -20,18 +20,29 @@
     left: 50%;
     transform: translate(-50%, 0);
 }
-.catego ul{
+.catego ul {
     padding-left: 0;
     list-style: none;
     margin-top: 60px;
-}
-.catego img{
-    margin: auto;
-    width: calc(60% - 0%);
-}
-.catego ul li{
     display: flex;
-}
+    flex-wrap: wrap;
+    justify-content: center; /* يخلي الصور بالنص */
+    gap: 20px; /* مسافة بين الصور */
+  }
+  
+  .catego ul li {
+    flex: 1 1 200px; /* أقل عرض 200px ويكبر حسب الشاشة */
+    display: flex;
+    justify-content: center;
+  }
+  
+  .catego img {
+    width: 100%;
+    max-width: 350px; /* أكبر حجم ممكن للصورة */
+    height: auto;     /* يحافظ على النسبة */
+    object-fit: contain; /* يمنع التمدد */
+  }
+  
 .catego ul li:nth-child(3){
     cursor: pointer;
 }

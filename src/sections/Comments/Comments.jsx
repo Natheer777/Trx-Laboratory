@@ -43,21 +43,22 @@ export default function Comments() {
             {
               id: 1,
               img: "https://randomuser.me/api/portraits/men/12.jpg",
-              comment: "TRX-LABORATORYv supplements completely transformed my energy levels! Incredible taste and noticeable results.",
+              comment: "TRX-LABORATORY injections gave me a real boost in strength and recovery. Felt the difference within weeks!",
               name: "James Carter",
             },
             {
               id: 2,
               img: "https://randomuser.me/api/portraits/men/22.jpg",
-              comment: "I've tried many brands, but TRX-LABORATORYv stands out in quality and performance. Highly recommend!",
+              comment: "I’ve used different oral cycles before, but TRX-LABORATORY tablets are by far the most effective with clean results.",
               name: "William Thompson",
             },
             {
               id: 3,
               img: "https://randomuser.me/api/portraits/men/33.jpg",
-              comment: "From packaging to performance, TRX-LABORATORYv delivers excellence. My new go-to supplement brand!",
+              comment: "hormone from TRX-LABORATORY worked perfectly for my bulking phase. Great quality and noticeable gains!",
               name: "Daniel Roberts",
             }
+            
           ].map((testimonial) => (
             <SwiperSlide key={testimonial.id}>
               <div className="comment-card">

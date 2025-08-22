@@ -1,0 +1,95 @@
+import React, { useState } from 'react';
+import './Articel.css';
+import Blogs from '../Blog/Blog';
+import TextType from '../../components/TextType/TextType';
+
+export default function Article() {
+  const [showFullContent, setShowFullContent] = useState(false);
+  
+  return (
+    <section className="article-section">
+      <div className="article-container">
+        <h1 className="article-title">
+          <TextType
+            text="Understanding Steroids: A Comprehensive Overview"
+            typingSpeed={100}
+            pauseDuration={1500}
+            showCursor={true}
+            cursorCharacter="|"
+          />
+        </h1>
+
+        <div className="article-image">
+          <Blogs />
+        </div>
+
+        <div className="article-content">
+          <div className={`article-intro ${!showFullContent ? 'article-intro--collapsed' : ''}`}>
+            <h2>Understanding Steroids: Types and Medical Uses</h2>
+            <p className="lead">
+              Steroids are powerful compounds that play crucial roles in the human body. While often misunderstood, they have important medical applications when used correctly under professional supervision.
+            </p>
+            
+            <section className="article-section">
+              <h3>Anabolic Steroids</h3>
+              <p>
+                Anabolic steroids are synthetic derivatives of testosterone, designed to promote muscle growth and enhance physical performance. While they have legitimate medical uses, their misuse can lead to serious health consequences.
+              </p>
+              
+              <h4>Medical Applications</h4>
+              <ul>
+                <li>Treatment of delayed puberty in boys</li>
+                <li>Muscle wasting conditions like HIV/AIDS</li>
+                <li>Certain types of anemia</li>
+              </ul>
+              
+              <h4>Risks of Misuse</h4>
+              <ul>
+                <li>Liver damage and tumors</li>
+                <li>Cardiovascular problems</li>
+                <li>Hormonal imbalances</li>
+                <li>Psychological effects</li>
+              </ul>
+            </section>
+            
+            <section className="article-section">
+              <h3>Corticosteroids</h3>
+              <p>
+                Unlike anabolic steroids, corticosteroids are primarily used for their anti-inflammatory and immunosuppressive properties. They are commonly prescribed for a variety of medical conditions.
+              </p>
+              
+              <h4>Common Uses</h4>
+              <ul>
+                <li>Reducing inflammation in conditions like arthritis</li>
+                <li>Treating allergic reactions</li>
+                <li>Managing autoimmune diseases</li>
+              </ul>
+              
+              <h4>Administration Methods</h4>
+              <ul>
+                <li>Oral medications</li>
+                <li>Topical creams</li>
+                <li>Injections</li>
+                <li>Inhalers</li>
+              </ul>
+            </section>
+            
+            <div className="important-note">
+              <h4>Important Note</h4>
+              <p>
+                Always consult with a healthcare professional before starting or stopping any steroid treatment. Misuse of these powerful medications can lead to serious health complications.
+              </p>
+            </div>
+
+            <button 
+              className="read-more-btn"
+              onClick={() => setShowFullContent(!showFullContent)}
+            >
+              {showFullContent ? 'Show Less' : 'Read More'}
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

@@ -1,5 +1,9 @@
 .blogImage img{
+    max-width: 600px;
     width: 100%;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 30px);
 }
 .textBlog{
     border-radius: 10px;
