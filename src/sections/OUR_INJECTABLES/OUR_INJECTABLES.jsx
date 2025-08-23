@@ -7,6 +7,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import ShinyText from '../../components/ShinyText/ShinyText';
+
 export default function OUR_INJECTABLES() {
   const [data, setData] = useState([]);
 
@@ -19,41 +20,53 @@ export default function OUR_INJECTABLES() {
 
   return (
     <>
-    <div className="OUR_INJECTABLES">
+      <div className="OUR_INJECTABLES">
         <div className="borderOur">
-        <h5>CHECK OUT!</h5>
-        <ul>
-          <li>
-          <ShinyText 
-          text="OUR INJECTABLES"
-          speed={3}
-          className='shiny-heading'
-          />
-
+          <h5>CHECK OUT!</h5>
+          <ul>
+            <li>
+              <ShinyText
+                text="OUR INJECTABLES"
+                speed={3}
+                className='shiny-heading'
+              />
             </li>
             <li>VIAL 10 ML</li>
-        </ul>
+          </ul>
         </div>
         <div className="ProductsInjec container">
           <div className="All_Product">
             <Swiper
-              spaceBetween={30}
+              spaceBetween={20} // قلل المسافة
               slidesPerView={1}
-              centeredSlides={true}
+              centeredSlides={false} // غير إلى false
               pagination={{
                 clickable: true,
               }}
               navigation={true}
               modules={[Pagination, Navigation]}
               breakpoints={{
+                480: {
+                  slidesPerView: 1,
+                  spaceBetween: 15,
+                },
                 640: {
                   slidesPerView: 2,
+                  spaceBetween: 20,
                 },
                 1024: {
                   slidesPerView: 3,
+                  spaceBetween: 25,
                 },
+                1200: {
+                  slidesPerView: 3,
+                  spaceBetween: 30,
+                }
               }}
               className="products-swiper"
+              // إضافة هذه الخصائص للتأكد من العرض الصحيح
+              watchSlidesProgress={true}
+              watchOverflow={true}
             >
               {data.map((item) => (
                 <SwiperSlide key={item.id}>
@@ -73,10 +86,10 @@ export default function OUR_INJECTABLES() {
                           img && (
                             <SwiperSlide key={`${item.id}-img-${idx}`}>
                               <div className="product-image-container">
-                                <img 
-                                  loading="lazy" 
-                                  src={img} 
-                                  alt={`${item.pname} ${idx + 1}`} 
+                                <img
+                                  loading="lazy"
+                                  src={img}
+                                  alt={`${item.pname} ${idx + 1}`}
                                   className="product-image"
                                 />
                               </div>
@@ -103,7 +116,7 @@ export default function OUR_INJECTABLES() {
             </Swiper>
           </div>
         </div>
-    </div>
+      </div>
     </>
   )
 }

@@ -36,24 +36,37 @@ export default function OUR_TABLETS() {
         </div>
         <div className="ProductsInjec container">
           <div className="All_Product">
-            <Swiper
-              spaceBetween={30}
+          <Swiper
+              spaceBetween={20} // قلل المسافة
               slidesPerView={1}
-              centeredSlides={true}
+              centeredSlides={false} // غير إلى false
               pagination={{
                 clickable: true,
               }}
               navigation={true}
               modules={[Pagination, Navigation]}
               breakpoints={{
+                480: {
+                  slidesPerView: 1,
+                  spaceBetween: 15,
+                },
                 640: {
                   slidesPerView: 2,
+                  spaceBetween: 20,
                 },
                 1024: {
                   slidesPerView: 3,
+                  spaceBetween: 25,
                 },
+                1200: {
+                  slidesPerView: 3,
+                  spaceBetween: 30,
+                }
               }}
               className="products-swiper"
+              // إضافة هذه الخصائص للتأكد من العرض الصحيح
+              watchSlidesProgress={true}
+              watchOverflow={true}
             >
               {data.map((item) => (
                 <SwiperSlide key={item.id}>

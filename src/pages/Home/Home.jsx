@@ -6,7 +6,7 @@ export default function Home() {
     <>
     <Navbar />
     <Header />
-    <AboutUs />
+    {/* <AboutUs /> */}
     <Catego />
     <OUR_INJECTABLES />
     <OUR_TABLETS />

@@ -6,6 +6,43 @@ import categoImage3 from '../../assets/catego/Asset 3@8x.png'
 import ShinyText from '../../components/ShinyText/ShinyText'
 export default function Catego() {
     return (
+        <>
+        <div className="marquee-container  mb-4">
+        <div className="marquee-text">
+          <ul>
+            <li>
+              <span>
+              </span>{" "}
+              TRX-LABORATORY
+            </li>
+            <li>
+              <span>
+              </span>{" "}
+              TRX-LABORATORY
+            </li>
+            <li>
+              <span>
+              </span>{" "}
+              TRX-LABORATORY
+            </li>
+            <li>
+              <span>
+              </span>{" "}
+              TRX-LABORATORY
+            </li>
+            <li>
+              <span>
+              </span>{" "}
+              TRX-LABORATORY
+            </li>
+            <li>
+              <span>
+              </span>{" "}
+              TRX-LABORATORY
+            </li>
+          </ul>
+        </div>
+      </div>
         <div className="catego mb-5">
             <h1>
             <ShinyText 
@@ -32,5 +69,6 @@ export default function Catego() {
                 </ul>
             </div>
         </div>
+        </>
     )
 }

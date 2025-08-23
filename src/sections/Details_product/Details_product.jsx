@@ -374,7 +374,7 @@ export default function Details_product({
                         <img
                           src={img}
                           alt={`product ${index + 1}`}
-                          className="img-fluid"
+                          className="img-fluid mt-4"
                           style={{ borderRadius: "20px", maxWidth: "100%", height: "auto" }}
                         />
                       </SwiperSlide>

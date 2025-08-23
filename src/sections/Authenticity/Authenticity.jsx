@@ -126,38 +126,38 @@ export default function Authenticity() {
             Trx-Laboratory places the credibility and quality of its products at the forefront of its mission through a comprehensive, multi-layered verification system. Every injectable product from Trx-Laboratory is equipped with unique and secure identifiers that allow customers to easily confirm its authenticity. These identifiers are not just a means of verification, but a tangible guarantee of quality and reliability, reflecting Trx’s unwavering commitment to delivering genuine products that consumers can trust.
           </p>
 
-          <div className="features-grid m-1">
-            <h1>
+            <h1 className='text-centerme-2 '>
               <ShinyText
                 text="HOW TO AUTHENTICITY YOUR PRODUCT"
                 speed={3}
-                className='shiny-heading'
+                className='shiny-heading howauthenticity'
               />
             </h1>
+          <div className="features-grid m-1">
             <div className="feature-item">
               <div>
-                <h3 className='d-flex'>              <span className="step-number">1.</span>
+                <h3 className='d-flex'>              <span className="me-2 step-number">1.</span>
                   Scratch and reveal</h3>
                 <p>Scratch the designated area to reveal your unique code</p>
               </div>
             </div>
             <div className="feature-item">
               <div>
-                <h3 className='d-flex'>              <span className="step-number">2.</span>
+                <h3 className='d-flex'>              <span className="me-2 step-number">2.</span>
                   Scan the QR</h3>
                 <p>use your smartphone camera to scan the QR code</p>
               </div>
             </div>
             <div className="feature-item">
               <div>
-                <h3 className='d-flex'>              <span className="step-number">3.</span>
+                <h3 className='d-flex'>              <span className="me-2 step-number">3.</span>
                   Open the link</h3>
                 <p>Follow the link provided by the QR code</p>
               </div>
             </div>
             <div className="feature-item">
               <div>
-                <h3 className='d-flex'>              <span className="step-number">4.</span>
+                <h3 className='d-flex'>              <span className="me-2 step-number">4.</span>
                   Enter the code</h3>
                 <p>Finally, enter the code you revealed into the verification field to confirm that your product is genuine</p>
               </div>

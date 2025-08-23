@@ -12,6 +12,7 @@ import slide1Mobile from '../../assets/header/headerMobile/Asset 2@8x.png'
 import slide2Mobile from '../../assets/header/headerMobile/Asset 3@8x.png'
 import slide3Mobile from '../../assets/header/headerMobile/Asset 4@8x.png'
 import homeVideo from '/videoHome/home/0820(5).mp4'
+import AboutUs from '../AboutUs/AboutUs'
 
 // Custom hook لتحديد حجم الشاشة
 const useWindowSize = () => {
@@ -53,6 +54,7 @@ export default function Header() {
   ];
 
   return (
+    <>
     <div className='header mb-4'>
       <Swiper
         spaceBetween={0}
@@ -80,7 +82,12 @@ export default function Header() {
           </SwiperSlide>
         ))}
       </Swiper>
-          <div className="video-container ps-2 pe-2 mt-4">
+    </div>
+    <div className="container">
+
+      <div className="row">
+        <div className="col-xl-6 col-lg-6">
+        <div className="video-container mb-4">
                   <video 
                     autoPlay 
                     loop 
@@ -99,7 +106,12 @@ export default function Header() {
                     Your browser does not support the video tag.
                   </video>
                 </div>
+        </div>
+        <div className="col-xl-6 col-lg-6"><AboutUs /></div>
+                    </div>
+      </div>
+                      </>
+        
       
-    </div>
   )
 }

@@ -61,8 +61,17 @@ export default function VerifyProduct() {
     >
       <div className="container">
         <div className="verification-card">
+              <motion.h2 
+                className="section-title"
+                initial={{ y: -20, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 }}
+              >
+                Verify Your Product
+              </motion.h2>
           <div className="verification-grid">
-            {/* QR Code Section */}
+            {/* QR Code Section with Button */}
             <motion.div 
               className="qr-code-section"
               initial={{ scale: 0.9, opacity: 0 }}
@@ -74,29 +83,32 @@ export default function VerifyProduct() {
                 onMouseEnter={() => !isMobile && setIsHovered(true)}
                 onMouseLeave={() => !isMobile && setIsHovered(false)}
               >
-                <div className="qr-overlay">
-                  <FiCheck className="qr-icon" />
-                  <span>Scan to Verify</span>
-                </div>
+         
                 <img 
                   src={scan} 
                   alt="QR Code for Verification" 
                   className={`qr-image ${isHovered ? 'hovered' : ''}`}
                 />
               </div>
+              
+              {/* Button moved here - below the image */}
+              <motion.div 
+                className="button-container"
+                initial={{ scale: 0.9, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.5 }}
+              >
+               <div className="brand-logo-container">
+                <Link to="/authenticity">
+               <button className='submit-btn btn btn-primary'>Go To Authenticity</button>
+                </Link>
+              </div>
+              </motion.div>
             </motion.div>
 
             {/* Instructions Section */}
             <div className="instructions-section">
-              <motion.h2 
-                className="section-title"
-                initial={{ y: -20, opacity: 0 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3 }}
-              >
-                Verify Your Product
-              </motion.h2>
               
               <motion.ul 
                 className="steps-list"
@@ -117,25 +129,7 @@ export default function VerifyProduct() {
                   </motion.li>
                 ))}
               </motion.ul>
-
-             
-               
             </div>
-
-            {/* Brand Section */}
-            <motion.div 
-              className="brand-section"
-              initial={{ scale: 0.9, opacity: 0 }}
-              whileInView={{ scale: 1, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
-            >
-              <div className="brand-logo-container">
-                <Link to="/authenticity">
-               <button className='submit-btn btn btn-primary'>Go To Authenticity</button>
-                </Link>
-              </div>
-            </motion.div>
           </div>
         </div>
       </div>
