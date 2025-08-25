@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { FiSearch } from 'react-icons/fi';
 import { FaTimes } from 'react-icons/fa';
 import './Navbar.css';
-import logo from '../../assets/logo/Asset 1@8x.png'
+import logo from '../../assets/logo/new@8x.png'
 
 const Navbar = () => {
   const [expanded, setExpanded] = useState(false);

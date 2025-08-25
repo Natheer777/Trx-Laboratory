@@ -12,7 +12,7 @@ export default function Home() {
     <OUR_TABLETS />
     <TOP_SEARCH />
     <WhyChoos />
-    <Comments />
+    {/* <Comments /> */}
     <Blog />
     <ContactUs />
     <Verfiy_product />

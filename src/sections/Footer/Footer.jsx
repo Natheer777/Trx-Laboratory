@@ -8,7 +8,7 @@ import {
   faWhatsapp
 } from '@fortawesome/free-brands-svg-icons';
 import { faLocationDot, faPhone, faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import logo from '../../assets/logo/Asset 1@8x.png'
+import logo from '../../assets/logo/new@8x.png'
 import './Footer.css';
 
 const Footer = () => {
