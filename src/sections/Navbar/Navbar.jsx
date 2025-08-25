@@ -165,7 +165,7 @@ const Navbar = () => {
       expanded={expanded} 
       className={`custom-navbar ${scrolled ? 'scrolled' : ''} ${expanded ? 'mobile-open' : ''}`}
     >
-      <Container>
+      {/* <Container> */}
         <motion.div
           initial={{ x: -50, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
@@ -268,7 +268,7 @@ const Navbar = () => {
         </BSNavbar.Collapse>
      
 
-      </Container>
+      {/* </Container> */}
 
       {/* Search Overlay */}
       {searchOpen && (
