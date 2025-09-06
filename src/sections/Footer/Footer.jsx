@@ -1,39 +1,60 @@
-import React from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from "react";
+import { Container, Row, Col } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFacebookF,
   faInstagram,
-  faWhatsapp
-} from '@fortawesome/free-brands-svg-icons';
-import { faLocationDot, faPhone, faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import logo from '../../assets/logo/new@8x.png'
-import './Footer.css';
+  faWhatsapp,
+} from "@fortawesome/free-brands-svg-icons";
+import {
+  faLocationDot,
+  faPhone,
+  faEnvelope,
+} from "@fortawesome/free-solid-svg-icons";
+import logo from "../../assets/logo/new@8x.png";
+import "./Footer.css";
 
 const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-top">
         <Container>
-          <Row className='justify-content-evenly'>
+          <Row className="justify-content-evenly">
             <Col lg={4} md={6} className="footer-about">
               <div className="footer-logo">
                 <img src={logo} alt="Logo" />
               </div>
               <p>
-                We are a leading laboratory equipment provider, offering high-quality products and solutions for scientific research and healthcare institutions.
+                We are a leading laboratory equipment provider, offering
+                high-quality products and solutions for scientific research and
+                healthcare institutions.
               </p>
               <div className="social-links">
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="social-icon">
+                <a
+                  href="https://facebook.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="social-icon"
+                >
                   <FontAwesomeIcon icon={faFacebookF} />
                 </a>
 
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="social-icon">
+                <a
+                  href="https://instagram.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="social-icon"
+                >
                   <FontAwesomeIcon icon={faInstagram} />
                 </a>
 
-                <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer" className="social-icon">
+                <a
+                  href="https://wa.me/1234567890"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="social-icon"
+                >
                   <FontAwesomeIcon icon={faWhatsapp} />
                 </a>
               </div>
@@ -42,12 +63,22 @@ const Footer = () => {
             <Col lg={2} md={6} className="footer-links">
               <h4>Quick Links</h4>
               <ul>
-                <li><Link to="/">Home</Link></li>
-                <li><Link to="/About">About Us</Link></li>
-                <li><Link to="/contact">Contact</Link></li>
+                <li>
+                  <Link to="/">Home</Link>
+                </li>
+                <li>
+                  <Link to="/About">About Us</Link>
+                </li>
+                <li>
+                  <Link to="/contact">Contact</Link>
+                </li>
                 {/* <li><Link to="/Authenticity">Authenticity</Link></li> */}
-                <li><Link to="/injectables">Injectables</Link></li>
-                <li><Link to="/tablets">Tablets</Link></li>
+                <li>
+                  <Link to="/injectables">Injectables</Link>
+                </li>
+                <li>
+                  <Link to="/tablets">Tablets</Link>
+                </li>
                 {/* <li><Link to="/Counterfeit">Counterfeit</Link></li> */}
                 {/* <li><Link to="/Article">Article</Link></li> */}
                 {/* <li><Link to="/Blogs">Blogs</Link></li> */}
@@ -57,9 +88,15 @@ const Footer = () => {
             <Col lg={2} md={6} className="footer-links">
               <h4>Usefull Links</h4>
               <ul>
-                <li><Link to="/Authenticity">Authenticity</Link></li>
-                <li><Link to="/Counterfeit">Counterfeit</Link></li>
-                <li><Link to="/Article">Article</Link></li>
+                <li>
+                  <Link to="/Authenticity">Authenticity</Link>
+                </li>
+                <li>
+                  <Link to="/Counterfeit">Counterfeit</Link>
+                </li>
+                <li>
+                  <Link to="/Article">Article</Link>
+                </li>
                 {/* <li><Link to="/Blogs">Blogs</Link></li> */}
               </ul>
             </Col>
@@ -68,25 +105,36 @@ const Footer = () => {
               <h4>Contact</h4>
               <ul className="list-unstyled">
                 <li>
-                  <FontAwesomeIcon icon={faLocationDot} style={{ marginRight: '8px' }} />
-                  9/2, 2nd Floor, Innovation Hub, Sheikh Zayed Rd, Dubai 00000, UAE
+                  <FontAwesomeIcon
+                    icon={faLocationDot}
+                    style={{ marginRight: "8px" }}
+                  />
+                  Address
+                  <br /> Germany , Hamburg , Oostkamp
                 </li>
                 <li>
                   <a href="tel:+97112345678" className="text-decoration-none">
-                    <FontAwesomeIcon icon={faPhone} style={{ marginRight: '8px' }} />
-                    +971 12 345 678
+                    <FontAwesomeIcon
+                      icon={faPhone}
+                      style={{ marginRight: "8px" }}
+                    />
+                   +49 152 12126950
                   </a>
                 </li>
                 <li>
-                  <a href="mailto:hello@example-labs.com" className="text-decoration-none">
-                    <FontAwesomeIcon icon={faEnvelope} style={{ marginRight: '8px' }} />
-                    hello@example-labs.com
+                  <a
+                    href="mailto:hello@example-labs.com"
+                    className="text-decoration-none"
+                  >
+                    <FontAwesomeIcon
+                      icon={faEnvelope}
+                      style={{ marginRight: "8px" }}
+                    />
+                    trx-laboratory@gmail.com
                   </a>
                 </li>
               </ul>
             </Col>
-
-
           </Row>
         </Container>
       </div>
@@ -96,8 +144,8 @@ const Footer = () => {
           <Row>
             <Col md={12}>
               <div className="copyright">
-                &copy; {new Date().getFullYear()} Trx-Laboratory. All Rights Reserved.
-
+                &copy; {new Date().getFullYear()} Trx-Laboratory. All Rights
+                Reserved.
               </div>
             </Col>
           </Row>
