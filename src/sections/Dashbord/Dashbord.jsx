@@ -18,9 +18,15 @@ import "./Dashbord.css";
 
 function ProductForm({ initial, onSave, onClose, isLoading }) {
   const [form, setForm] = useState(initial);
+  const [formError, setFormError] = useState("");
 
   function handleChange(e) {
-    const { name, value } = e.target;
+    const { name } = e.target;
+    let { value } = e.target;
+    // Enforce alphanumeric only and max length 5 for code fields
+    if (["code", "code2", "code3", "code4"].includes(name)) {
+      value = String(value || "").replace(/[^a-z0-9]/gi, "").slice(0, 5);
+    }
     setForm((f) => ({ ...f, [name]: value }));
   }
 
@@ -30,6 +36,14 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
         className="dashboard-modal"
         onSubmit={(e) => {
           e.preventDefault();
+          // Validate codes: each must be exactly 5 alphanumeric characters
+          const codes = [form.code, form.code2, form.code3, form.code4];
+          const allValid = codes.every((c) => /^[A-Za-z0-9]{5}$/.test(String(c || "")));
+          if (!allValid) {
+            setFormError("Codes (code, code2, code3, code4) must be exactly 5 characters (letters or numbers).");
+            return;
+          }
+          setFormError("");
           onSave(form);
         }}
       >
@@ -47,7 +61,7 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
           />
           <input
             name="name"
-            placeholder="اسم المنتج AR"
+            placeholder="Product Name"
             className="w-full mb-2 p-2 border rounded"
             value={form.name || ""}
             onChange={handleChange}
@@ -55,7 +69,7 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
           />
           <textarea
             name="product_overview"
-            placeholder="وصف عام للمنتج..."
+            placeholder="General product description..."
             className="w-full mb-2 p-2 border rounded span-2"
             value={form.product_overview || ""}
             onChange={handleChange}
@@ -63,7 +77,7 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
           />
           <textarea
             name="uses"
-            placeholder="استخدامات المنتج..."
+            placeholder="Product uses..."
             className="w-full mb-2 p-2 border rounded span-2"
             value={form.uses || ""}
             onChange={handleChange}
@@ -71,7 +85,7 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
           />
           <textarea
             name="potential_harms"
-            placeholder="الأضرار المحتملة..."
+            placeholder="Potential harms..."
             className="w-full mb-2 p-2 border rounded span-2"
             value={form.potential_harms || ""}
             onChange={handleChange}
@@ -79,7 +93,7 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
           />
           <textarea
             name="method_of_use"
-            placeholder="طريقة الاستخدام..."
+            placeholder="How to use..."
             className="w-full mb-2 p-2 border rounded span-2"
             value={form.method_of_use || ""}
             onChange={handleChange}
@@ -109,6 +123,10 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
             className="w-full mb-2 p-2 border rounded"
             value={form.code || ""}
             onChange={handleChange}
+            maxLength={5}
+            pattern="[A-Za-z0-9]{5}"
+            inputMode="text"
+            title="Enter exactly 5 characters (letters or numbers)"
             required
           />
           <input
@@ -117,6 +135,10 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
             className="w-full mb-2 p-2 border rounded"
             value={form.code2 || ""}
             onChange={handleChange}
+            maxLength={5}
+            pattern="[A-Za-z0-9]{5}"
+            inputMode="text"
+            title="Enter exactly 5 characters (letters or numbers)"
             required
           />
           <input
@@ -125,6 +147,10 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
             className="w-full mb-2 p-2 border rounded"
             value={form.code3 || ""}
             onChange={handleChange}
+            maxLength={5}
+            pattern="[A-Za-z0-9]{5}"
+            inputMode="text"
+            title="Enter exactly 5 characters (letters or numbers)"
             required
           />
           <input
@@ -133,11 +159,15 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
             className="w-full mb-2 p-2 border rounded"
             value={form.code4 || ""}
             onChange={handleChange}
+            maxLength={5}
+            pattern="[A-Za-z0-9]{5}"
+            inputMode="text"
+            title="Enter exactly 5 characters (letters or numbers)"
             required
           />
           <textarea
             name="warnings"
-            placeholder="تحذيرات مهمة..."
+            placeholder="Important warnings..."
             className="w-full mb-2 p-2 border rounded span-2"
             value={form.warnings || ""}
             onChange={handleChange}
@@ -160,15 +190,6 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
             required
           />
           <input
-            name="sec_id"
-            type="number"
-            placeholder="Section ID"
-            className="w-full mb-2 p-2 border rounded"
-            value={form.sec_id || ""}
-            onChange={handleChange}
-            required
-          />
-          <input
             name="vid_url"
             placeholder="Video URL"
             className="w-full mb-2 p-2 border rounded"
@@ -178,7 +199,7 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
           />
           <input
             name="img_url"
-            placeholder="Main Image URL"
+            placeholder="Image one"
             className="w-full mb-2 p-2 border rounded"
             value={form.img_url || ""}
             onChange={handleChange}
@@ -186,19 +207,24 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
           />
           <input
             name="img_url2"
-            placeholder="Second Image URL (اختياري)"
+            placeholder="Image two"
             className="w-full mb-2 p-2 border rounded"
             value={form.img_url2 || ""}
             onChange={handleChange}
+            required
           />
           <input
             name="img_url3"
-            placeholder="Third Image URL (اختياري)"
+            placeholder="Image three"
             className="w-full mb-2 p-2 border rounded"
             value={form.img_url3 || ""}
             onChange={handleChange}
+            required
           />
         </div>
+        {formError && (
+          <div className="text-red-500 mb-2" role="alert">{formError}</div>
+        )}
         <div className="flex gap-2 mt-4">
           <button type="submit" className="dashboard-btn" disabled={isLoading}>
             {isLoading ? "Saving..." : "Save"}
@@ -225,7 +251,7 @@ export default function Dashboard() {
   const [deleteId, setDeleteId] = useState(null);
   const [search, setSearch] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
-  const initialSection = (searchParams.get("section") || "all").toLowerCase();
+  const initialSection = (searchParams.get("section") || "injectables").toLowerCase();
   const [activeSection, setActiveSection] = useState(initialSection);
 
   const {
@@ -273,8 +299,7 @@ export default function Dashboard() {
   const filteredProducts = Array.isArray(products)
     ? products
       .filter((p) => {
-        // Section filter using sec_name if available; otherwise pass through
-        if (activeSection === "all") return true;
+        // Section filter using sec_name
         const sec = String(p.sec_name || "").toLowerCase();
         return sec === String(activeSection).toLowerCase();
       })
@@ -296,16 +321,12 @@ export default function Dashboard() {
         (p) => String(p.sec_name || "").toLowerCase() === String(sec)
       ).length
       : 0;
-  const totalCount = Array.isArray(products) ? products.length : 0;
+  
 
   function setSection(sec) {
-    const norm = (sec || "all").toLowerCase();
+    const norm = (sec || "injectables").toLowerCase();
     setActiveSection(norm);
-    if (norm === "all") {
-      setSearchParams({});
-    } else {
-      setSearchParams({ section: norm });
-    }
+    setSearchParams({ section: norm });
   }
 
   return (
@@ -343,12 +364,6 @@ export default function Dashboard() {
           </div>
         </div>
         <div className="section-tabs">
-          <button
-            className={`tab ${activeSection === "all" ? "active" : ""}`}
-            onClick={() => setSection("all")}
-          >
-            All ({totalCount})
-          </button>
           <button
             className={`tab ${activeSection === "injectables" ? "active" : ""}`}
             onClick={() => setSection("injectables")}
@@ -467,13 +482,19 @@ export default function Dashboard() {
               warnings: "",
               vial: "",
               caliber: "",
-              sec_id: "",
+              // Auto-fill sec_id based on active section: Injectables=3, Tablets=4
+              sec_id: activeSection === "injectables" ? 3 : activeSection === "tablets" ? 4 : "",
               vid_url: "",
               img_url: "",
               img_url2: "",
               img_url3: "",
             }}
-            onSave={(data) => createMutation.mutate(data)}
+            onSave={(data) => {
+              // Enforce sec_id mapping on submit as well
+              const mappedSecId =
+                activeSection === "injectables" ? 3 : activeSection === "tablets" ? 4 : data.sec_id;
+              createMutation.mutate({ ...data, sec_id: mappedSecId });
+            }}
             onClose={() => setShowForm(false)}
             isLoading={createMutation.isLoading}
           />
