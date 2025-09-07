@@ -5,11 +5,35 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+/* Default (desktop) background image */
+.login-bg.has-image {
+  background-image: url("../../assets/header/headerPc/the-image-depicts-a-scene-within-a-modern-laboratory-bathed-in-a-dominant-light-blue-hue-that-gent.png");
+}
+
+/* Mobile background image */
+@media (max-width: 767px) {
+  .login-bg.has-image {
+    background-image: url("../../assets/header/headerMobile/Asset 2@8x.png");
+  }
+}
+
+/* Overlay when using an image */
+.login-bg.has-image::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(2, 6, 23, 0.45), rgba(2, 6, 23, 0.35));
+  pointer-events: none;
 }
 
 /* Login form */
 .login-form {
-  background: #fff;
+  background: rgba(255, 255, 255, 0.6);
   border-radius: 16px;
   box-shadow: 0 4px 24px rgba(37, 99, 235, 0.12);
   padding: 40px 32px;
@@ -17,18 +41,25 @@
   max-width: 400px;
   display: flex;
   flex-direction: column;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  animation: floatIn 600ms ease-out both;
 }
 
 .login-title {
-  color: var(--color-blue2);
-  font-weight: 700;
-  font-size: 2rem;
+  font-family: 'NunitoBlack';
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: 12px;
   letter-spacing: 1px;
+  font-size: 45px !important;
+  height: 70px;
+  display: flex !important;
+  justify-content: center;
 }
 
 .login-input {
+  font-family: 'NunitoSemiBold';
   border: 1px solid #e5e7eb;
   border-radius: 8px;
   padding: 12px;
@@ -41,16 +72,18 @@
 .login-input:focus {
   border-color: var(--color-blue2);
   outline: none;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
 }
 
 .login-btn {
+  font-family: 'NunitoSemiBold';
   background: var(--color-blue2);
   color: #fff;
   border: none;
   border-radius: 8px;
   padding: 12px;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 1.2rem;
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(37, 99, 235, 0.08);
   transition: background 0.2s, box-shadow 0.2s;
@@ -67,4 +100,17 @@
   text-align: center;
   margin-top: 16px;
   font-size: 1rem;
+}
+
+/* Subtle entrance animation */
+@keyframes floatIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }

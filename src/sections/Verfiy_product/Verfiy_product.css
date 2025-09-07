@@ -208,7 +208,7 @@
   color: var(--text-color);
   font-size: 1.1rem;
   line-height: 1.7;
-  font-family: 'NunitoSemiBold', sans-serif;
+  font-family: 'NunitoSemiBold';
   flex: 1;
 }
 

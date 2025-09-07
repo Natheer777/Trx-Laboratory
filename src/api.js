@@ -73,7 +73,7 @@ export async function createProduct({
       uses,
       potential_harms,
       method_of_use,
-      price,
+      price: price !== undefined && price !== null ? Number(price) : price,
       qr_code,
       code,
       code2,
@@ -82,14 +82,19 @@ export async function createProduct({
       warnings,
       vial,
       caliber,
-      sec_id,
+      sec_id: sec_id !== undefined && sec_id !== null ? Number(sec_id) : sec_id,
       vid_url,
       img_url,
       img_url2,
       img_url3,
     }),
   });
-  return await res.json();
+  if (!res.ok) {
+    throw new Error(`HTTP error! status: ${res.status}`);
+  }
+  const data = await res.json();
+  if (data && data.status === "success") return data;
+  throw new Error(data?.message || "Failed to create product");
 }
 
 export async function updateProduct({
@@ -119,14 +124,14 @@ export async function updateProduct({
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      p_id,
+      p_id: p_id !== undefined && p_id !== null ? Number(p_id) : p_id,
       pname,
       name,
       product_overview,
       uses,
       potential_harms,
       method_of_use,
-      price,
+      price: price !== undefined && price !== null ? Number(price) : price,
       qr_code,
       code,
       code2,
@@ -135,14 +140,19 @@ export async function updateProduct({
       warnings,
       vial,
       caliber,
-      sec_id,
+      sec_id: sec_id !== undefined && sec_id !== null ? Number(sec_id) : sec_id,
       vid_url,
       img_url,
       img_url2,
       img_url3,
     }),
   });
-  return await res.json();
+  if (!res.ok) {
+    throw new Error(`HTTP error! status: ${res.status}`);
+  }
+  const data = await res.json();
+  if (data && data.status === "success") return data;
+  throw new Error(data?.message || "Failed to update product");
 }
 
 export async function deleteProduct(p_id) {

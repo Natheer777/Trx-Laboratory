@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "../../api";
 import "./Login.css";
+import ShinyText from "../../components/ShinyText/ShinyText";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -20,7 +21,7 @@ export default function Login() {
   });
 
   return (
-    <div className="login-bg flex items-center justify-center min-h-screen">
+    <div className="login-bg has-image flex items-center justify-center min-h-screen">
       <form
         className="login-form w-full max-w-md"
         onSubmit={(e) => {
@@ -28,8 +29,14 @@ export default function Login() {
           mutate();
         }}
       >
-        <h2 className="login-title mb-6">Login</h2>
-        <input
+   <h1>
+            <ShinyText 
+            text="Login"
+            speed={3}
+            className='shiny-heading login-title'
+            />
+
+            </h1>        <input
           type="email"
           className="login-input w-full"
           placeholder="Email"
