@@ -6,6 +6,7 @@ import {
   updateProduct,
   deleteProduct,
   logout,
+  updateUserInfo,
 } from "../../api";
 import ShinyText from "../../components/ShinyText/ShinyText";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -25,7 +26,9 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
     let { value } = e.target;
     // Enforce alphanumeric only and max length 5 for code fields
     if (["code", "code2", "code3", "code4"].includes(name)) {
-      value = String(value || "").replace(/[^a-z0-9]/gi, "").slice(0, 5);
+      value = String(value || "")
+        .replace(/[^a-z0-9]/gi, "")
+        .slice(0, 5);
     }
     setForm((f) => ({ ...f, [name]: value }));
   }
@@ -38,9 +41,13 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
           e.preventDefault();
           // Validate codes: each must be exactly 5 alphanumeric characters
           const codes = [form.code, form.code2, form.code3, form.code4];
-          const allValid = codes.every((c) => /^[A-Za-z0-9]{5}$/.test(String(c || "")));
+          const allValid = codes.every((c) =>
+            /^[A-Za-z0-9]{5}$/.test(String(c || ""))
+          );
           if (!allValid) {
-            setFormError("Codes (code, code2, code3, code4) must be exactly 5 characters (letters or numbers).");
+            setFormError(
+              "Codes (code, code2, code3, code4) must be exactly 5 characters (letters or numbers)."
+            );
             return;
           }
           setFormError("");
@@ -223,7 +230,9 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
           />
         </div>
         {formError && (
-          <div className="text-red-500 mb-2" role="alert">{formError}</div>
+          <div className="text-red-500 mb-2" role="alert">
+            {formError}
+          </div>
         )}
         <div className="flex gap-2 mt-4">
           <button type="submit" className="dashboard-btn" disabled={isLoading}>
@@ -242,8 +251,108 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
     </div>
   );
 }
+// ...existing code...
 
-export default function Dashboard() {
+// Replace the UpdateInfoSection in your Dashboard.jsx with this:
+
+function UpdateInfoSection({ userId, currentEmail, currentPhone }) {
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const validatePhone = (value) => {
+    const digits = value.replace(/\D/g, "");
+    return digits.length === 13;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setMessage("");
+
+    // Always include all required fields
+    const payload = {
+      id: String(userId), // تأكد أنها string
+      email: email.trim() || currentEmail,
+      phone: phone.trim() || currentPhone,
+    };
+
+    // Validate phone number format
+    if (!validatePhone(payload.phone)) {
+      setMessage("Phone number must be exactly 13 digits.");
+      setLoading(false);
+      return;
+    }
+
+    // Check if there are any changes
+    if (email.trim() === '' && phone.trim() === '') {
+      setMessage("No changes to update.");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const res = await updateUserInfo(payload);
+
+      if (res.status === "success") {
+        setMessage(res.message || "Information updated successfully.");
+        // Clear form after successful update
+        setEmail("");
+        setPhone("");
+      } else {
+        setMessage(res.message || "An error occurred while updating.");
+      }
+    } catch (error) {
+      console.error("Update error:", error);
+      setMessage(`Error: ${error.message || "Failed to update information"}`);
+    }
+
+    setLoading(false);
+  };
+
+  return (
+    <div className="update-info-section mt-8">
+  <h1>
+            <ShinyText text="Update Email & Phone" speed={3} className="shiny-heading dashboard-title mb-4" />
+          </h1>      <form onSubmit={handleSubmit} className="max-w-md">
+        <div className="mb-4">
+          <label className="block text-sm font-medium mb-2">Email:</label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder={currentEmail || "Enter new email"}
+            className="w-full p-2 border rounded"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-sm font-medium mb-2">Phone:</label>
+          <input
+            type="text"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            placeholder={currentPhone || "Enter new phone"}
+            maxLength={13}
+            className="w-full p-2 border rounded"
+          />
+        </div>
+        <button type="submit" disabled={loading} className="dashboard-btn">
+          {loading ? "Updating..." : "Update"}
+        </button>
+      </form>
+      {message && (
+        <p className={`mt-2 ${message.includes("successfully") ? "text-green-600" : "text-red-600"}`}>
+          {message}
+        </p>
+      )}
+    </div>
+  );
+}
+
+//
+
+export default function Dashboard(props) {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const [showForm, setShowForm] = useState(false);
@@ -251,7 +360,9 @@ export default function Dashboard() {
   const [deleteId, setDeleteId] = useState(null);
   const [search, setSearch] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
-  const initialSection = (searchParams.get("section") || "injectables").toLowerCase();
+  const initialSection = (
+    searchParams.get("section") || "injectables"
+  ).toLowerCase();
   const [activeSection, setActiveSection] = useState(initialSection);
 
   const {
@@ -308,9 +419,15 @@ export default function Dashboard() {
         const q = search.trim().toLowerCase();
         if (!q) return true;
         return (
-          String(p.pname || "").toLowerCase().includes(q) ||
-          String(p.name || "").toLowerCase().includes(q) ||
-          String(p.p_id || "").toLowerCase().includes(q)
+          String(p.pname || "")
+            .toLowerCase()
+            .includes(q) ||
+          String(p.name || "")
+            .toLowerCase()
+            .includes(q) ||
+          String(p.p_id || "")
+            .toLowerCase()
+            .includes(q)
         );
       })
     : [];
@@ -321,7 +438,6 @@ export default function Dashboard() {
         (p) => String(p.sec_name || "").toLowerCase() === String(sec)
       ).length
       : 0;
-  
 
   function setSection(sec) {
     const norm = (sec || "injectables").toLowerCase();
@@ -329,211 +445,273 @@ export default function Dashboard() {
     setSearchParams({ section: norm });
   }
 
+  const userId = props.userId;
+  const email = props.email;
+  const phone = props.phone;
+
   return (
     <div className="dash">
       <div className="dashboard-bg min-h-screen p-8">
         <div className="catego">
-
           <h1>
-            <ShinyText
-              text="Dashboard"
-              speed={3}
-              className='shiny-heading'
-            />
-
+            <ShinyText text="Dashboard" speed={3} className="shiny-heading" />
           </h1>
         </div>
         <div className="container">
-
-        <div className="toolbar mt-5 mb-5">
-          <div className="toolbar-left">
-            <input
-              className="toolbar-search"
-              placeholder="Search by name or ID..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </div>
-          <div className="toolbar-right">
-            <button className="dashboard-btn" onClick={() => setShowForm(true)}>
-              + Add Product
-            </button>
-            <button className="dashboard-btn logout" onClick={handleLogout}>
-              Logout
-            </button>
-          </div>
-        </div>
-        <div className="section-tabs">
-          <button
-            className={`tab ${activeSection === "injectables" ? "active" : ""}`}
-            onClick={() => setSection("injectables")}
-          >
-            Injectables ({countFor("injectables")})
-          </button>
-          <button
-            className={`tab ${activeSection === "tablets" ? "active" : ""}`}
-            onClick={() => setSection("tablets")}
-          >
-            Tablets ({countFor("tablets")})
-          </button>
-        </div>
-        {isLoading ? (
-          <div>Loading products...</div>
-        ) : error ? (
-          <div className="text-red-500">Error loading products.</div>
-        ) : Array.isArray(products) ? (
-          <div>
-            {filteredProducts.length === 0 ? (
-              <div className="text-center text-gray-500">No matching products.</div>
-            ) : (
-              <div className="product-swiper-wrap">
-                <Swiper
-                  className="product-swiper"
-                  modules={[Navigation, Pagination, Keyboard]}
-                  navigation
-                  pagination={{ clickable: true }}
-                  keyboard={{ enabled: true, onlyInViewport: true }}
-                  watchOverflow={true}
-                  centeredSlides={true}
-                  centeredSlidesBounds={true}
-                  spaceBetween={12}
-                  slidesPerView={1}
-                  breakpoints={{
-                    640: { slidesPerView: 2, spaceBetween: 12, centeredSlides: false },
-                    900: { slidesPerView: 3, spaceBetween: 12, centeredSlides: false },
-                    1280: { slidesPerView: 4, spaceBetween: 12, centeredSlides: false },
-                  }}
-                >
-                {filteredProducts.map((prod) => {
-                  const img = prod.img_url || prod.img_url2 || prod.img_url3;
-                  return (
-                    <SwiperSlide key={prod.p_id}>
-                      <div className="product-card">
-                        <div className="product-card-image">
-                          {img ? (
-                            <img src={img} alt={prod.name || prod.pname || "product"} loading="lazy" />
-                          ) : (
-                            <div className="product-card-image placeholder">No Image</div>
-                          )}
-                        </div>
-                        <div className="product-card-body">
-                          <div className="product-card-title">{prod.name}</div>
-                          {prod.pname && (
-                            <div className="product-card-subtitle">{prod.pname}</div>
-                          )}
-                          <div className="product-card-price">Price: {prod.price}$</div>
-                        </div>
-                        <div className="product-card-actions">
-                          {prod.qr_code ? (
-                            <a
-                              className="dashboard-btn"
-                              href={`${prod.qr_code}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              title="Go to product QR route"
-                            >
-                              Show More
-                            </a>
-                          ) : (
-                            <span className="dashboard-btn" style={{ opacity: 0.6, pointerEvents: "none" }}>
-                              Show More
-                            </span>
-                          )}
-                          <button
-                            className="dashboard-btn edit"
-                            onClick={() => setEditProduct(prod)}
-                          >
-                            Edit
-                          </button>
-                          <button
-                            className="dashboard-btn delete"
-                            onClick={() => setDeleteId(prod.p_id)}
-                          >
-                            Delete
-                          </button>
-                        </div>
-                      </div>
-                    </SwiperSlide>
-                  );
-                })}
-                </Swiper>
-              </div>
-            )}
-          </div>
-        ) : (
-          <div className="text-red-500">No products found or API error.</div>
-        )}
-
-        {showForm && (
-          <ProductForm
-            initial={{
-              pname: "",
-              name: "",
-              product_overview: "",
-              uses: "",
-              potential_harms: "",
-              method_of_use: "",
-              price: "",
-              qr_code: "",
-              code: "",
-              code2: "",
-              code3: "",
-              code4: "",
-              warnings: "",
-              vial: "",
-              caliber: "",
-              // Auto-fill sec_id based on active section: Injectables=3, Tablets=4
-              sec_id: activeSection === "injectables" ? 3 : activeSection === "tablets" ? 4 : "",
-              vid_url: "",
-              img_url: "",
-              img_url2: "",
-              img_url3: "",
-            }}
-            onSave={(data) => {
-              // Enforce sec_id mapping on submit as well
-              const mappedSecId =
-                activeSection === "injectables" ? 3 : activeSection === "tablets" ? 4 : data.sec_id;
-              createMutation.mutate({ ...data, sec_id: mappedSecId });
-            }}
-            onClose={() => setShowForm(false)}
-            isLoading={createMutation.isLoading}
-          />
-        )}
-
-        {editProduct && (
-          <ProductForm
-          initial={editProduct}
-            onSave={(data) =>
-              updateMutation.mutate({ ...data, p_id: editProduct.p_id })
-            }
-            onClose={() => setEditProduct(null)}
-            isLoading={updateMutation.isLoading}
-          />
-        )}
-
-        {deleteId && (
-          <div className="dashboard-modal-bg">
-            <div className="dashboard-modal">
-              <p className="mb-4">Are you sure you want to delete this product?</p>
-              <div className="flex gap-2">
-                <button
-                  className="dashboard-btn delete"
-                  onClick={() => deleteMutation.mutate(deleteId)}
-                  disabled={deleteMutation.isLoading}
-                >
-                  {deleteMutation.isLoading ? "Deleting..." : "Delete"}
-                </button>
-                <button
-                  className="dashboard-btn"
-                  style={{ backgroundColor: "#e5e7eb", color: "#2563eb" }}
-                  onClick={() => setDeleteId(null)}
-                >
-                  Cancel
-                </button>
-              </div>
+          <div className="toolbar mt-5 mb-5">
+            <div className="toolbar-left">
+              <input
+                className="toolbar-search"
+                placeholder="Search by name 
+            "
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
+            <div className="toolbar-right">
+              <button
+                className="dashboard-btn"
+                onClick={() => setShowForm(true)}
+              >
+                + Add Product
+              </button>
+              <button className="dashboard-btn logout" onClick={handleLogout}>
+                Logout
+              </button>
             </div>
           </div>
-        )}
+          <div className="section-tabs">
+            <button
+              className={`tab ${activeSection === "injectables" ? "active" : ""
+                }`}
+              onClick={() => setSection("injectables")}
+            >
+              Injectables ({countFor("injectables")})
+            </button>
+            <button
+              className={`tab ${activeSection === "tablets" ? "active" : ""}`}
+              onClick={() => setSection("tablets")}
+            >
+              Tablets ({countFor("tablets")})
+            </button>
+          </div>
+          {isLoading ? (
+            <div>Loading products...</div>
+          ) : error ? (
+            <div className="text-red-500">Error loading products.</div>
+          ) : Array.isArray(products) ? (
+            <div>
+              {filteredProducts.length === 0 ? (
+                <div className="text-center text-gray-500">
+                  No matching products.
+                </div>
+              ) : (
+                <div className="product-swiper-wrap">
+                  <Swiper
+                    className="product-swiper"
+                    modules={[Navigation, Pagination, Keyboard]}
+                    navigation
+                    pagination={{ clickable: true }}
+                    keyboard={{ enabled: true, onlyInViewport: true }}
+                    watchOverflow={true}
+                    centeredSlides={true}
+                    centeredSlidesBounds={true}
+                    spaceBetween={12}
+                    slidesPerView={1}
+                    breakpoints={{
+                      640: {
+                        slidesPerView: 2,
+                        spaceBetween: 12,
+                        centeredSlides: false,
+                      },
+                      900: {
+                        slidesPerView: 3,
+                        spaceBetween: 12,
+                        centeredSlides: false,
+                      },
+                      1280: {
+                        slidesPerView: 4,
+                        spaceBetween: 12,
+                        centeredSlides: false,
+                      },
+                    }}
+                  >
+                    {filteredProducts.map((prod) => {
+                      const img =
+                        prod.img_url || prod.img_url2 || prod.img_url3;
+                      return (
+                        <SwiperSlide key={prod.p_id}>
+                          <div className="product-card">
+                            <div className="product-card-image">
+                              {img ? (
+                                <img
+                                  src={img}
+                                  alt={prod.name || prod.pname || "product"}
+                                  loading="lazy"
+                                />
+                              ) : (
+                                <div className="product-card-image placeholder">
+                                  No Image
+                                </div>
+                              )}
+                            </div>
+                            <div className="product-card-body">
+                              <div className="product-card-title">
+                                {prod.name}
+                              </div>
+                              {prod.pname && (
+                                <div className="product-card-subtitle">
+                                  {prod.pname}
+                                </div>
+                              )}
+                              <div className="product-card-price">
+                                Price: {prod.price}$
+                              </div>
+                            </div>
+                            <div className="product-card-actions">
+                              {prod.qr_code ? (
+                                <a
+                                  className="dashboard-btn"
+                                  href={`${prod.qr_code}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  title="Go to product QR route"
+                                >
+                                  Show More
+                                </a>
+                              ) : (
+                                <span
+                                  className="dashboard-btn"
+                                  style={{
+                                    opacity: 0.6,
+                                    pointerEvents: "none",
+                                  }}
+                                >
+                                  Show More
+                                </span>
+                              )}
+                              <button
+                                className="dashboard-btn edit"
+                                onClick={() => setEditProduct(prod)}
+                              >
+                                Edit
+                              </button>
+                              <button
+                                className="dashboard-btn delete"
+                                onClick={() => setDeleteId(prod.p_id)}
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          </div>
+                        </SwiperSlide>
+                      );
+                    })}
+                  </Swiper>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="text-red-500">No products found or API error.</div>
+          )}
+
+          {showForm && (
+            <ProductForm
+              initial={{
+                pname: "",
+                name: "",
+                product_overview: "",
+                uses: "",
+                potential_harms: "",
+                method_of_use: "",
+                price: "",
+                qr_code: "",
+                code: "",
+                code2: "",
+                code3: "",
+                code4: "",
+                warnings: "",
+                vial: "",
+                caliber: "",
+                // Auto-fill sec_id based on active section: Injectables=3, Tablets=4
+                sec_id:
+                  activeSection === "injectables"
+                    ? 3
+                    : activeSection === "tablets"
+                      ? 4
+                      : "",
+                vid_url: "",
+                img_url: "",
+                img_url2: "",
+                img_url3: "",
+              }}
+              onSave={(data) => {
+                // Enforce sec_id mapping on submit as well
+                const mappedSecId =
+                  activeSection === "injectables"
+                    ? 3
+                    : activeSection === "tablets"
+                      ? 4
+                      : data.sec_id;
+                createMutation.mutate({ ...data, sec_id: mappedSecId });
+              }}
+              onClose={() => setShowForm(false)}
+              isLoading={createMutation.isLoading}
+            />
+          )}
+
+          {editProduct && (
+            <ProductForm
+              initial={editProduct}
+              onSave={(data) => {
+                const mappedSecId =
+                  activeSection === "injectables"
+                    ? 3
+                    : activeSection === "tablets"
+                      ? 4
+                      : data.sec_id;
+                updateMutation.mutate({
+                  ...data,
+                  p_id: editProduct.p_id,
+                  sec_id: mappedSecId,
+                });
+              }}
+              onClose={() => setEditProduct(null)}
+              isLoading={updateMutation.isLoading}
+            />
+          )}
+
+          {deleteId && (
+            <div className="dashboard-modal-bg">
+              <div className="dashboard-modal">
+                <p className="mb-4">
+                  Are you sure you want to delete this product?
+                </p>
+                <div className="flex gap-2">
+                  <button
+                    className="dashboard-btn delete"
+                    onClick={() => deleteMutation.mutate(deleteId)}
+                    disabled={deleteMutation.isLoading}
+                  >
+                    {deleteMutation.isLoading ? "Deleting..." : "Delete"}
+                  </button>
+                  <button
+                    className="dashboard-btn"
+                    style={{ backgroundColor: "#e5e7eb", color: "#2563eb" }}
+                    onClick={() => setDeleteId(null)}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <UpdateInfoSection
+            userId={userId}
+            currentEmail={email}
+            currentPhone={phone}
+          />
         </div>
       </div>
     </div>

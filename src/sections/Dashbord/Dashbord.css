@@ -1,6 +1,6 @@
 /* Dashboard typography */
 .dash {
-  font-family: 'NunitoSemiBold', 'Nunito', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-family: 'NunitoSemiBold';
 }
 
 /* Dashboard background */
@@ -45,9 +45,11 @@
 .dash .dashboard-table tr:last-child td {
   border-bottom: none;
 }
-.logout{
+
+.logout {
   background-color: orangered !important;
 }
+
 /* Button styles */
 .dash .dashboard-btn {
   background: var(--color-blue2);
@@ -227,7 +229,9 @@
 
 /* Tighter image ratio on very small screens */
 @media (max-width: 480px) {
-  .dash .product-card-image { aspect-ratio: 1 / 1; }
+  .dash .product-card-image {
+    aspect-ratio: 1 / 1;
+  }
 }
 
 .dash .product-card {
@@ -243,7 +247,8 @@
 
 .dash .product-card-image {
   width: 100%;
-  aspect-ratio: 1.25 / 1; /* slightly taller for better fit */
+  aspect-ratio: 1.25 / 1;
+  /* slightly taller for better fit */
   /* landscape-ish */
   background: #f1f5f9;
   display: flex;
@@ -342,7 +347,8 @@
 /* Swiper tweaks */
 .dash .product-swiper {
   position: relative;
-  overflow: hidden; /* keep only current slides visible */
+  overflow: hidden;
+  /* keep only current slides visible */
   padding-bottom: 28px;
   /* space for bullets */
   --swiper-navigation-size: 18px;
@@ -357,11 +363,15 @@
 }
 
 @media (min-width: 768px) {
-  .dash .product-swiper-wrap { padding: 0 12px; }
+  .dash .product-swiper-wrap {
+    padding: 0 12px;
+  }
 }
 
 @media (min-width: 1280px) {
-  .dash .product-swiper-wrap { padding: 0 16px; }
+  .dash .product-swiper-wrap {
+    padding: 0 16px;
+  }
 }
 
 .dash .product-swiper .swiper-button-prev,
@@ -392,8 +402,15 @@
 }
 
 /* Explicit positions for arrows */
-.dash .product-swiper .swiper-button-prev { left: 8px; right: auto; }
-.dash .product-swiper .swiper-button-next { right: 8px; left: auto; }
+.dash .product-swiper .swiper-button-prev {
+  left: 8px;
+  right: auto;
+}
+
+.dash .product-swiper .swiper-button-next {
+  right: 8px;
+  left: auto;
+}
 
 /* Keep disabled arrows visible (but non-interactive) */
 .dash .product-swiper .swiper-button-disabled {
@@ -457,4 +474,205 @@
     margin-top: 15px;
     margin-bottom: 15px;
   }
+}
+
+
+
+.update-info-section {
+  background: linear-gradient(145deg, #ffffff, #f8fafc);
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  padding: 32px;
+  margin: 32px auto 0 auto;
+  max-width: 420px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transform: translateY(0);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.update-info-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-blue2), var(--color-blue2));
+  animation: gradientBG 3s ease infinite;
+  background-size: 200% 200%;
+}
+
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.update-info-section h3 {
+  margin: 0 0 24px 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1e40af;
+  text-align: center;
+  position: relative;
+  padding-bottom: 12px;
+}
+
+.update-info-section h3::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-blue2), var(--color-blue2));
+  border-radius: 3px;
+}
+
+.update-info-section form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.update-info-section .form-group {
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.update-info-section label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #374151;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.update-info-section input[type="email"],
+.update-info-section input[type="text"] {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: #ffffff;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.update-info-section input:focus {
+  border-color: var(--color-blue2);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.update-info-section input::placeholder {
+  color: #9ca3af;
+  font-size: 0.95rem;
+}
+
+.update-info-section button[type="submit"] {
+  background: linear-gradient(135deg, var(--color-blue2), var(--color-blue2));
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 14px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  position: relative;
+  overflow: hidden;
+}
+
+.update-info-section button[type="submit"]:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  background: linear-gradient(135deg, var(--color-blue2), var(--color-blue2));
+}
+
+.update-info-section button[type="submit"]:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.update-info-section button[type="submit"]:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.update-info-section p {
+  margin: 16px 0 0;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-weight: 500;
+  text-align: center;
+  transition: all 0.3s ease;
+  background-color: #f0fdf4;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+}
+
+/* Error message style */
+.update-info-section p[role="alert"],
+.update-info-section .error {
+  background-color: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
+/* Loading state */
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.update-info-section button[type="submit"]:disabled::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: shimmer 1.5s infinite;
+  background-size: 200% 100%;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.update-info-section h1 {
+  font-family: 'NunitoBlack';
+  text-align: center;
+  margin-bottom: 20px;
 }

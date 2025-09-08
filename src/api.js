@@ -163,3 +163,33 @@ export async function deleteProduct(p_id) {
   });
   return res.json();
 }
+
+// Replace your current updateUserInfo function in api.js with this:
+
+export async function updateUserInfo({ phone, email }) {
+  try {
+    // دائماً أرسل id: "1"
+    const dataToSend = {
+      id: "1",
+      phone,
+      email,
+    };
+    const res = await fetch("https://trx-laboratory.com/update_info.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(dataToSend),
+    });
+
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("API call failed:", error);
+    throw error;
+  }
+}

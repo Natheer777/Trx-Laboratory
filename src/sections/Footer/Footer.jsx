@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,6 +16,31 @@ import logo from "../../assets/logo/new@8x.png";
 import "./Footer.css";
 
 const Footer = () => {
+  const [contact, setContact] = useState(null);
+
+ useEffect(() => {
+  const fetchInfo = async () => {
+    try {
+      const res = await fetch("https://trx-laboratory.com/get_info.php");
+      const json = await res.json();
+      console.log("API response:", json); // Debug line
+      if (json?.status === "success" && Array.isArray(json.data) && json.data.length > 0) {
+        setContact(json.data[0]);
+      }
+    } catch (e) {
+      console.error("Failed to load contact info", e);
+    }
+  };
+  fetchInfo();
+}, []);
+
+  const phoneRaw = contact?.phone || "";
+  const phoneDisplay = phoneRaw ? (phoneRaw.startsWith("+") ? phoneRaw : `+${phoneRaw}`) : "";
+  const telHref = phoneDisplay ? `tel:${phoneDisplay}` : undefined;
+  const email = contact?.email;
+  const phoneDigits = phoneRaw.replace(/\D/g, "");
+  const whatsappHref = phoneDigits ? `https://wa.me/${phoneDigits}` : "https://wa.me/";
+
   return (
     <footer className="footer">
       <div className="footer-top">
@@ -50,7 +75,7 @@ const Footer = () => {
                 </a>
 
                 <a
-                  href="https://wa.me/1234567890"
+                  href={whatsappHref}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="social-icon"
@@ -110,27 +135,27 @@ const Footer = () => {
                     style={{ marginRight: "8px" }}
                   />
                   Address
-                  <br /> Germany , Hamburg , Oostkamp
+                  <br /> {contact?.address || "Germany , Hamburg , Oostkamp"}
                 </li>
                 <li>
-                  <a href="tel:+97112345678" className="text-decoration-none">
+                  <a href={telHref || "#"} className="text-decoration-none" aria-disabled={!telHref}>
                     <FontAwesomeIcon
                       icon={faPhone}
                       style={{ marginRight: "8px" }}
                     />
-                   +49 152 12126950
+                   {phoneDisplay}
                   </a>
                 </li>
                 <li>
                   <a
-                    href="mailto:hello@example-labs.com"
+                    href={email ? `mailto:${email}` : "mailto:trx-laboratory@gmail.com"}
                     className="text-decoration-none"
                   >
                     <FontAwesomeIcon
                       icon={faEnvelope}
                       style={{ marginRight: "8px" }}
                     />
-                    trx-laboratory@gmail.com
+                    {email}
                   </a>
                 </li>
               </ul>
@@ -156,3 +181,4 @@ const Footer = () => {
 };
 
 export default Footer;
+
