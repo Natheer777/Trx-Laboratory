@@ -2,7 +2,10 @@
 .dash {
   font-family: 'NunitoSemiBold';
 }
-
+.dash label{
+  text-align: start;
+  font-size: 14px;
+}
 /* Dashboard background */
 .dash .dashboard-bg {
   background: linear-gradient(135deg, #e3f0ff 0%, #f8fafc 100%);

@@ -58,176 +58,252 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
           {initial.p_id ? "Edit" : "Add"} Product
         </h3>
         <div className="form-grid">
-          <input
-            name="pname"
-            placeholder="Product Name EN"
-            className="w-full mb-2 p-2 border rounded"
-            value={form.pname || ""}
-            onChange={handleChange}
-            required
-          />
-          <input
-            name="name"
-            placeholder="Product Name"
-            className="w-full mb-2 p-2 border rounded"
-            value={form.name || ""}
-            onChange={handleChange}
-            required
-          />
-          <textarea
-            name="product_overview"
-            placeholder="General product description..."
-            className="w-full mb-2 p-2 border rounded span-2"
-            value={form.product_overview || ""}
-            onChange={handleChange}
-            required
-          />
-          <textarea
-            name="uses"
-            placeholder="Product uses..."
-            className="w-full mb-2 p-2 border rounded span-2"
-            value={form.uses || ""}
-            onChange={handleChange}
-            required
-          />
-          <textarea
-            name="potential_harms"
-            placeholder="Potential harms..."
-            className="w-full mb-2 p-2 border rounded span-2"
-            value={form.potential_harms || ""}
-            onChange={handleChange}
-            required
-          />
-          <textarea
-            name="method_of_use"
-            placeholder="How to use..."
-            className="w-full mb-2 p-2 border rounded span-2"
-            value={form.method_of_use || ""}
-            onChange={handleChange}
-            required
-          />
-          <input
-            name="price"
-            type="number"
-            step="0.01"
-            placeholder="Price"
-            className="w-full mb-2 p-2 border rounded"
-            value={form.price || ""}
-            onChange={handleChange}
-            required
-          />
-          <input
-            name="qr_code"
-            placeholder="QR Code"
-            className="w-full mb-2 p-2 border rounded"
-            value={form.qr_code || ""}
-            onChange={handleChange}
-            required
-          />
-          <input
-            name="code"
-            placeholder="Code"
-            className="w-full mb-2 p-2 border rounded"
-            value={form.code || ""}
-            onChange={handleChange}
-            maxLength={5}
-            pattern="[A-Za-z0-9]{5}"
-            inputMode="text"
-            title="Enter exactly 5 characters (letters or numbers)"
-            required
-          />
-          <input
-            name="code2"
-            placeholder="Code 2"
-            className="w-full mb-2 p-2 border rounded"
-            value={form.code2 || ""}
-            onChange={handleChange}
-            maxLength={5}
-            pattern="[A-Za-z0-9]{5}"
-            inputMode="text"
-            title="Enter exactly 5 characters (letters or numbers)"
-            required
-          />
-          <input
-            name="code3"
-            placeholder="Code 3"
-            className="w-full mb-2 p-2 border rounded"
-            value={form.code3 || ""}
-            onChange={handleChange}
-            maxLength={5}
-            pattern="[A-Za-z0-9]{5}"
-            inputMode="text"
-            title="Enter exactly 5 characters (letters or numbers)"
-            required
-          />
-          <input
-            name="code4"
-            placeholder="Code 4"
-            className="w-full mb-2 p-2 border rounded"
-            value={form.code4 || ""}
-            onChange={handleChange}
-            maxLength={5}
-            pattern="[A-Za-z0-9]{5}"
-            inputMode="text"
-            title="Enter exactly 5 characters (letters or numbers)"
-            required
-          />
-          <textarea
-            name="warnings"
-            placeholder="Important warnings..."
-            className="w-full mb-2 p-2 border rounded span-2"
-            value={form.warnings || ""}
-            onChange={handleChange}
-            required
-          />
-          <input
-            name="vial"
-            placeholder="Vial"
-            className="w-full mb-2 p-2 border rounded"
-            value={form.vial || ""}
-            onChange={handleChange}
-            required
-          />
-          <input
-            name="caliber"
-            placeholder="Caliber"
-            className="w-full mb-2 p-2 border rounded"
-            value={form.caliber || ""}
-            onChange={handleChange}
-            required
-          />
-          <input
-            name="vid_url"
-            placeholder="Video URL"
-            className="w-full mb-2 p-2 border rounded"
-            value={form.vid_url || ""}
-            onChange={handleChange}
-            required
-          />
-          <input
-            name="img_url"
-            placeholder="Image one"
-            className="w-full mb-2 p-2 border rounded"
-            value={form.img_url || ""}
-            onChange={handleChange}
-            required
-          />
-          <input
-            name="img_url2"
-            placeholder="Image two"
-            className="w-full mb-2 p-2 border rounded"
-            value={form.img_url2 || ""}
-            onChange={handleChange}
-            required
-          />
-          <input
-            name="img_url3"
-            placeholder="Image three"
-            className="w-full mb-2 p-2 border rounded"
-            value={form.img_url3 || ""}
-            onChange={handleChange}
-            required
-          />
+          <div className="form-group">
+            <label htmlFor="pname" className="form-label">Product Name Qr</label>
+            <input
+              id="pname"
+              name="pname"
+              placeholder="Enter product name in English"
+              className="w-full mb-2 p-2 border rounded"
+              value={form.pname || ""}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="name" className="form-label">Product Name Web</label>
+            <input
+              id="name"
+              name="name"
+              placeholder="Enter product name in local language"
+              className="w-full mb-2 p-2 border rounded"
+              value={form.name || ""}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group span-2">
+            <label htmlFor="product_overview" className="form-label">Product Overview</label>
+            <textarea
+              id="product_overview"
+              name="product_overview"
+              placeholder="Enter general product description..."
+              className="w-full mb-2 p-2 border rounded"
+              value={form.product_overview || ""}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group span-2">
+            <label htmlFor="uses" className="form-label">Product Uses</label>
+            <textarea
+              id="uses"
+              name="uses"
+              placeholder="Describe the uses of the product..."
+              className="w-full mb-2 p-2 border rounded"
+              value={form.uses || ""}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group span-2">
+            <label htmlFor="potential_harms" className="form-label">Potential Harms</label>
+            <textarea
+              id="potential_harms"
+              name="potential_harms"
+              placeholder="List any potential harms or side effects..."
+              className="w-full mb-2 p-2 border rounded"
+              value={form.potential_harms || ""}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group span-2">
+            <label htmlFor="method_of_use" className="form-label">Method of Use</label>
+            <textarea
+              id="method_of_use"
+              name="method_of_use"
+              placeholder="Explain how to use the product..."
+              className="w-full mb-2 p-2 border rounded"
+              value={form.method_of_use || ""}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="price" className="form-label">Price</label>
+            <input
+              id="price"
+              name="price"
+              type="number"
+              step="0.01"
+              placeholder="0.00"
+              className="w-full mb-2 p-2 border rounded"
+              value={form.price || ""}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="qr_code" className="form-label">QR Code Link</label>
+            <input
+              id="qr_code"
+              name="qr_code"
+              placeholder="Enter QR code"
+              className="w-full mb-2 p-2 border rounded"
+              value={form.qr_code || ""}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="code" className="form-label">Code 1</label>
+            <input
+              id="code"
+              name="code"
+              placeholder="Enter 5-character code"
+              className="w-full mb-2 p-2 border rounded"
+              value={form.code || ""}
+              onChange={handleChange}
+              maxLength={5}
+              pattern="[A-Za-z0-9]{5}"
+              inputMode="text"
+              title="Enter exactly 5 characters (letters or numbers)"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="code2" className="form-label">Code 2</label>
+            <input
+              id="code2"
+              name="code2"
+              placeholder="Enter 5-character code"
+              className="w-full mb-2 p-2 border rounded"
+              value={form.code2 || ""}
+              onChange={handleChange}
+              maxLength={5}
+              pattern="[A-Za-z0-9]{5}"
+              inputMode="text"
+              title="Enter exactly 5 characters (letters or numbers)"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="code3" className="form-label">Code 3</label>
+            <input
+              id="code3"
+              name="code3"
+              placeholder="Enter 5-character code"
+              className="w-full mb-2 p-2 border rounded"
+              value={form.code3 || ""}
+              onChange={handleChange}
+              maxLength={5}
+              pattern="[A-Za-z0-9]{5}"
+              inputMode="text"
+              title="Enter exactly 5 characters (letters or numbers)"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="code4" className="form-label">Code 4</label>
+            <input
+              id="code4"
+              name="code4"
+              placeholder="Enter 5-character code"
+              className="w-full mb-2 p-2 border rounded"
+              value={form.code4 || ""}
+              onChange={handleChange}
+              maxLength={5}
+              pattern="[A-Za-z0-9]{5}"
+              inputMode="text"
+              title="Enter exactly 5 characters (letters or numbers)"
+              required
+            />
+          </div>
+          <div className="form-group span-2">
+            <label htmlFor="warnings" className="form-label">Important Warnings</label>
+            <textarea
+              id="warnings"
+              name="warnings"
+              placeholder="Enter important warnings..."
+              className="w-full mb-2 p-2 border rounded"
+              value={form.warnings || ""}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="vial" className="form-label">Vial</label>
+            <input
+              id="vial"
+              name="vial"
+              placeholder="Enter vial information"
+              className="w-full mb-2 p-2 border rounded"
+              value={form.vial || ""}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="caliber" className="form-label">Caliber</label>
+            <input
+              id="caliber"
+              name="caliber"
+              placeholder="Enter caliber information"
+              className="w-full mb-2 p-2 border rounded"
+              value={form.caliber || ""}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="vid_url" className="form-label">Video URL</label>
+            <input
+              id="vid_url"
+              name="vid_url"
+              placeholder="Enter video URL"
+              className="w-full mb-2 p-2 border rounded"
+              value={form.vid_url || ""}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="img_url" className="form-label">First Image URL</label>
+            <input
+              id="img_url"
+              name="img_url"
+              placeholder="Enter primary image URL"
+              className="w-full mb-2 p-2 border rounded"
+              value={form.img_url || ""}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="img_url2" className="form-label">Secondary Image URL</label>
+            <input
+              id="img_url2"
+              name="img_url2"
+              placeholder="Enter secondary image URL"
+              className="w-full mb-2 p-2 border rounded"
+              value={form.img_url2 || ""}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="img_url3" className="form-label">Third Image URL</label>
+            <input
+              id="img_url3"
+              name="img_url3"
+              placeholder="Enter third image URL"
+              className="w-full mb-2 p-2 border rounded"
+              value={form.img_url3 || ""}
+              onChange={handleChange}
+              required
+            />
+          </div>
         </div>
         {formError && (
           <div className="text-red-500 mb-2" role="alert">
@@ -251,9 +327,7 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
     </div>
   );
 }
-// ...existing code...
 
-// Replace the UpdateInfoSection in your Dashboard.jsx with this:
 
 function UpdateInfoSection({ userId, currentEmail, currentPhone }) {
   const [email, setEmail] = useState("");
