@@ -21,8 +21,8 @@ export default function OUR_INJECTABLES() {
   return (
     <>
       <div className="OUR_INJECTABLES">
-        <div className="borderOur">
-          <h5>CHECK OUT!</h5>
+        <div className="borderOur ">
+          <h5>steroid</h5>
           <ul>
             <li>
               <ShinyText
@@ -64,7 +64,6 @@ export default function OUR_INJECTABLES() {
                 }
               }}
               className="products-swiper"
-              // إضافة هذه الخصائص للتأكد من العرض الصحيح
               watchSlidesProgress={true}
               watchOverflow={true}
             >

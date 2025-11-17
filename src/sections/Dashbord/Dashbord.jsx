@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   getAllProducts,
@@ -22,8 +22,24 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
   const [formError, setFormError] = useState("");
 
   function handleChange(e) {
-    const { name } = e.target;
+    const { name, files } = e.target;
     let { value } = e.target;
+
+    if (name === "images" || name === "videos") {
+      const list = files ? Array.from(files) : [];
+      setForm((f) => ({ ...f, [name]: list }));
+      return;
+    }
+
+    const numericFields = ["price"];
+
+    if (numericFields.includes(name)) {
+      setForm((f) => ({ ...f, [name]: value }));
+      return;
+    }
+
+    setForm((f) => ({ ...f, [name]: value }));
+
     // Enforce alphanumeric only and max length 5 for code fields
     if (["code", "code2", "code3", "code4"].includes(name)) {
       value = String(value || "")
@@ -32,6 +48,8 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
     }
     setForm((f) => ({ ...f, [name]: value }));
   }
+
+  
 
   return (
     <div className="dashboard-modal-bg">
@@ -57,6 +75,7 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
         <h3 className="dashboard-title mb-4">
           {initial.p_id ? "Edit" : "Add"} Product
         </h3>
+        {formError && <p className="text-red-500 mb-4">{formError}</p>}
         <div className="form-grid">
           <div className="form-group">
             <label htmlFor="pname" className="form-label">Product Name Qr</label>
@@ -259,59 +278,65 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
           <div className="form-group">
             <label htmlFor="vid_url" className="form-label">Video URL</label>
             <input
+              type="file"
               id="vid_url"
               name="vid_url"
-              placeholder="Enter video URL"
+              accept="video/*"
               className="w-full mb-2 p-2 border rounded"
-              value={form.vid_url || ""}
-              onChange={handleChange}
+              onChange={(e) =>
+                setForm((f) => ({ ...f, vid_url: e.target.files?.[0] || null }))
+              }
               required
             />
           </div>
           <div className="form-group">
             <label htmlFor="img_url" className="form-label">First Image URL</label>
             <input
+              type="file"
               id="img_url"
               name="img_url"
-              placeholder="Enter primary image URL"
+              accept="image/*"
               className="w-full mb-2 p-2 border rounded"
-              value={form.img_url || ""}
-              onChange={handleChange}
+              onChange={(e) =>
+                setForm((f) => ({
+                  ...f,
+                  img_url: e.target.files?.[0] || null,
+                }))
+              }
               required
             />
           </div>
           <div className="form-group">
             <label htmlFor="img_url2" className="form-label">Secondary Image URL</label>
             <input
+              type="file"
               id="img_url2"
               name="img_url2"
-              placeholder="Enter secondary image URL"
+              accept="image/*"
               className="w-full mb-2 p-2 border rounded"
-              value={form.img_url2 || ""}
-              onChange={handleChange}
+              onChange={(e) => setForm((f) => ({ ...f, img_url2: e.target.files?.[0] || null }))}
               required
             />
           </div>
           <div className="form-group">
             <label htmlFor="img_url3" className="form-label">Third Image URL</label>
             <input
+              type="file"
               id="img_url3"
               name="img_url3"
-              placeholder="Enter third image URL"
+              accept="image/*"
               className="w-full mb-2 p-2 border rounded"
-              value={form.img_url3 || ""}
-              onChange={handleChange}
+              onChange={(e) => setForm((f) => ({ ...f, img_url3: e.target.files?.[0] || null }))}
               required
             />
           </div>
         </div>
-        {formError && (
-          <div className="text-red-500 mb-2" role="alert">
-            {formError}
-          </div>
-        )}
         <div className="flex gap-2 mt-4">
-          <button type="submit" className="dashboard-btn" disabled={isLoading}>
+          <button
+            type="submit"
+            className="dashboard-btn"
+            disabled={isLoading}
+          >
             {isLoading ? "Saving..." : "Save"}
           </button>
           <button
@@ -328,8 +353,113 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
   );
 }
 
+export default function Dashboard(props) {
+  const [showForm, setShowForm] = useState(false);
+  const [editProduct, setEditProduct] = useState(null);
+  const [deleteId, setDeleteId] = useState(null);
+  const [search, setSearch] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [activeCategory, setActiveCategoryState] = useState(searchParams.get("category") || "steroids");
+  const [activeSub, setActiveSubState] = useState(searchParams.get("sub") || "injectables");
 
-function UpdateInfoSection({ userId, currentEmail, currentPhone }) {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  const secIdMap = {
+    injectables: 3,
+    tablets: 4,
+    vials: 5,
+    pens: 6,
+  };
+
+  useEffect(() => {
+    const cat = searchParams.get("category") || "steroids";
+    let sub = searchParams.get("sub");
+    if (!sub) {
+      sub = cat === "steroids" ? "injectables" : "vials";
+    }
+    setActiveCategoryState(cat);
+    setActiveSubState(sub);
+  }, [searchParams]);
+
+  const setActiveCategory = (cat) => {
+    const defaultSub = cat === "steroids" ? "injectables" : "vials";
+    setActiveCategoryState(cat);
+    setActiveSubState(defaultSub);
+    setSearchParams({ category: cat, sub: defaultSub });
+  };
+
+  const setActiveSub = (sub) => {
+    setActiveSubState(sub);
+    setSearchParams({ category: activeCategory, sub });
+  };
+
+  const { data: products = [], isLoading, error } = useQuery({
+    queryKey: ["products"],
+    queryFn: getAllProducts,
+  });
+
+  const createMutation = useMutation({
+    mutationFn: createProduct,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["products"]);
+      setShowForm(false);
+    },
+  });
+
+  const updateMutation = useMutation({
+    mutationFn: updateProduct,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["products"]);
+      setEditProduct(null);
+    },
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: deleteProduct,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["products"]);
+      setDeleteId(null);
+    },
+  });
+
+  function handleLogout() {
+    const token = localStorage.getItem("token");
+    // You may need to store user id somewhere, here assumed as "1"
+    logout(1, token).then(() => {
+      localStorage.removeItem("token");
+      navigate("/login");
+    });
+  }
+
+  const filteredProducts = Array.isArray(products)
+    ? products
+      .filter((p) => {
+        const sec = String(p.sec_name || "").toLowerCase();
+        return sec === activeSub.toLowerCase();
+      })
+      .filter((p) => {
+        const q = search.trim().toLowerCase();
+        if (!q) return true;
+        return (
+          String(p.pname || "").toLowerCase().includes(q) ||
+          String(p.name || "").toLowerCase().includes(q) ||
+          String(p.p_id || "").toLowerCase().includes(q)
+        );
+      })
+    : [];
+
+  const countFor = (sub) =>
+    Array.isArray(products)
+      ? products.filter((p) => String(p.sec_name || "").toLowerCase() === sub.toLowerCase()).length
+      : 0;
+
+  const userId = props.userId;
+  const email = props.email;
+  const phone = props.phone;
+
+
+  function UpdateInfoSection({ userId, currentEmail, currentPhone }) {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
@@ -387,9 +517,9 @@ function UpdateInfoSection({ userId, currentEmail, currentPhone }) {
 
   return (
     <div className="update-info-section mt-8">
-  <h1>
-            <ShinyText text="Update Email & Phone" speed={3} className="shiny-heading dashboard-title mb-4" />
-          </h1>      <form onSubmit={handleSubmit} className="max-w-md">
+      <h1>
+        <ShinyText text="Update Email & Phone" speed={3} className="shiny-heading dashboard-title mb-4" />
+      </h1>      <form onSubmit={handleSubmit} className="max-w-md">
         <div className="mb-4">
           <label className="block text-sm font-medium mb-2">Email:</label>
           <input
@@ -424,104 +554,6 @@ function UpdateInfoSection({ userId, currentEmail, currentPhone }) {
   );
 }
 
-//
-
-export default function Dashboard(props) {
-  const queryClient = useQueryClient();
-  const navigate = useNavigate();
-  const [showForm, setShowForm] = useState(false);
-  const [editProduct, setEditProduct] = useState(null);
-  const [deleteId, setDeleteId] = useState(null);
-  const [search, setSearch] = useState("");
-  const [searchParams, setSearchParams] = useSearchParams();
-  const initialSection = (
-    searchParams.get("section") || "injectables"
-  ).toLowerCase();
-  const [activeSection, setActiveSection] = useState(initialSection);
-
-  const {
-    data: products,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["products"],
-    queryFn: getAllProducts,
-  });
-
-  const createMutation = useMutation({
-    mutationFn: createProduct,
-    onSuccess: () => {
-      queryClient.invalidateQueries(["products"]);
-      setShowForm(false);
-    },
-  });
-
-  const updateMutation = useMutation({
-    mutationFn: updateProduct,
-    onSuccess: () => {
-      queryClient.invalidateQueries(["products"]);
-      setEditProduct(null);
-    },
-  });
-
-  const deleteMutation = useMutation({
-    mutationFn: deleteProduct,
-    onSuccess: () => {
-      queryClient.invalidateQueries(["products"]);
-      setDeleteId(null);
-    },
-  });
-
-  function handleLogout() {
-    const token = localStorage.getItem("token");
-    // You may need to store user id somewhere, here assumed as "1"
-    logout(1, token).then(() => {
-      localStorage.removeItem("token");
-      navigate("/login");
-    });
-  }
-
-  const filteredProducts = Array.isArray(products)
-    ? products
-      .filter((p) => {
-        // Section filter using sec_name
-        const sec = String(p.sec_name || "").toLowerCase();
-        return sec === String(activeSection).toLowerCase();
-      })
-      .filter((p) => {
-        // Text search filter
-        const q = search.trim().toLowerCase();
-        if (!q) return true;
-        return (
-          String(p.pname || "")
-            .toLowerCase()
-            .includes(q) ||
-          String(p.name || "")
-            .toLowerCase()
-            .includes(q) ||
-          String(p.p_id || "")
-            .toLowerCase()
-            .includes(q)
-        );
-      })
-    : [];
-
-  const countFor = (sec) =>
-    Array.isArray(products)
-      ? products.filter(
-        (p) => String(p.sec_name || "").toLowerCase() === String(sec)
-      ).length
-      : 0;
-
-  function setSection(sec) {
-    const norm = (sec || "injectables").toLowerCase();
-    setActiveSection(norm);
-    setSearchParams({ section: norm });
-  }
-
-  const userId = props.userId;
-  const email = props.email;
-  const phone = props.phone;
 
   return (
     <div className="dash">
@@ -536,17 +568,13 @@ export default function Dashboard(props) {
             <div className="toolbar-left">
               <input
                 className="toolbar-search"
-                placeholder="Search by name 
-            "
+                placeholder="Search by name"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
             </div>
             <div className="toolbar-right">
-              <button
-                className="dashboard-btn"
-                onClick={() => setShowForm(true)}
-              >
+              <button className="dashboard-btn" onClick={() => setShowForm(true)}>
                 + Add Product
               </button>
               <button className="dashboard-btn logout" onClick={handleLogout}>
@@ -554,20 +582,54 @@ export default function Dashboard(props) {
               </button>
             </div>
           </div>
+          {/* Main Category Tabs */}
+          <div className="main-tabs section-tabs mb-4">
+            <button
+              className={`tab ${activeCategory === "steroids" ? "active" : ""}`}
+              onClick={() => setActiveCategory("steroids")}
+            >
+              Steroids
+            </button>
+            <button
+              className={`tab ${activeCategory === "peptides" ? "active" : ""}`}
+              onClick={() => setActiveCategory("peptides")}
+            >
+              Peptides
+            </button>
+          </div>
+          {/* Sub Tabs */}
           <div className="section-tabs">
-            <button
-              className={`tab ${activeSection === "injectables" ? "active" : ""
-                }`}
-              onClick={() => setSection("injectables")}
-            >
-              Injectables ({countFor("injectables")})
-            </button>
-            <button
-              className={`tab ${activeSection === "tablets" ? "active" : ""}`}
-              onClick={() => setSection("tablets")}
-            >
-              Tablets ({countFor("tablets")})
-            </button>
+            {activeCategory === "steroids" ? (
+              <>
+                <button
+                  className={`tab ${activeSub === "injectables" ? "active" : ""}`}
+                  onClick={() => setActiveSub("injectables")}
+                >
+                  Injectables ({countFor("injectables")})
+                </button>
+                <button
+                  className={`tab ${activeSub === "tablets" ? "active" : ""}`}
+                  onClick={() => setActiveSub("tablets")}
+                >
+                  Tablets ({countFor("tablets")})
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  className={`tab ${activeSub === "vials" ? "active" : ""}`}
+                  onClick={() => setActiveSub("vials")}
+                >
+                  Vials ({countFor("vials")})
+                </button>
+                <button
+                  className={`tab ${activeSub === "pens" ? "active" : ""}`}
+                  onClick={() => setActiveSub("pens")}
+                >
+                  Pens ({countFor("pens")})
+                </button>
+              </>
+            )}
           </div>
           {isLoading ? (
             <div>Loading products...</div>
@@ -630,9 +692,9 @@ export default function Dashboard(props) {
                               )}
                             </div>
                             <div className="product-card-body">
-                              <div className="product-card-title">
+                              {/* <div className="product-card-title">
                                 {prod.name}
-                              </div>
+                              </div> */}
                               {prod.pname && (
                                 <div className="product-card-subtitle">
                                   {prod.pname}
@@ -707,27 +769,14 @@ export default function Dashboard(props) {
                 warnings: "",
                 vial: "",
                 caliber: "",
-                // Auto-fill sec_id based on active section: Injectables=3, Tablets=4
-                sec_id:
-                  activeSection === "injectables"
-                    ? 3
-                    : activeSection === "tablets"
-                      ? 4
-                      : "",
+                sec_id: secIdMap[activeSub],
                 vid_url: "",
                 img_url: "",
                 img_url2: "",
                 img_url3: "",
               }}
               onSave={(data) => {
-                // Enforce sec_id mapping on submit as well
-                const mappedSecId =
-                  activeSection === "injectables"
-                    ? 3
-                    : activeSection === "tablets"
-                      ? 4
-                      : data.sec_id;
-                createMutation.mutate({ ...data, sec_id: mappedSecId });
+                createMutation.mutate({ ...data, sec_id: secIdMap[activeSub] });
               }}
               onClose={() => setShowForm(false)}
               isLoading={createMutation.isLoading}
@@ -738,16 +787,10 @@ export default function Dashboard(props) {
             <ProductForm
               initial={editProduct}
               onSave={(data) => {
-                const mappedSecId =
-                  activeSection === "injectables"
-                    ? 3
-                    : activeSection === "tablets"
-                      ? 4
-                      : data.sec_id;
                 updateMutation.mutate({
                   ...data,
                   p_id: editProduct.p_id,
-                  sec_id: mappedSecId,
+                  sec_id: secIdMap[activeSub] || editProduct.sec_id, // Fallback to existing if mismatch
                 });
               }}
               onClose={() => setEditProduct(null)}

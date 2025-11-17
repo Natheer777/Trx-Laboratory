@@ -20,7 +20,7 @@ export default function OUR_TABLETS() {
     <>
     <div className="OUR_INJECTABLES mt-4">
         <div className="borderOur">
-        <h5>CHECK OUT!</h5>
+        <h5>steroid</h5>
         <ul>
           <li>
 
