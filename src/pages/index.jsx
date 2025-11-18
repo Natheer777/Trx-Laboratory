@@ -10,3 +10,4 @@ export { default as Tablets } from "./tablets/Tablets";
 export { default as About } from "./About/About";
 export { default as Dash } from "./Dash/Dash";
 export { default as LoginPage } from "./LoginPage/LoginPage";
+export { default as Peptids } from "./peptids/peptids";

@@ -104,6 +104,9 @@ const Footer = () => {
                 <li>
                   <Link to="/tablets">Tablets</Link>
                 </li>
+                <li>
+                  <Link to="/peptids">Peptids</Link>
+                </li>
                 {/* <li><Link to="/Counterfeit">Counterfeit</Link></li> */}
                 {/* <li><Link to="/Article">Article</Link></li> */}
                 {/* <li><Link to="/Blogs">Blogs</Link></li> */}

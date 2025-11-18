@@ -15,6 +15,7 @@ import {
   Counterfeit,
   Injectables,
   Tablets,
+  Peptids,
   Dash,
 } from "./pages";
 import { useEffect } from "react";
@@ -70,6 +71,7 @@ export default function App() {
           <Route path="/Blogs" element={<Blogs />} />
           <Route path="/Article" element={<Articles />} />
           <Route path="/injectables" element={<Injectables />} />
+          <Route path="/peptids" element={<Peptids />} />
           <Route path="/tablets" element={<Tablets />} />
           <Route path="/:param" element={<DynamicRouteHandler />} />
           <Route path="*" element={<Navigate to="/login" />} />

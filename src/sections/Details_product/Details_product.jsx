@@ -166,38 +166,8 @@ const CircularProgress = ({
     </div>
   );
 };
-// const productColors = {
-//   DECA250mg: "#3bb9eb",
-//   NPP100mg: "#3bb9eb",
-//   primo100mg: "#3bb9eb",
-//   Sustalon250mg: "#3bb9eb",
 
-//   "L-carnitine+Yohimbine+Clen200mg": "#008081",
-//   MASTE100mg: "#008081",
-//   MASTERON200mg: "#008081",
 
-//   "TEST-C200": "#25356e",
-//   "TEST-E250": "#25356e",
-//   "TEST-P100": "#25356e",
-
-//   "TREN-A100mg": "#6564aa",
-//   "TREN-E200mg": "#6564aa",
-
-//   Bolde250mg: "#6564aa",
-
-//   // "Carntin+Yohimbine": "#008081",
-//   "ANAVAR-10mg": "#6564aa",
-//   "CLENBUT-40mg": "#008081",
-//   "DIANABOL-10mg": "#3bb9eb",
-//   "OXYTHOL-50mg": "#25356e",
-//   "WINSTROL-10mg": "#6564aa",
-// };
-function capitalizeFirstLetter(str) {
-  if (!str) return "";
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
-// دالة JSX مخصصة لعرض اسم المنتج بشكل مقسم وملون (نفس منطق Products_home)
 const renderSpecialLCarnitineName = () => (
   <div style={{ lineHeight: 1.1 }}>
     <div style={{ letterSpacing: "1px" }}>L-Carnitine</div>
@@ -226,7 +196,6 @@ export default function Details_product({
   const [productData, setProductData] = useState(productDataProp || null);
   const [loading, setLoading] = useState(productDataProp ? false : true);
   const [error, setError] = useState(null);
-  const [showFullDescription, setShowFullDescription] = useState(false);
 
   useEffect(() => {
     if (productDataProp) return;
@@ -272,15 +241,10 @@ export default function Details_product({
     return (
       <div className="details-error-container">
         <p className="details-error-message">{error}</p>
-        {/* <p className="details-error-subtitle">
-          This product has been previously verified. <br />
-          (This QR code has been scanned before.)
-        </p> */}
       </div>
     );
   if (!productData) return <p></p>;
 
-  // إخفاء منتج Carntin+Yohimbine
   if (productData.pname === "Carntin+Yohimbine") {
     return (
       <div className="details-error-container">
@@ -302,6 +266,10 @@ export default function Details_product({
     vial,
     caliber,
     sec_name,
+    dosage,
+    kit,
+    total_vial,
+    sterile_water,
     vid_url,
     img_url,
     img_url2,
@@ -309,45 +277,11 @@ export default function Details_product({
     science_name
   } = productData;
 
-  // const productColor = productColors[pname] || "#ffffff";
-  // Clean up the science_name display
-  const displayScienceName = science_name
-    ? science_name.replace(/[()]/g, '').trim()
-    : '';
 
-  const formatTextWithNumbers = (text, useProductColor = false) => {
-    if (!text) return "";
-
-    const parts = text.split(/(\d+)/);
-    return parts.map((part, index) => {
-      if (/^\d+$/.test(part)) {
-        return (
-          <span
-            key={index}
-            className="number-value"
-            // style={useProductColor ? { color: productColor } : {}}
-          >
-            {part}
-          </span>
-        );
-      } else {
-        return (
-          <span key={index} className="text-content">
-            {part}
-          </span>
-        );
-      }
-    });
-  };
 
   return (
     <>
-      {/* <div
-        className="BackgroundImage"
-        style={{
-          backgroundImage: `url(${img_url})`,
-        }}
-      ></div> */}
+
 
       <div className="swiper_product mb-5 container">
         <div className="Swiper_Conent">
@@ -387,7 +321,7 @@ export default function Details_product({
                 <div className="detailsMainProduct pb-4">
                   <div>
                     <h1
-                      className="product_name text-xl font-bold  left"
+                      className="product_name text-xl font-bold  left ps-0"
                       // style={{ color: productColor }}
                     >
                       {/* تخصيص عرض اسم المنتج إذا كان هو المطلوب */}
@@ -412,11 +346,15 @@ export default function Details_product({
                               : name.toUpperCase();
                           })()}
                     </h1>
-                    {sec_name && (
+                    <p className="scientific_name">
+
+                    {name}
+                    </p>
+                    {/* {sec_name && (
                       <p className="sec_name">
                         {capitalizeFirstLetter(sec_name.replace(/[()]/g, ""))}
                       </p>
-                    )}
+                    )} */}
                     {/* {science_name && (
                       <p className="sec_name">
                         {capitalizeFirstLetter(science_name.replace(/[()]/g, ""))}
@@ -426,20 +364,24 @@ export default function Details_product({
                   <div>
                     <span className="vial right">
                       <span>
-                        {sec_name === "injections"
+                        {/* {sec_name === "injections"
                           ? "Vial: "
                           : sec_name === "tablets"
                           ? "Tablets: "
-                          : "Vial: "}
+                          : "Vial: "} */}
                       </span>
-                      {vial}
+                      {dosage}
                     </span>{" "}
                     <p className="caliber right">
-                      {caliber}
+                      {kit}
                     </p>  
                     <span className="price  left">
-                      <span>Price: </span>
-                      {price}$
+                  
+                      {total_vial}
+                    </span>
+                    <span className="price  left">
+               
+                      {sterile_water}
                     </span>
                   </div>
                 </div>

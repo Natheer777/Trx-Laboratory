@@ -124,7 +124,8 @@ const Navbar = () => {
       isDropdown: true,
       items: [
         { path: '/injectables', label: 'INJECTABLES' },
-        { path: '/tablets', label: 'TABLETS' }
+        { path: '/tablets', label: 'TABLETS' },
+        { path: '/peptids', label: 'PEPTIDS' },
       ]
     },
     { path: '/Authenticity', label: 'Authenticity' },

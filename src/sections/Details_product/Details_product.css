@@ -29,7 +29,7 @@
 /* Product name with gradient */
 .swiper_product .product_name {
   font-size: 2rem;
-  font-family: 'LittleBubble', sans-serif;
+  font-family: "LittleBubble", sans-serif;
   background: linear-gradient(90deg, #6ed6ff, #263684 80%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: none;
@@ -73,7 +73,6 @@
 
 /* Responsive tweaks */
 @media (max-width: 991px) {
-
   .swiper_product,
   .Verfiy_product {
     padding: 1.2rem 0.5rem;
@@ -138,7 +137,8 @@
   border-top-right-radius: 20px;
   /* background-color: #99222ab2; */
   border-bottom: 10px solid;
-  border-image: linear-gradient(90deg, #263684, #4a90e2) 1;}
+  border-image: linear-gradient(90deg, #263684, #4a90e2) 1;
+}
 
 .price {
   font-family: "NunitoSemiBold";
@@ -148,7 +148,7 @@
   margin-left: 10px;
   border-bottom-left-radius: 20px;
   border-top-right-radius: 20px;
-    }
+}
 
 .price span,
 .vial span {
@@ -363,7 +363,7 @@
 }
 
 .number-value {
-  font-family: 'RoundedBlackRegular';
+  font-family: "RoundedBlackRegular";
   text-shadow: 0 0 2px white, 0 0 2px white, 0 0 3px white !important;
   display: flex;
   justify-content: center;
@@ -429,7 +429,7 @@
 .circular-progress-attribute {
   width: 60px;
   height: 60px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   border-radius: 50%;
   background: #fff;
   display: flex;
@@ -492,7 +492,8 @@
   text-align: center;
   margin: 2rem auto;
   padding: 2rem;
-  background: -webkit-linear-gradient(180deg, #1160aa, #04044f);  border-radius: 15px;
+  background: -webkit-linear-gradient(180deg, #1160aa, #04044f);
+  border-radius: 15px;
   box-shadow: 0 8px 32px rgba(220, 53, 69, 0.1);
   border: 2px solid #dc3545;
   max-width: 500px;
@@ -501,7 +502,7 @@
 }
 
 .details-error-container::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -515,7 +516,7 @@
   font-size: 1.8rem !important;
   font-weight: bold !important;
   color: #dc3545;
-  font-family: 'NunitoBlack';
+  font-family: "NunitoBlack";
   font-weight: 600;
   margin: 0;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
@@ -552,4 +553,11 @@
   .details-error-subtitle {
     font-size: 0.8rem;
   }
+}
+
+.scientific_name {
+  width: 210px;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
 }

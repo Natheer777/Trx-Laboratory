@@ -25,31 +25,29 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
     const { name, files } = e.target;
     let { value } = e.target;
 
-    if (name === "images" || name === "videos") {
-      const list = files ? Array.from(files) : [];
-      setForm((f) => ({ ...f, [name]: list }));
+    // Handle file inputs
+    if (["vid_url", "img_url", "img_url2", "img_url3"].includes(name)) {
+      const file = files?.[0] || null;
+      setForm((f) => ({ ...f, [name]: file }));
       return;
     }
 
+    // Handle numeric fields
     const numericFields = ["price"];
-
     if (numericFields.includes(name)) {
       setForm((f) => ({ ...f, [name]: value }));
       return;
     }
 
-    setForm((f) => ({ ...f, [name]: value }));
-
-    // Enforce alphanumeric only and max length 5 for code fields
+    // Handle code fields - enforce alphanumeric only and max length 5
     if (["code", "code2", "code3", "code4"].includes(name)) {
       value = String(value || "")
         .replace(/[^a-z0-9]/gi, "")
         .slice(0, 5);
     }
+
     setForm((f) => ({ ...f, [name]: value }));
   }
-
-  
 
   return (
     <div className="dashboard-modal-bg">
@@ -76,9 +74,13 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
           {initial.p_id ? "Edit" : "Add"} Product
         </h3>
         {formError && <p className="text-red-500 mb-4">{formError}</p>}
+        
         <div className="form-grid">
+          {/* ============ BASIC INFORMATION ============ */}
           <div className="form-group">
-            <label htmlFor="pname" className="form-label">Product Name Qr</label>
+            <label htmlFor="pname" className="form-label">
+              Product Name QR (English)
+            </label>
             <input
               id="pname"
               name="pname"
@@ -89,8 +91,11 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
               required
             />
           </div>
+
           <div className="form-group">
-            <label htmlFor="name" className="form-label">Product Name Web</label>
+            <label htmlFor="name" className="form-label">
+              Product Name Web (Local)
+            </label>
             <input
               id="name"
               name="name"
@@ -101,56 +106,115 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
               required
             />
           </div>
-          <div className="form-group span-2">
-            <label htmlFor="product_overview" className="form-label">Product Overview</label>
-            <textarea
-              id="product_overview"
-              name="product_overview"
-              placeholder="Enter general product description..."
-              className="w-full mb-2 p-2 border rounded"
-              value={form.product_overview || ""}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group span-2">
-            <label htmlFor="uses" className="form-label">Product Uses</label>
-            <textarea
-              id="uses"
-              name="uses"
-              placeholder="Describe the uses of the product..."
-              className="w-full mb-2 p-2 border rounded"
-              value={form.uses || ""}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group span-2">
-            <label htmlFor="potential_harms" className="form-label">Potential Harms</label>
-            <textarea
-              id="potential_harms"
-              name="potential_harms"
-              placeholder="List any potential harms or side effects..."
-              className="w-full mb-2 p-2 border rounded"
-              value={form.potential_harms || ""}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group span-2">
-            <label htmlFor="method_of_use" className="form-label">Method of Use</label>
-            <textarea
-              id="method_of_use"
-              name="method_of_use"
-              placeholder="Explain how to use the product..."
-              className="w-full mb-2 p-2 border rounded"
-              value={form.method_of_use || ""}
-              onChange={handleChange}
-              required
-            />
-          </div>
+
+          {/* ============ DOSAGE & STRENGTH ============ */}
           <div className="form-group">
-            <label htmlFor="price" className="form-label">Price</label>
+            <label htmlFor="dosage" className="form-label">
+              Dosage
+            </label>
+            <input
+              id="dosage"
+              name="dosage"
+              placeholder="e.g., 5 MG"
+              className="w-full mb-2 p-2 border rounded"
+              value={form.dosage || ""}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="strength" className="form-label">
+              Strength
+            </label>
+            <input
+              id="strength"
+              name="strength"
+              placeholder="e.g., 100mg/ml"
+              className="w-full mb-2 p-2 border rounded"
+              value={form.strength || ""}
+              onChange={handleChange}
+            />
+          </div>
+
+          {/* ============ KIT & VIAL INFORMATION ============ */}
+          <div className="form-group">
+            <label htmlFor="kit" className="form-label">
+              Kit
+            </label>
+            <input
+              id="kit"
+              name="kit"
+              placeholder="e.g., 25 MG kit"
+              className="w-full mb-2 p-2 border rounded"
+              value={form.kit || ""}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="total_vial" className="form-label">
+              Total Vial
+            </label>
+            <input
+              id="total_vial"
+              name="total_vial"
+              placeholder="e.g., 5 vial 2ml x 5MG"
+              className="w-full mb-2 p-2 border rounded"
+              value={form.total_vial || ""}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="vial" className="form-label">
+              Vial Type
+            </label>
+            <input
+              id="vial"
+              name="vial"
+              placeholder="Enter vial information"
+              className="w-full mb-2 p-2 border rounded"
+              value={form.vial || ""}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="sterile_water" className="form-label">
+              Sterile Water
+            </label>
+            <input
+              id="sterile_water"
+              name="sterile_water"
+              placeholder="e.g., Sterile water 2mlx5"
+              className="w-full mb-2 p-2 border rounded"
+              value={form.sterile_water || ""}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="caliber" className="form-label">
+              Caliber
+            </label>
+            <input
+              id="caliber"
+              name="caliber"
+              placeholder="Enter caliber information"
+              className="w-full mb-2 p-2 border rounded"
+              value={form.caliber || ""}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          {/* ============ PRICING ============ */}
+          <div className="form-group">
+            <label htmlFor="price" className="form-label">
+              Price
+            </label>
             <input
               id="price"
               name="price"
@@ -163,20 +227,12 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
               required
             />
           </div>
+
+          {/* ============ CODES ============ */}
           <div className="form-group">
-            <label htmlFor="qr_code" className="form-label">QR Code Link</label>
-            <input
-              id="qr_code"
-              name="qr_code"
-              placeholder="Enter QR code"
-              className="w-full mb-2 p-2 border rounded"
-              value={form.qr_code || ""}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="code" className="form-label">Code 1</label>
+            <label htmlFor="code" className="form-label">
+              Code 1
+            </label>
             <input
               id="code"
               name="code"
@@ -191,8 +247,11 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
               required
             />
           </div>
+
           <div className="form-group">
-            <label htmlFor="code2" className="form-label">Code 2</label>
+            <label htmlFor="code2" className="form-label">
+              Code 2
+            </label>
             <input
               id="code2"
               name="code2"
@@ -207,8 +266,11 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
               required
             />
           </div>
+
           <div className="form-group">
-            <label htmlFor="code3" className="form-label">Code 3</label>
+            <label htmlFor="code3" className="form-label">
+              Code 3
+            </label>
             <input
               id="code3"
               name="code3"
@@ -223,8 +285,11 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
               required
             />
           </div>
+
           <div className="form-group">
-            <label htmlFor="code4" className="form-label">Code 4</label>
+            <label htmlFor="code4" className="form-label">
+              Code 4
+            </label>
             <input
               id="code4"
               name="code4"
@@ -239,8 +304,146 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
               required
             />
           </div>
+
+          {/* ============ QR CODE ============ */}
           <div className="form-group span-2">
-            <label htmlFor="warnings" className="form-label">Important Warnings</label>
+            <label htmlFor="qr_code" className="form-label">
+              QR Code Link
+            </label>
+            <input
+              id="qr_code"
+              name="qr_code"
+              placeholder="Enter QR code link"
+              className="w-full mb-2 p-2 border rounded"
+              value={form.qr_code || ""}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          {/* ============ PRODUCT DESCRIPTIONS ============ */}
+          <div className="form-group span-2">
+            <label htmlFor="product_overview" className="form-label">
+              Product Overview
+            </label>
+            <textarea
+              id="product_overview"
+              name="product_overview"
+              placeholder="Enter general product description..."
+              className="w-full mb-2 p-2 border rounded"
+              value={form.product_overview || ""}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group span-2">
+            <label htmlFor="uses" className="form-label">
+              Product Uses
+            </label>
+            <textarea
+              id="uses"
+              name="uses"
+              placeholder="Describe the uses of the product..."
+              className="w-full mb-2 p-2 border rounded"
+              value={form.uses || ""}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group span-2">
+            <label htmlFor="method_of_use" className="form-label">
+              Method of Use
+            </label>
+            <textarea
+              id="method_of_use"
+              name="method_of_use"
+              placeholder="Explain how to use the product..."
+              className="w-full mb-2 p-2 border rounded"
+              value={form.method_of_use || ""}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          {/* ============ SIDE EFFECTS & BENEFITS ============ */}
+          <div className="form-group span-2">
+            <label htmlFor="side_effects" className="form-label">
+              Side Effects
+            </label>
+            <textarea
+              id="side_effects"
+              name="side_effects"
+              placeholder="List potential side effects..."
+              className="w-full mb-2 p-2 border rounded"
+              value={form.side_effects || ""}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="form-group span-2">
+            <label htmlFor="potential_harms" className="form-label">
+              Potential Harms
+            </label>
+            <textarea
+              id="potential_harms"
+              name="potential_harms"
+              placeholder="List any potential harms or side effects..."
+              className="w-full mb-2 p-2 border rounded"
+              value={form.potential_harms || ""}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="muscle_gain" className="form-label">
+              Muscle Gain
+            </label>
+            <input
+              id="muscle_gain"
+              name="muscle_gain"
+              placeholder="e.g., 15-20%"
+              className="w-full mb-2 p-2 border rounded"
+              value={form.muscle_gain || ""}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="keep_gains" className="form-label">
+              Keep Gains
+            </label>
+            <input
+              id="keep_gains"
+              name="keep_gains"
+              placeholder="e.g., 80-90%"
+              className="w-full mb-2 p-2 border rounded"
+              value={form.keep_gains || ""}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="form-group span-2">
+            <label htmlFor="fat_water" className="form-label">
+              Fat/Water Loss
+            </label>
+            <input
+              id="fat_water"
+              name="fat_water"
+              placeholder="Description of fat and water loss"
+              className="w-full mb-2 p-2 border rounded"
+              value={form.fat_water || ""}
+              onChange={handleChange}
+            />
+          </div>
+
+          {/* ============ WARNINGS ============ */}
+          <div className="form-group span-2">
+            <label htmlFor="warnings" className="form-label">
+              Important Warnings
+            </label>
             <textarea
               id="warnings"
               name="warnings"
@@ -251,86 +454,94 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
               required
             />
           </div>
+
+          {/* ============ MEDIA FILES ============ */}
           <div className="form-group">
-            <label htmlFor="vial" className="form-label">Vial</label>
-            <input
-              id="vial"
-              name="vial"
-              placeholder="Enter vial information"
-              className="w-full mb-2 p-2 border rounded"
-              value={form.vial || ""}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="caliber" className="form-label">Caliber</label>
-            <input
-              id="caliber"
-              name="caliber"
-              placeholder="Enter caliber information"
-              className="w-full mb-2 p-2 border rounded"
-              value={form.caliber || ""}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="vid_url" className="form-label">Video URL</label>
+            <label htmlFor="vid_url" className="form-label">
+              Video URL
+            </label>
             <input
               type="file"
               id="vid_url"
               name="vid_url"
               accept="video/*"
               className="w-full mb-2 p-2 border rounded"
-              onChange={(e) =>
-                setForm((f) => ({ ...f, vid_url: e.target.files?.[0] || null }))
-              }
-              required
+              onChange={handleChange}
             />
+            {form.vid_url && (
+              <p className="text-sm text-green-600">
+                {typeof form.vid_url === "string"
+                  ? "Current: " + form.vid_url.substring(0, 30) + "..."
+                  : "File selected: " + form.vid_url.name}
+              </p>
+            )}
           </div>
+
           <div className="form-group">
-            <label htmlFor="img_url" className="form-label">First Image URL</label>
+            <label htmlFor="img_url" className="form-label">
+              First Image URL
+            </label>
             <input
               type="file"
               id="img_url"
               name="img_url"
               accept="image/*"
               className="w-full mb-2 p-2 border rounded"
-              onChange={(e) =>
-                setForm((f) => ({
-                  ...f,
-                  img_url: e.target.files?.[0] || null,
-                }))
-              }
-              required
+              onChange={handleChange}
             />
+            {form.img_url && (
+              <p className="text-sm text-green-600">
+                {typeof form.img_url === "string"
+                  ? "Current: " + form.img_url.substring(0, 30) + "..."
+                  : "File selected: " + form.img_url.name}
+              </p>
+            )}
           </div>
+
           <div className="form-group">
-            <label htmlFor="img_url2" className="form-label">Secondary Image URL</label>
+            <label htmlFor="img_url2" className="form-label">
+              Secondary Image URL
+            </label>
             <input
               type="file"
               id="img_url2"
               name="img_url2"
               accept="image/*"
               className="w-full mb-2 p-2 border rounded"
-              onChange={(e) => setForm((f) => ({ ...f, img_url2: e.target.files?.[0] || null }))}
-              required
+              onChange={handleChange}
             />
+            {form.img_url2 && (
+              <p className="text-sm text-green-600">
+                {typeof form.img_url2 === "string"
+                  ? "Current: " + form.img_url2.substring(0, 30) + "..."
+                  : "File selected: " + form.img_url2.name}
+              </p>
+            )}
           </div>
+
           <div className="form-group">
-            <label htmlFor="img_url3" className="form-label">Third Image URL</label>
+            <label htmlFor="img_url3" className="form-label">
+              Third Image URL
+            </label>
             <input
               type="file"
               id="img_url3"
               name="img_url3"
               accept="image/*"
               className="w-full mb-2 p-2 border rounded"
-              onChange={(e) => setForm((f) => ({ ...f, img_url3: e.target.files?.[0] || null }))}
-              required
+              onChange={handleChange}
             />
+            {form.img_url3 && (
+              <p className="text-sm text-green-600">
+                {typeof form.img_url3 === "string"
+                  ? "Current: " + form.img_url3.substring(0, 30) + "..."
+                  : "File selected: " + form.img_url3.name}
+              </p>
+            )}
           </div>
         </div>
+
+        {/* Form Actions */}
         <div className="flex gap-2 mt-4">
           <button
             type="submit"
@@ -353,14 +564,118 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
   );
 }
 
+function UpdateInfoSection({ userId, currentEmail, currentPhone }) {
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const validatePhone = (value) => {
+    const digits = value.replace(/\D/g, "");
+    return digits.length === 13;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setMessage("");
+
+    const payload = {
+      id: String(userId),
+      email: email.trim() || currentEmail,
+      phone: phone.trim() || currentPhone,
+    };
+
+    if (!validatePhone(payload.phone)) {
+      setMessage("Phone number must be exactly 13 digits.");
+      setLoading(false);
+      return;
+    }
+
+    if (email.trim() === "" && phone.trim() === "") {
+      setMessage("No changes to update.");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const res = await updateUserInfo(payload);
+
+      if (res.status === "success") {
+        setMessage(res.message || "Information updated successfully.");
+        setEmail("");
+        setPhone("");
+      } else {
+        setMessage(res.message || "An error occurred while updating.");
+      }
+    } catch (error) {
+      console.error("Update error:", error);
+      setMessage(`Error: ${error.message || "Failed to update information"}`);
+    }
+
+    setLoading(false);
+  };
+
+  return (
+    <div className="update-info-section mt-8">
+      <h1>
+        <ShinyText
+          text="Update Email & Phone"
+          speed={3}
+          className="shiny-heading dashboard-title mb-4"
+        />
+      </h1>
+      <form onSubmit={handleSubmit} className="max-w-md">
+        <div className="mb-4">
+          <label className="block text-sm font-medium mb-2">Email:</label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder={currentEmail || "Enter new email"}
+            className="w-full p-2 border rounded"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-sm font-medium mb-2">Phone:</label>
+          <input
+            type="text"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            placeholder={currentPhone || "Enter new phone"}
+            maxLength={13}
+            className="w-full p-2 border rounded"
+          />
+        </div>
+        <button type="submit" disabled={loading} className="dashboard-btn">
+          {loading ? "Updating..." : "Update"}
+        </button>
+      </form>
+      {message && (
+        <p
+          className={`mt-2 ${
+            message.includes("successfully") ? "text-green-600" : "text-red-600"
+          }`}
+        >
+          {message}
+        </p>
+      )}
+    </div>
+  );
+}
+
 export default function Dashboard(props) {
   const [showForm, setShowForm] = useState(false);
   const [editProduct, setEditProduct] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
   const [search, setSearch] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
-  const [activeCategory, setActiveCategoryState] = useState(searchParams.get("category") || "steroids");
-  const [activeSub, setActiveSubState] = useState(searchParams.get("sub") || "injectables");
+  const [activeCategory, setActiveCategoryState] = useState(
+    searchParams.get("category") || "steroids"
+  );
+  const [activeSub, setActiveSubState] = useState(
+    searchParams.get("sub") || "injectables"
+  );
 
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -425,7 +740,6 @@ export default function Dashboard(props) {
 
   function handleLogout() {
     const token = localStorage.getItem("token");
-    // You may need to store user id somewhere, here assumed as "1"
     logout(1, token).then(() => {
       localStorage.removeItem("token");
       navigate("/login");
@@ -458,102 +772,37 @@ export default function Dashboard(props) {
   const email = props.email;
   const phone = props.phone;
 
-
-  function UpdateInfoSection({ userId, currentEmail, currentPhone }) {
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
-
-  const validatePhone = (value) => {
-    const digits = value.replace(/\D/g, "");
-    return digits.length === 13;
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setMessage("");
-
-    // Always include all required fields
-    const payload = {
-      id: String(userId), // تأكد أنها string
-      email: email.trim() || currentEmail,
-      phone: phone.trim() || currentPhone,
-    };
-
-    // Validate phone number format
-    if (!validatePhone(payload.phone)) {
-      setMessage("Phone number must be exactly 13 digits.");
-      setLoading(false);
-      return;
-    }
-
-    // Check if there are any changes
-    if (email.trim() === '' && phone.trim() === '') {
-      setMessage("No changes to update.");
-      setLoading(false);
-      return;
-    }
-
-    try {
-      const res = await updateUserInfo(payload);
-
-      if (res.status === "success") {
-        setMessage(res.message || "Information updated successfully.");
-        // Clear form after successful update
-        setEmail("");
-        setPhone("");
-      } else {
-        setMessage(res.message || "An error occurred while updating.");
-      }
-    } catch (error) {
-      console.error("Update error:", error);
-      setMessage(`Error: ${error.message || "Failed to update information"}`);
-    }
-
-    setLoading(false);
-  };
-
-  return (
-    <div className="update-info-section mt-8">
-      <h1>
-        <ShinyText text="Update Email & Phone" speed={3} className="shiny-heading dashboard-title mb-4" />
-      </h1>      <form onSubmit={handleSubmit} className="max-w-md">
-        <div className="mb-4">
-          <label className="block text-sm font-medium mb-2">Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder={currentEmail || "Enter new email"}
-            className="w-full p-2 border rounded"
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-sm font-medium mb-2">Phone:</label>
-          <input
-            type="text"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            placeholder={currentPhone || "Enter new phone"}
-            maxLength={13}
-            className="w-full p-2 border rounded"
-          />
-        </div>
-        <button type="submit" disabled={loading} className="dashboard-btn">
-          {loading ? "Updating..." : "Update"}
-        </button>
-      </form>
-      {message && (
-        <p className={`mt-2 ${message.includes("successfully") ? "text-green-600" : "text-red-600"}`}>
-          {message}
-        </p>
-      )}
-    </div>
-  );
-}
-
+  const getInitialProductForm = () => ({
+    pname: "",
+    name: "",
+    product_overview: "",
+    uses: "",
+    potential_harms: "",
+    method_of_use: "",
+    price: "",
+    qr_code: "",
+    code: "",
+    code2: "",
+    code3: "",
+    code4: "",
+    warnings: "",
+    vial: "",
+    caliber: "",
+    dosage: "",
+    strength: "",
+    kit: "",
+    total_vial: "",
+    sterile_water: "",
+    side_effects: "",
+    muscle_gain: "",
+    keep_gains: "",
+    fat_water: "",
+    sec_id: secIdMap[activeSub],
+    vid_url: null,
+    img_url: null,
+    img_url2: null,
+    img_url3: null,
+  });
 
   return (
     <div className="dash">
@@ -582,6 +831,7 @@ export default function Dashboard(props) {
               </button>
             </div>
           </div>
+
           {/* Main Category Tabs */}
           <div className="main-tabs section-tabs mb-4">
             <button
@@ -597,6 +847,7 @@ export default function Dashboard(props) {
               Peptides
             </button>
           </div>
+
           {/* Sub Tabs */}
           <div className="section-tabs">
             {activeCategory === "steroids" ? (
@@ -631,6 +882,7 @@ export default function Dashboard(props) {
               </>
             )}
           </div>
+
           {isLoading ? (
             <div>Loading products...</div>
           ) : error ? (
@@ -673,8 +925,7 @@ export default function Dashboard(props) {
                     }}
                   >
                     {filteredProducts.map((prod) => {
-                      const img =
-                        prod.img_url || prod.img_url2 || prod.img_url3;
+                      const img = prod.img_url || prod.img_url2 || prod.img_url3;
                       return (
                         <SwiperSlide key={prod.p_id}>
                           <div className="product-card">
@@ -692,9 +943,6 @@ export default function Dashboard(props) {
                               )}
                             </div>
                             <div className="product-card-body">
-                              {/* <div className="product-card-title">
-                                {prod.name}
-                              </div> */}
                               {prod.pname && (
                                 <div className="product-card-subtitle">
                                   {prod.pname}
@@ -753,28 +1001,7 @@ export default function Dashboard(props) {
 
           {showForm && (
             <ProductForm
-              initial={{
-                pname: "",
-                name: "",
-                product_overview: "",
-                uses: "",
-                potential_harms: "",
-                method_of_use: "",
-                price: "",
-                qr_code: "",
-                code: "",
-                code2: "",
-                code3: "",
-                code4: "",
-                warnings: "",
-                vial: "",
-                caliber: "",
-                sec_id: secIdMap[activeSub],
-                vid_url: "",
-                img_url: "",
-                img_url2: "",
-                img_url3: "",
-              }}
+              initial={getInitialProductForm()}
               onSave={(data) => {
                 createMutation.mutate({ ...data, sec_id: secIdMap[activeSub] });
               }}
@@ -790,7 +1017,7 @@ export default function Dashboard(props) {
                 updateMutation.mutate({
                   ...data,
                   p_id: editProduct.p_id,
-                  sec_id: secIdMap[activeSub] || editProduct.sec_id, // Fallback to existing if mismatch
+                  sec_id: secIdMap[activeSub] || editProduct.sec_id,
                 });
               }}
               onClose={() => setEditProduct(null)}
