@@ -708,3 +708,6 @@
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
+span.inline-block.mt-1.rounded-full.bg-amber-100.text-amber-700.text-\[11px\].font-semibold.px-2.py-0\.5.uppercase.tracking-wide {
+    color: #0061ff7a;
+}

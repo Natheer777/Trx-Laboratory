@@ -167,6 +167,10 @@ const CircularProgress = ({
   );
 };
 
+function capitalizeFirstLetter(str) {
+  if (!str) return "";
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
 
 const renderSpecialLCarnitineName = () => (
   <div style={{ lineHeight: 1.1 }}>
@@ -186,7 +190,6 @@ export default function Details_product({
   suppressErrors = false,
 }) {
   const params = useParams();
-  // تتبع القيم المستلمة
   console.log(
     "Details_Product.jsx - productName prop:",
     productName,
@@ -196,6 +199,7 @@ export default function Details_product({
   const [productData, setProductData] = useState(productDataProp || null);
   const [loading, setLoading] = useState(productDataProp ? false : true);
   const [error, setError] = useState(null);
+  const [showFullDescription, setShowFullDescription] = useState(false);
 
   useEffect(() => {
     if (productDataProp) return;
@@ -231,7 +235,6 @@ export default function Details_product({
     fetchProduct();
   }, [productName, productId, productDataProp]);
 
-  // تتبع بيانات المنتج بعد الجلب
   useEffect(() => {
     console.log("Details_Product.jsx - productData:", productData);
   }, [productData]);
@@ -266,23 +269,49 @@ export default function Details_product({
     vial,
     caliber,
     sec_name,
-    dosage,
-    kit,
-    total_vial,
-    sterile_water,
     vid_url,
     img_url,
     img_url2,
     img_url3,
-    science_name
+    science_name,
+    dosage,
+    kit,
+    total_vial,
+    sterile_water,
   } = productData;
 
+  const displayScienceName = science_name
+    ? science_name.replace(/[()]/g, '').trim()
+    : '';
 
+  const isVialsProduct = sec_name && sec_name.toLowerCase() === "vials";
+
+  const formatTextWithNumbers = (text, useProductColor = false) => {
+    if (!text) return "";
+
+    const parts = text.split(/(\d+)/);
+    return parts.map((part, index) => {
+      if (/^\d+$/.test(part)) {
+        return (
+          <span
+            key={index}
+            className="number-value"
+          >
+            {part}
+          </span>
+        );
+      } else {
+        return (
+          <span key={index} className="text-content">
+            {part}
+          </span>
+        );
+      }
+    });
+  };
 
   return (
     <>
-
-
       <div className="swiper_product mb-5 container">
         <div className="Swiper_Conent">
           <div className="container">
@@ -320,11 +349,7 @@ export default function Details_product({
               <div className="col-xl-6 col-lg-6 ">
                 <div className="detailsMainProduct pb-4">
                   <div>
-                    <h1
-                      className="product_name text-xl font-bold  left ps-0"
-                      // style={{ color: productColor }}
-                    >
-                      {/* تخصيص عرض اسم المنتج إذا كان هو المطلوب */}
+                    <h1 className="product_name text-xl font-bold left">
                       {pname &&
                       pname
                         .replace(/-/g, "")
@@ -332,57 +357,76 @@ export default function Details_product({
                         .toLowerCase() === "lcarnitine+yohimbine+clen200mg"
                         ? renderSpecialLCarnitineName()
                         : (() => {
-                            let name = pname || "";
-                            // Only remove '-' for tablets products
+                            let productName = pname || "";
                             if (
                               productData.sec_name &&
                               productData.sec_name.toLowerCase() === "tablets"
                             ) {
-                              name = name.replace(/-/g, " ");
+                              productName = productName.replace(/-/g, " ");
                             }
-                            const match = name.match(/^[^\d]*/);
-                            return match
-                              ? match[0].trim().toUpperCase()
-                              : name.toUpperCase();
+                            // Only remove numbers if they are at the start of the string
+                            productName = productName.replace(/^\d+\s*/, '');
+                            return productName.toUpperCase();
                           })()}
                     </h1>
-                    <p className="scientific_name">
-
-                    {name}
-                    </p>
-                    {/* {sec_name && (
-                      <p className="sec_name">
-                        {capitalizeFirstLetter(sec_name.replace(/[()]/g, ""))}
-                      </p>
-                    )} */}
-                    {/* {science_name && (
-                      <p className="sec_name">
-                        {capitalizeFirstLetter(science_name.replace(/[()]/g, ""))}
-                      </p>
-                    )} */}
+                    {isVialsProduct ? (
+                      name && (
+                        <p className="sec_name scientific_name">
+                          {capitalizeFirstLetter(name.replace(/[()]/g, ""))}
+                        </p>
+                      )
+                    ) : (
+                      sec_name && (
+                        <p className="sec_name">
+                          {capitalizeFirstLetter(sec_name.replace(/[()]/g, ""))}
+                        </p>
+                      )
+                    )}
                   </div>
                   <div>
-                    <span className="vial right">
-                      <span>
-                        {/* {sec_name === "injections"
-                          ? "Vial: "
-                          : sec_name === "tablets"
-                          ? "Tablets: "
-                          : "Vial: "} */}
-                      </span>
-                      {dosage}
-                    </span>{" "}
-                    <p className="caliber right">
-                      {kit}
-                    </p>  
-                    <span className="price  left">
-                  
-                      {total_vial}
-                    </span>
-                    <span className="price  left">
-               
-                      {sterile_water}
-                    </span>
+                    {isVialsProduct ? (
+                      <>
+                        <span className="vial right dosage">
+                          {dosage}
+                        </span>
+                        <p className="caliber right mb-1">
+                          {kit}
+                        </p>
+                        <div className="d-grid">
+
+                        <span className="price left mb-2 vialFont">
+                          {total_vial}
+                          
+                        
+                        </span>
+                        <span className="price left vialFont">
+
+                          
+                          {sterile_water}
+                        </span>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <span className="vial right">
+                          <span>
+                            {sec_name === "injections"
+                              ? "Vial: "
+                              : sec_name === "tablets"
+                              ? "Tablets: "
+                              : "Vial: "}
+                          </span>
+                          {vial}
+                        </span>
+                        <p className="caliber right">
+                          {caliber}
+                        </p>
+                        <span className="price left">
+                          <span>Price: </span>
+                          {price}$
+                        </span>
+                      </>
+                    )}
                   </div>
                 </div>
                 <div className="details_product pb-5">

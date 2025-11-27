@@ -9,9 +9,7 @@ import "swiper/css/navigation";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 
 export default function OurInjectables() {
-  const [activeTab, setActiveTab] = useState("vials"); // "vials" or "pens"
   const [vialData, setVialData] = useState([]);
-  const [penData, setPenData] = useState([]);
   const [loading, setLoading] = useState(true);
 
   // Fetch Vials
@@ -25,22 +23,6 @@ export default function OurInjectables() {
       .finally(() => setLoading(false));
   }, []);
 
-  // Fetch Pens only when tab is clicked (lazy load)
-  useEffect(() => {
-    if (activeTab === "pens" && penData.length === 0) {
-      setLoading(true);
-      axios
-        .get("https://trx-laboratory.com/get_pens_products.php")
-        .then((res) => {
-          setPenData(res.data.data || []);
-        })
-        .catch((err) => console.error("Error fetching pens:", err))
-        .finally(() => setLoading(false));
-    }
-  }, [activeTab, penData.length]);
-
-  const currentData = activeTab === "vials" ? vialData : penData;
-
   return (
     <>
       <div className="OUR_INJECTABLES">
@@ -50,34 +32,20 @@ export default function OurInjectables() {
           <ul className="injectables-tabs">
             <li>
               <ShinyText
-                text="OUR INJECTABLES"
+                text="OUR VIALS"
                 speed={3}
                 className="shiny-heading"
               />
             </li>
           </ul>
         </div>
-            <div className="tab-switcher mb-5">
-              <button
-                className={`tab-btn ${activeTab === "vials" ? "active" : ""}`}
-                onClick={() => setActiveTab("vials")}
-              >
-                VIAL 10 ML
-              </button>
-              <button
-                className={`tab-btn ${activeTab === "pens" ? "active" : ""}`}
-                onClick={() => setActiveTab("pens")}
-              >
-                PENS
-              </button>
-            </div>
 
         {/* Products Grid */}
         <div className="ProductsInjec container">
           <div className="All_Product">
             {loading ? (
               <div className="loading-state">Loading products...</div>
-            ) : currentData.length === 0 ? (
+            ) : vialData.length === 0 ? (
               <div className="no-products">No products available</div>
             ) : (
               <Swiper
@@ -97,7 +65,7 @@ export default function OurInjectables() {
                 watchSlidesProgress={true}
                 watchOverflow={true}
               >
-                {currentData.map((item) => (
+                {vialData.map((item) => (
                   <SwiperSlide key={item.id}>
                     <div className="All_Product_items">
                       <div className="product-card p-4 shadow-sm">

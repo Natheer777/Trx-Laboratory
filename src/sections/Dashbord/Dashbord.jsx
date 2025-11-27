@@ -17,25 +17,88 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "./Dashbord.css";
 
+// ============ دالة تنظيف البيانات ============
+const sanitizeProductData = (data, activeSub, secIdMap, editMode = false) => {
+  return {
+    ...(editMode && { p_id: data.p_id }),
+    // الحقول المطلوبة
+    pname: data.pname?.trim() || "",
+    name: data.name?.trim() || "",
+    product_overview: data.product_overview?.trim() || "",
+    uses: data.uses?.trim() || "",
+    potential_harms: data.potential_harms?.trim() || "",
+    method_of_use: data.method_of_use?.trim() || "",
+    price: data.price || 0,
+    code: data.code?.trim() || "",
+    code2: data.code2?.trim() || "",
+    code3: data.code3?.trim() || "",
+    code4: data.code4?.trim() || "",
+    warnings: data.warnings?.trim() || "",
+    vial: data.vial?.trim() || "",
+    caliber: data.caliber?.trim() || "",
+    // الحقول الاختيارية - تأكد من إرسالها كـ empty string وليس null
+    dosage: data.dosage?.trim() || "",
+    kit: data.kit?.trim() || "",
+    total_vial: data.total_vial?.trim() || "",
+    sterile_water: data.sterile_water?.trim() || "",
+    // الحقول المُحدثة - ضمان عدم إرسال null
+    vid_url: data.vid_url?.trim() || "",
+    img_url: data.img_url?.trim() || "",
+    img_url2: data.img_url2?.trim() || "",
+    img_url3: data.img_url3?.trim() || "",
+    // QR code - الرابط الافتراضي
+    qr_code: data.qr_code?.trim() || "https://trx-laboratory.com/",
+    // sec_id
+    sec_id: data.sec_id || secIdMap[activeSub],
+  };
+};
+
+// ============ دالة تحسين لتنظيف القيم من null ============
+const normalizeFormValues = (data = {}) => {
+  const normalized = { ...data };
+
+  // تحويل جميع القيم null إلى empty string
+  Object.keys(normalized).forEach((key) => {
+    if (normalized[key] === null || normalized[key] === undefined) {
+      normalized[key] = "";
+    }
+  });
+
+  // التأكد من القيم الافتراضية
+  const defaultValues = {
+    vid_url: "",
+    img_url: "",
+    img_url2: "",
+    img_url3: "",
+    dosage: "",
+  };
+
+  Object.entries(defaultValues).forEach(([key, defaultValue]) => {
+    if (!(key in normalized)) {
+      normalized[key] = defaultValue;
+    }
+  });
+
+  return normalized;
+};
+
 function ProductForm({ initial, onSave, onClose, isLoading }) {
-  const [form, setForm] = useState(initial);
+  const [form, setForm] = useState(normalizeFormValues(initial));
   const [formError, setFormError] = useState("");
 
-  function handleChange(e) {
-    const { name, files } = e.target;
-    let { value } = e.target;
+  useEffect(() => {
+    const normalizedInitial = normalizeFormValues(initial);
+    setForm(normalizedInitial);
+  }, [initial]);
 
-    // Handle file inputs
-    if (["vid_url", "img_url", "img_url2", "img_url3"].includes(name)) {
-      const file = files?.[0] || null;
-      setForm((f) => ({ ...f, [name]: file }));
-      return;
-    }
+  function handleChange(e) {
+    const { name } = e.target;
+    let { value } = e.target;
 
     // Handle numeric fields
     const numericFields = ["price"];
     if (numericFields.includes(name)) {
-      setForm((f) => ({ ...f, [name]: value }));
+      setForm((f) => ({ ...f, [name]: value === "" ? "" : Number(value) }));
       return;
     }
 
@@ -46,7 +109,11 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
         .slice(0, 5);
     }
 
-    setForm((f) => ({ ...f, [name]: value }));
+    // تحديث الحالة مع القيمة الجديدة
+    setForm((f) => ({ 
+      ...f, 
+      [name]: value 
+    }));
   }
 
   return (
@@ -74,12 +141,12 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
           {initial.p_id ? "Edit" : "Add"} Product
         </h3>
         {formError && <p className="text-red-500 mb-4">{formError}</p>}
-        
+
         <div className="form-grid">
           {/* ============ BASIC INFORMATION ============ */}
           <div className="form-group">
             <label htmlFor="pname" className="form-label">
-              Product Name QR (English)
+              Product Name QR (English) <span className="text-red-500">*</span>
             </label>
             <input
               id="pname"
@@ -94,7 +161,7 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
 
           <div className="form-group">
             <label htmlFor="name" className="form-label">
-              Product Name Web (Local)
+              Product Name Web (Local) <span className="text-red-500">*</span>
             </label>
             <input
               id="name"
@@ -107,10 +174,13 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
             />
           </div>
 
-          {/* ============ DOSAGE & STRENGTH ============ */}
+          {/* ============ DOSAGE ============ */}
           <div className="form-group">
             <label htmlFor="dosage" className="form-label">
               Dosage
+              <span className="inline-block mt-1 rounded-full bg-amber-100 text-amber-700 text-[11px] font-semibold px-2 py-0.5 uppercase tracking-wide">
+                For Vials products only
+              </span>
             </label>
             <input
               id="dosage"
@@ -119,21 +189,6 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
               className="w-full mb-2 p-2 border rounded"
               value={form.dosage || ""}
               onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="strength" className="form-label">
-              Strength
-            </label>
-            <input
-              id="strength"
-              name="strength"
-              placeholder="e.g., 100mg/ml"
-              className="w-full mb-2 p-2 border rounded"
-              value={form.strength || ""}
-              onChange={handleChange}
             />
           </div>
 
@@ -141,6 +196,9 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
           <div className="form-group">
             <label htmlFor="kit" className="form-label">
               Kit
+              <span className="inline-block mt-1 rounded-full bg-amber-100 text-amber-700 text-[11px] font-semibold px-2 py-0.5 uppercase tracking-wide">
+                For Vials products only
+              </span>
             </label>
             <input
               id="kit"
@@ -155,6 +213,9 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
           <div className="form-group">
             <label htmlFor="total_vial" className="form-label">
               Total Vial
+              <span className="inline-block mt-1 rounded-full bg-amber-100 text-amber-700 text-[11px] font-semibold px-2 py-0.5 uppercase tracking-wide">
+                For Vials products only
+              </span>
             </label>
             <input
               id="total_vial"
@@ -168,7 +229,7 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
 
           <div className="form-group">
             <label htmlFor="vial" className="form-label">
-              Vial Type
+              Vial Type <span className="text-red-500">*</span>
             </label>
             <input
               id="vial"
@@ -184,6 +245,9 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
           <div className="form-group">
             <label htmlFor="sterile_water" className="form-label">
               Sterile Water
+              <span className="inline-block mt-1 rounded-full bg-amber-100 text-amber-700 text-[11px] font-semibold px-2 py-0.5 uppercase tracking-wide">
+                For Vials products only
+              </span>
             </label>
             <input
               id="sterile_water"
@@ -197,7 +261,7 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
 
           <div className="form-group">
             <label htmlFor="caliber" className="form-label">
-              Caliber
+              Caliber <span className="text-red-500">*</span>
             </label>
             <input
               id="caliber"
@@ -213,7 +277,7 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
           {/* ============ PRICING ============ */}
           <div className="form-group">
             <label htmlFor="price" className="form-label">
-              Price
+              Price <span className="text-red-500">*</span>
             </label>
             <input
               id="price"
@@ -231,7 +295,7 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
           {/* ============ CODES ============ */}
           <div className="form-group">
             <label htmlFor="code" className="form-label">
-              Code 1
+              Code 1 <span className="text-red-500">*</span>
             </label>
             <input
               id="code"
@@ -250,7 +314,7 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
 
           <div className="form-group">
             <label htmlFor="code2" className="form-label">
-              Code 2
+              Code 2 <span className="text-red-500">*</span>
             </label>
             <input
               id="code2"
@@ -269,7 +333,7 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
 
           <div className="form-group">
             <label htmlFor="code3" className="form-label">
-              Code 3
+              Code 3 <span className="text-red-500">*</span>
             </label>
             <input
               id="code3"
@@ -288,7 +352,7 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
 
           <div className="form-group">
             <label htmlFor="code4" className="form-label">
-              Code 4
+              Code 4 <span className="text-red-500">*</span>
             </label>
             <input
               id="code4"
@@ -308,23 +372,25 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
           {/* ============ QR CODE ============ */}
           <div className="form-group span-2">
             <label htmlFor="qr_code" className="form-label">
-              QR Code Link
+              QR Code Link{" "}
+              <span className="inline-block mt-1 rounded-full bg-blue-100 text-blue-700 text-[11px] font-semibold px-2 py-0.5 uppercase tracking-wide">
+                Default: https://trx-laboratory.com/
+              </span>
             </label>
             <input
               id="qr_code"
               name="qr_code"
-              placeholder="Enter QR code link"
+              placeholder="Leave empty for default QR code[](https://trx-laboratory.com/)"
               className="w-full mb-2 p-2 border rounded"
               value={form.qr_code || ""}
               onChange={handleChange}
-              required
             />
           </div>
 
           {/* ============ PRODUCT DESCRIPTIONS ============ */}
           <div className="form-group span-2">
             <label htmlFor="product_overview" className="form-label">
-              Product Overview
+              Product Overview <span className="text-red-500">*</span>
             </label>
             <textarea
               id="product_overview"
@@ -339,7 +405,7 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
 
           <div className="form-group span-2">
             <label htmlFor="uses" className="form-label">
-              Product Uses
+              Product Uses <span className="text-red-500">*</span>
             </label>
             <textarea
               id="uses"
@@ -354,7 +420,7 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
 
           <div className="form-group span-2">
             <label htmlFor="method_of_use" className="form-label">
-              Method of Use
+              Method of Use <span className="text-red-500">*</span>
             </label>
             <textarea
               id="method_of_use"
@@ -367,24 +433,9 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
             />
           </div>
 
-          {/* ============ SIDE EFFECTS & BENEFITS ============ */}
-          <div className="form-group span-2">
-            <label htmlFor="side_effects" className="form-label">
-              Side Effects
-            </label>
-            <textarea
-              id="side_effects"
-              name="side_effects"
-              placeholder="List potential side effects..."
-              className="w-full mb-2 p-2 border rounded"
-              value={form.side_effects || ""}
-              onChange={handleChange}
-            />
-          </div>
-
           <div className="form-group span-2">
             <label htmlFor="potential_harms" className="form-label">
-              Potential Harms
+              Potential Harms <span className="text-red-500">*</span>
             </label>
             <textarea
               id="potential_harms"
@@ -397,52 +448,10 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="muscle_gain" className="form-label">
-              Muscle Gain
-            </label>
-            <input
-              id="muscle_gain"
-              name="muscle_gain"
-              placeholder="e.g., 15-20%"
-              className="w-full mb-2 p-2 border rounded"
-              value={form.muscle_gain || ""}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="keep_gains" className="form-label">
-              Keep Gains
-            </label>
-            <input
-              id="keep_gains"
-              name="keep_gains"
-              placeholder="e.g., 80-90%"
-              className="w-full mb-2 p-2 border rounded"
-              value={form.keep_gains || ""}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="form-group span-2">
-            <label htmlFor="fat_water" className="form-label">
-              Fat/Water Loss
-            </label>
-            <input
-              id="fat_water"
-              name="fat_water"
-              placeholder="Description of fat and water loss"
-              className="w-full mb-2 p-2 border rounded"
-              value={form.fat_water || ""}
-              onChange={handleChange}
-            />
-          </div>
-
           {/* ============ WARNINGS ============ */}
           <div className="form-group span-2">
             <label htmlFor="warnings" className="form-label">
-              Important Warnings
+              Important Warnings <span className="text-red-500">*</span>
             </label>
             <textarea
               id="warnings"
@@ -455,26 +464,20 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
             />
           </div>
 
-          {/* ============ MEDIA FILES ============ */}
+          {/* ============ MEDIA LINKS ============ */}
           <div className="form-group">
             <label htmlFor="vid_url" className="form-label">
               Video URL
             </label>
             <input
-              type="file"
+              type="url"
               id="vid_url"
               name="vid_url"
-              accept="video/*"
+              placeholder="https://example.com/video.mp4"
               className="w-full mb-2 p-2 border rounded"
+              value={form.vid_url || ""}
               onChange={handleChange}
             />
-            {form.vid_url && (
-              <p className="text-sm text-green-600">
-                {typeof form.vid_url === "string"
-                  ? "Current: " + form.vid_url.substring(0, 30) + "..."
-                  : "File selected: " + form.vid_url.name}
-              </p>
-            )}
           </div>
 
           <div className="form-group">
@@ -482,20 +485,14 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
               First Image URL
             </label>
             <input
-              type="file"
+              type="url"
               id="img_url"
               name="img_url"
-              accept="image/*"
+              placeholder="https://example.com/image.jpg"
               className="w-full mb-2 p-2 border rounded"
+              value={form.img_url || ""}
               onChange={handleChange}
             />
-            {form.img_url && (
-              <p className="text-sm text-green-600">
-                {typeof form.img_url === "string"
-                  ? "Current: " + form.img_url.substring(0, 30) + "..."
-                  : "File selected: " + form.img_url.name}
-              </p>
-            )}
           </div>
 
           <div className="form-group">
@@ -503,20 +500,14 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
               Secondary Image URL
             </label>
             <input
-              type="file"
+              type="url"
               id="img_url2"
               name="img_url2"
-              accept="image/*"
+              placeholder="https://example.com/image-2.jpg"
               className="w-full mb-2 p-2 border rounded"
+              value={form.img_url2 || ""}
               onChange={handleChange}
             />
-            {form.img_url2 && (
-              <p className="text-sm text-green-600">
-                {typeof form.img_url2 === "string"
-                  ? "Current: " + form.img_url2.substring(0, 30) + "..."
-                  : "File selected: " + form.img_url2.name}
-              </p>
-            )}
           </div>
 
           <div className="form-group">
@@ -524,30 +515,20 @@ function ProductForm({ initial, onSave, onClose, isLoading }) {
               Third Image URL
             </label>
             <input
-              type="file"
+              type="url"
               id="img_url3"
               name="img_url3"
-              accept="image/*"
+              placeholder="https://example.com/image-3.jpg"
               className="w-full mb-2 p-2 border rounded"
+              value={form.img_url3 || ""}
               onChange={handleChange}
             />
-            {form.img_url3 && (
-              <p className="text-sm text-green-600">
-                {typeof form.img_url3 === "string"
-                  ? "Current: " + form.img_url3.substring(0, 30) + "..."
-                  : "File selected: " + form.img_url3.name}
-              </p>
-            )}
           </div>
         </div>
 
         {/* Form Actions */}
         <div className="flex gap-2 mt-4">
-          <button
-            type="submit"
-            className="dashboard-btn"
-            disabled={isLoading}
-          >
+          <button type="submit" className="dashboard-btn" disabled={isLoading}>
             {isLoading ? "Saving..." : "Save"}
           </button>
           <button
@@ -684,7 +665,6 @@ export default function Dashboard(props) {
     injectables: 3,
     tablets: 4,
     vials: 5,
-    pens: 6,
   };
 
   useEffect(() => {
@@ -748,24 +728,25 @@ export default function Dashboard(props) {
 
   const filteredProducts = Array.isArray(products)
     ? products
-      .filter((p) => {
-        const sec = String(p.sec_name || "").toLowerCase();
-        return sec === activeSub.toLowerCase();
-      })
-      .filter((p) => {
-        const q = search.trim().toLowerCase();
-        if (!q) return true;
-        return (
-          String(p.pname || "").toLowerCase().includes(q) ||
-          String(p.name || "").toLowerCase().includes(q) ||
-          String(p.p_id || "").toLowerCase().includes(q)
-        );
-      })
+        .filter((p) => {
+          const sec = String(p.sec_name || "").toLowerCase();
+          return sec === activeSub.toLowerCase();
+        })
+        .filter((p) => {
+          const q = search.trim().toLowerCase();
+          if (!q) return true;
+          return (
+            String(p.pname || "").toLowerCase().includes(q) ||
+            String(p.name || "").toLowerCase().includes(q) ||
+            String(p.p_id || "").toLowerCase().includes(q)
+          );
+        })
     : [];
 
   const countFor = (sub) =>
     Array.isArray(products)
-      ? products.filter((p) => String(p.sec_name || "").toLowerCase() === sub.toLowerCase()).length
+      ? products.filter((p) => String(p.sec_name || "").toLowerCase() === sub.toLowerCase())
+          .length
       : 0;
 
   const userId = props.userId;
@@ -780,7 +761,7 @@ export default function Dashboard(props) {
     potential_harms: "",
     method_of_use: "",
     price: "",
-    qr_code: "",
+    qr_code: "https://trx-laboratory.com/",
     code: "",
     code2: "",
     code3: "",
@@ -789,19 +770,14 @@ export default function Dashboard(props) {
     vial: "",
     caliber: "",
     dosage: "",
-    strength: "",
     kit: "",
     total_vial: "",
     sterile_water: "",
-    side_effects: "",
-    muscle_gain: "",
-    keep_gains: "",
-    fat_water: "",
+    vid_url: "",
+    img_url: "",
+    img_url2: "",
+    img_url3: "",
     sec_id: secIdMap[activeSub],
-    vid_url: null,
-    img_url: null,
-    img_url2: null,
-    img_url3: null,
   });
 
   return (
@@ -866,20 +842,12 @@ export default function Dashboard(props) {
                 </button>
               </>
             ) : (
-              <>
-                <button
-                  className={`tab ${activeSub === "vials" ? "active" : ""}`}
-                  onClick={() => setActiveSub("vials")}
-                >
-                  Vials ({countFor("vials")})
-                </button>
-                <button
-                  className={`tab ${activeSub === "pens" ? "active" : ""}`}
-                  onClick={() => setActiveSub("pens")}
-                >
-                  Pens ({countFor("pens")})
-                </button>
-              </>
+              <button
+                className={`tab ${activeSub === "vials" ? "active" : ""}`}
+                onClick={() => setActiveSub("vials")}
+              >
+                Vials ({countFor("vials")})
+              </button>
             )}
           </div>
 
@@ -1003,7 +971,9 @@ export default function Dashboard(props) {
             <ProductForm
               initial={getInitialProductForm()}
               onSave={(data) => {
-                createMutation.mutate({ ...data, sec_id: secIdMap[activeSub] });
+                createMutation.mutate(
+                  sanitizeProductData(data, activeSub, secIdMap, false)
+                );
               }}
               onClose={() => setShowForm(false)}
               isLoading={createMutation.isLoading}
@@ -1014,11 +984,9 @@ export default function Dashboard(props) {
             <ProductForm
               initial={editProduct}
               onSave={(data) => {
-                updateMutation.mutate({
-                  ...data,
-                  p_id: editProduct.p_id,
-                  sec_id: secIdMap[activeSub] || editProduct.sec_id,
-                });
+                updateMutation.mutate(
+                  sanitizeProductData(data, activeSub, secIdMap, true)
+                );
               }}
               onClose={() => setEditProduct(null)}
               isLoading={updateMutation.isLoading}

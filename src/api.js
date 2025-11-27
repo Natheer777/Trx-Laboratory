@@ -106,7 +106,13 @@ function sanitizeProductData(productData) {
     // Other Information
     potential_harms: String(productData.potential_harms || "").trim(),
     warnings: String(productData.warnings || "").trim(),
-    
+
+    // Media URLs
+    vid_url: String(productData.vid_url || "").trim(),
+    img_url: String(productData.img_url || "").trim(),
+    img_url2: String(productData.img_url2 || "").trim(),
+    img_url3: String(productData.img_url3 || "").trim(),
+
     // Section ID
     sec_id: productData.sec_id ? Number(productData.sec_id) : null,
   };

@@ -556,8 +556,16 @@
 }
 
 .scientific_name {
-  width: 210px;
+  width: 200px;
   font-size: 12px;
   font-weight: 600;
   text-align: center;
+}
+.text-red-500{
+  font-size: 20px;
+  color: red;
+}
+
+.vialFont{
+  font-size: 10px;
 }
